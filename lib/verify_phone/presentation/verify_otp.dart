@@ -172,7 +172,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                             },
                           text: 'Sign In',
                           style: commonTextStyle(
-                              color: pPrimaryColor, type: "B2")),
+                              color: pPrimaryColor, type: "B2",weight: FontWeight.bold)),
                     ],
                   ),
                 ),

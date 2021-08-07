@@ -32,7 +32,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar("Secure your Data",isTrue: true),
+      appBar: commonAppBar("Secure your Data",isTrue: true,size: 18),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -43,8 +43,8 @@ class _SetPinScreenState extends State<SetPinScreen> {
               children: [
                 TView(
                   title: "Create Pin",
-                  color: pTextColors,
-                  size: 13.0,
+                  color: Color(0xff1C1D3E),
+                  size: 16.0,
                 ),
                 pVerticalSpace(height: 8.0),
                 Row(
@@ -113,15 +113,15 @@ class _SetPinScreenState extends State<SetPinScreen> {
                         child: TView(
                       title: "Show",
                       color: pPrimaryColor,
-                      size: 12.0,
+                      size: 16.0,
                     )),
                     //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.green,child: Text("text 4"))),
                   ],
                 ),
                 TView(
                   title: "Confirm Pin",
-                  color: pTextColors,
-                  size: 13.0,
+                  color: Color(0xff1C1D3E),
+                  size: 16.0,
                 ),
                 pVerticalSpace(height: 8.0),
                 Row(
@@ -188,7 +188,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                         child: TView(
                       title: "Show",
                       color: pPrimaryColor,
-                      size: 12.0,
+                      size: 16.0,
                     )),
                     //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.green,child: Text("text 4"))),
                   ],
