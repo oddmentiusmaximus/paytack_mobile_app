@@ -32,7 +32,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar("Secure your Data",isTrue: true,size: 18),
+      appBar: commonAppBar("",isTrue: true,size: 18),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -41,10 +41,21 @@ class _SetPinScreenState extends State<SetPinScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                pVerticalSpace(height: 12.0),
+                TView(
+                  title: "Secure your Data",
+                  size: 24.0,
+                  weight: FontWeight.bold,
+                  align: TextAlign.start,
+                  isMaxLines: false,
+                  isOverflow: false,
+                  color: pTextColor,
+                ),
+                pVerticalSpace(height: 40.0),
                 TView(
                   title: "Create Pin",
                   color: Color(0xff1C1D3E),
-                  size: 16.0,
+                  size: 14.0,
                 ),
                 pVerticalSpace(height: 8.0),
                 Row(
@@ -72,16 +83,16 @@ class _SetPinScreenState extends State<SetPinScreen> {
                           },
 
                           pinTheme: PinTheme(
-                              shape: PinCodeFieldShape.underline,
+                              shape: PinCodeFieldShape.box,
                               fieldOuterPadding: EdgeInsets.symmetric(
                                   horizontal: 7.0, vertical: 2.0),
-                              //borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(10),
                               fieldHeight: 50,
-                              fieldWidth: 40,
+                              fieldWidth: 50,
                               inactiveColor: pBorderGrey,
                               inactiveFillColor: Colors.white,
                               activeFillColor: Colors.white,
-                              selectedFillColor: pPrimaryColor,
+                              selectedFillColor: Colors.white,
                               selectedColor: pPrimaryColor,
                               activeColor: pPrimaryColor),
                           cursorColor: Colors.black,
@@ -112,16 +123,17 @@ class _SetPinScreenState extends State<SetPinScreen> {
                     Expanded(
                         child: TView(
                       title: "Show",
-                      color: pPrimaryColor,
-                      size: 16.0,
+                      color: pProgress,
+                      size: 14.0,
                     )),
                     //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.green,child: Text("text 4"))),
                   ],
                 ),
+                pVerticalSpace(height: 15.0),
                 TView(
                   title: "Confirm Pin",
                   color: Color(0xff1C1D3E),
-                  size: 16.0,
+                  size: 14.0,
                 ),
                 pVerticalSpace(height: 8.0),
                 Row(
@@ -147,23 +159,23 @@ class _SetPinScreenState extends State<SetPinScreen> {
                           },
 
                           pinTheme: PinTheme(
-                              shape: PinCodeFieldShape.underline,
+                              shape: PinCodeFieldShape.box,
                               fieldOuterPadding: EdgeInsets.symmetric(
                                   horizontal: 7.0, vertical: 2.0),
-                              //borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(10),
                               fieldHeight: 50,
-                              fieldWidth: 40,
+                              fieldWidth: 50,
                               inactiveColor: pBorderGrey,
                               inactiveFillColor: Colors.white,
                               activeFillColor: Colors.white,
-                              selectedFillColor: pPrimaryColor,
+                              selectedFillColor: Colors.white,
                               selectedColor: pPrimaryColor,
                               activeColor: pPrimaryColor),
                           cursorColor: Colors.black,
                           animationDuration: Duration(milliseconds: 300),
                           enableActiveFill: true,
                           errorAnimationController: errorController,
-                          controller: textEditingController,
+                          controller: TextEditingController(),
                           keyboardType: TextInputType.number,
                           onCompleted: (v) {
                             print("Completed");
@@ -187,21 +199,21 @@ class _SetPinScreenState extends State<SetPinScreen> {
                     Expanded(
                         child: TView(
                       title: "Show",
-                      color: pPrimaryColor,
-                      size: 16.0,
+                      color: pProgress,
+                      size: 14.0,
                     )),
                     //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.green,child: Text("text 4"))),
                   ],
                 ),
-                pVerticalSpace(height: 20.0),
+                pVerticalSpace(height: 40.0),
                 CustomButton(
                     color: pPrimaryColor,
                     tvColor: Colors.white,
                     isEnabled: true,
-                    tvSize: 14.0,
-                    height: 40.0,
+                    tvSize: 16.0,
+                    height: 50.0,
                     radius: 12.0,
-                    btnTitle: "Let's Go",
+                    btnTitle: "Set PIN",
                     onPress: () {
                       Get.offAllNamed(AppRoute.homeLanding);
                     }),

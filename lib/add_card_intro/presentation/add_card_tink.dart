@@ -1,17 +1,12 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
-import 'package:paytack/common_function/widget/textinput.dart';
 import 'package:paytack/routes/app_screens.dart';
 
 class AddCardIntro extends StatefulWidget {
@@ -50,8 +45,8 @@ Widget middleSection = new Expanded(
         Center(
           child: Image.asset(
             add_card,
-            fit: BoxFit.cover,
-            height: 120.0,
+            fit: BoxFit.contain,
+            height: 250.0,
           ),
         ),
         pVerticalSpace(height: 15.0),
@@ -83,7 +78,7 @@ Widget bottomBanner = Column(
         radius: 12.0,
         btnTitle: "Next",
         onPress: () {
-          //Get.toNamed(AppRoute.addCard);
+          Get.toNamed(AppRoute.setPin);
         }),
     pVerticalSpace(height: 14.0),
     CustomButton(

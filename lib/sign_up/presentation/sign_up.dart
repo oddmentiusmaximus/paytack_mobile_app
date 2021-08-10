@@ -1,12 +1,9 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
@@ -22,11 +19,9 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  Country? _selected;
 
   @override
   Widget build(BuildContext context) {
-    final IconData icon;
     return Scaffold(
         appBar: commonAppBar("", isTrue: true, size: 14, step: "1"),
         resizeToAvoidBottomInset: false,
@@ -48,8 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     isOverflow: false,
                     color: pTextColor,
                   ),
-                  pVerticalSpace(height: 15.0),
-
+                  pVerticalSpace(height: 25.0),
                   TInput(
                       controller: TextEditingController(),
                       type: 'B1',
@@ -63,7 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onChange: (val) {
                         if (val.toString() != 'null' || val.isNotEmpty) {}
                       }),
-                  pVerticalSpace(height: 15.0),
+                  pVerticalSpace(height: 25.0),
                   TInput(
                     controller: TextEditingController(),
                     type: 'B1',
@@ -139,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   //     ),
                   //   ],
                   // ),
-                  pVerticalSpace(height: 15.0),
+                  pVerticalSpace(height: 25.0),
                   TInput(
                     hintText: "Have a referral code?(Optional)",
                     type: 'B1',
@@ -156,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       isEnabled: true,
                       tvSize: 16.0,
                       tvColor: Colors.white,
-                      height: 40.0,
+                      height: 50.0,
                       radius: 12.0,
                       btnTitle: "Next",
                       onPress: () {
@@ -181,15 +175,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: <TextSpan>[
                           new TextSpan(
                               text: 'Terms & Conditions ',
-                              style: commonTextStyle(
+                              style: commonTextStyle(weight: FontWeight.bold,
                                   color: pPrimaryColor, type: 'B2')),
                           new TextSpan(
-                              text: 'and ',
+                              text: ' & ',
                               style: commonTextStyle(
                                   color: pTextColor, type: 'B2')),
                           new TextSpan(
                               text: 'Privacy Policy',
-                              style: commonTextStyle(
+                              style: commonTextStyle(weight: FontWeight.bold,
                                   color: pPrimaryColor, type: 'B2')),
                         ],
                       ),
@@ -216,8 +210,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     Get.offAllNamed(AppRoute.login);
                                   },
                                 text: '? Sign In ',
-                                style: commonTextStyle(
-                                    color: pPrimaryColor, type: "CAPTION")),
+                                style: commonTextStyle(weight: FontWeight.bold,
+                                    color: pPrimaryColor, type: 'B2')),
                           ],
                         ),
                       ),

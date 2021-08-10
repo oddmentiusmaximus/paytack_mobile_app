@@ -1,11 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
-import 'package:paytack/common_function/constants.dart';
-import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/routes/app_screens.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -51,8 +48,8 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Image.asset(
               splash_logo,
               fit: BoxFit.contain,
-              height: 120,
-              width: 120,
+              height: 250,
+              width: 200,
             ),
           ),
         ],
