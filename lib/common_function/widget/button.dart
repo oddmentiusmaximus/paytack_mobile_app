@@ -13,6 +13,7 @@ class CustomButton extends StatelessWidget {
   final Color? color;
   final double radius;
   final double height;
+  final Color? tvColor;
 
   CustomButton(
       {this.onPress,
@@ -22,6 +23,7 @@ class CustomButton extends StatelessWidget {
       this.radius = 4.0,
       this.height = 40.0,
       this.isEnabled,
+      this.tvColor,
       this.tvSize = 12.0});
 
   @override
@@ -41,7 +43,7 @@ class CustomButton extends StatelessWidget {
             BoxShadow(
               color: pProgress,
               blurRadius: 1.0,
-              offset: const Offset(0.0, 1.0),
+              offset: const Offset(0.0, 0.4),
             )
           ],
         ),
@@ -49,7 +51,7 @@ class CustomButton extends StatelessWidget {
           title: btnTitle,
           isMaxLines: true,
           size: tvSize,
-          color: Colors.white,
+          color: tvColor!,
         ),
       ),
     );

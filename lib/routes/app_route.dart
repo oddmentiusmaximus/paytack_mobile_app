@@ -9,5 +9,6 @@ abstract class AppRoute {
   static const verifyOtp = '/verifyOtp-screen';
   static const nearByAll = '/nearByAll-screen';
   static const detailPage = '/detailPage-screen';
+  static const addCard = '/addcard-screen';
 
 }

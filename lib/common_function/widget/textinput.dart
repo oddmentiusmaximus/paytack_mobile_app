@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:paytack/common_function/constants.dart';
@@ -21,7 +22,7 @@ class TInput extends StatelessWidget {
   final bool isInput;
   final bool disable;
   final bool isPadding;
-final String? type;
+  final String? type;
   final GlobalKey _globalKey = GlobalKey();
 
   TInput(
@@ -34,7 +35,7 @@ final String? type;
       this.focusNode,
       this.inputFormatters,
       this.suffixIcon,
-      this.fieldWidth = 34.0,
+      this.fieldWidth = 45.0,
       this.keyboardType,
       this.controller,
       this.textInputAction,
@@ -42,8 +43,8 @@ final String? type;
       this.label = "",
       this.hintText,
       this.onChange,
-      this.disable = false,this.type = 'B2'
-      })
+      this.disable = false,
+      this.type = 'B2'})
       : super(key: key);
 
   @override
@@ -86,7 +87,7 @@ final String? type;
           inputFormatters: inputFormatters,
           textInputAction: textInputAction,
           onChanged: (value) {
-            if(value.toString()!='null'||value.isNotEmpty){
+            if (value.toString() != 'null' || value.isNotEmpty) {
               onChange!(value);
             }
           },
@@ -97,22 +98,25 @@ final String? type;
           maxLines: maxLines,
           focusNode: focusNode,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal:11,vertical: 12),
+            contentPadding: EdgeInsets.symmetric(horizontal: 11, vertical: 5),
             hintText: hintText,
             hintStyle: commonTextStyle(
               type: type!,
               weight: FontWeight.normal,
             ).copyWith(color: pDisableColor),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: pBorderGrey),
-
-              //  when the TextFormField in unfocused
-            ),
-            focusedBorder: UnderlineInputBorder(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: pBorderGrey),
+                borderRadius: BorderRadius.circular(10.0)
+                //  when the TextFormField in unfocused
+                ),
+            focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: pPrimaryColor),
+                borderRadius: BorderRadius.circular(10.0)
+
               //  when the TextFormField in focused
             ),
-            border: UnderlineInputBorder(),
+            border: new OutlineInputBorder(
+                borderSide: new BorderSide(color: pBorderGrey)),
           ),
         ),
       ),

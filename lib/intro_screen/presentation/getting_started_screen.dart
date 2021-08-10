@@ -55,11 +55,9 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: double.infinity,
-        width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(splash_bg),
+            image: AssetImage(intro_bg),
             fit: BoxFit.fill,
           ),
         ),
@@ -127,6 +125,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                 height: 48.0,
                 isEnabled: true,
                 radius: 12.0,
+                tvColor: Colors.white,
                 tvSize: 16,
                 btnTitle: "Sign Up",
                 onPress: ()  {

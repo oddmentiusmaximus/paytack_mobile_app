@@ -123,6 +123,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     height: 40.0,
                     radius: 12.0,
                     btnTitle: "Verify",
+                    tvColor: Colors.white,
                     onPress: () {
                       Get.toNamed(AppRoute.setPin);
                     }),

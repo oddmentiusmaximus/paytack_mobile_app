@@ -52,6 +52,7 @@ void actionPopup({
                     isEnabled: true,
                     radius: 12.0,
                     tvSize: 15,
+                    tvColor: Colors.white,
                     btnTitle: leftButtonText!,
                     onPress: leftBtnCallBack!,
                   )),
@@ -59,6 +60,8 @@ void actionPopup({
                   Expanded(
                       child: CustomButton(
                           isEnabled: true,
+
+                          tvColor: Colors.white,
                           radius: 12.0,
                           tvSize: 15,
                           btnTitle: rightButtonText!,

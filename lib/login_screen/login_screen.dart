@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/common_function/widget/textinput.dart';
@@ -33,6 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: commonAppBar("", isTrue: true, size: 14, step: "1"),
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
@@ -45,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  pVerticalSpace(height: 14.0),
+                  pVerticalSpace(height: 12.0),
                   TView(
                     title: "Sign In",
                     size: 18.0,
@@ -55,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     isOverflow: false,
                     color: pTextColor,
                   ),
+                  pVerticalSpace(height: 14.0),
                   TInput(
                     hintText: "Name",
                     maxLines: 1,
@@ -64,77 +68,80 @@ class _LoginScreenState extends State<LoginScreen> {
                     inputFormatters: [LengthLimitingTextInputFormatter(20)],
                     keyboardType: TextInputType.name,
                   ),
+                  pVerticalSpace(height: 20.0),
+                  TView(
+                    title: "Enter Pin",
+                    size: 14.0,
+                    weight: FontWeight.normal,
+                    align: TextAlign.start,
+                    isMaxLines: false,
+                    isOverflow: false,
+                    color: pBottomNav,
+                  ),
                   pVerticalSpace(height: 5.0),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.red,child: Text("text 1"))),
                       Expanded(
-                          flex: 3,
                           child: PinCodeTextField(
-                            appContext: context,
-                            pastedTextStyle: TextStyle(
-                              color: Colors.green.shade600,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        appContext: context,
+                        pastedTextStyle: TextStyle(
+                          color: Colors.green.shade600,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        length: 4,
+                        obscureText: true,
+                        obscuringCharacter: '*',
+                        blinkWhenObscuring: true,
+                        animationType: AnimationType.fade,
 
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            length: 4,
-                            obscureText: true,
-                            obscuringCharacter: '*',
-                            blinkWhenObscuring: true,
-                            animationType: AnimationType.fade,
-                            validator: (v) {
-                              if (v!.length < 3) {
-                                return "I'm from validator";
-                              } else {
-                                return null;
-                              }
-                            },
+                        pinTheme: PinTheme(
+                            shape: PinCodeFieldShape.box,
+                            borderRadius: BorderRadius.circular(10.0),
+                            fieldOuterPadding: EdgeInsets.symmetric(
+                                horizontal: 4.0, vertical: 2.0),
+                            //borderRadius: BorderRadius.circular(5),
+                            fieldHeight: 50,
+                            fieldWidth: 45,
+                            inactiveColor: pBorderGrey,
+                            inactiveFillColor: Colors.white,
+                            activeFillColor: Colors.white,
+                            selectedFillColor: Colors.white,
+                            selectedColor: pPrimaryColor,
+                            activeColor: pPrimaryColor),
 
-                            pinTheme: PinTheme(
-                                shape: PinCodeFieldShape.underline,
-                                fieldOuterPadding: EdgeInsets.symmetric(
-                                    horizontal: 7.0, vertical: 2.0),
-                                //borderRadius: BorderRadius.circular(5),
-                                fieldHeight: 50,
-                                fieldWidth: 40,
-                                inactiveColor: pBorderGrey,
-                                inactiveFillColor: Colors.white,
-                                activeFillColor: Colors.white,
-                                selectedFillColor: pPrimaryColor,
-                                selectedColor: pPrimaryColor,
-                                activeColor: pPrimaryColor),
-                            cursorColor: Colors.black,
-                            animationDuration: Duration(milliseconds: 300),
-                            enableActiveFill: true,
-                            // errorAnimationController: errorController,
-                            // controller: textEditingController,
-                            keyboardType: TextInputType.number,
-                            onCompleted: (v) {
-                              print("Completed");
-                            },
-                            // onTap: () {
-                            //   print("Pressed");
-                            // },
-                            onChanged: (value) {
-                              print(value);
-                              setState(() {
-                                currentText = value;
-                              });
-                            },
-                            beforeTextPaste: (text) {
-                              print("Allowing to paste $text");
-                              //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                              //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                              return true;
-                            },
-                          )),
-                      Expanded(
-                          child: TView(
+                        cursorColor: Colors.black,
+                        animationDuration: Duration(milliseconds: 300),
+                        enableActiveFill: true,
+
+                        // errorAnimationController: errorController,
+                        // controller: textEditingController,
+                        keyboardType: TextInputType.number,
+                        onCompleted: (v) {
+                          print("Completed");
+                        },
+                        // onTap: () {
+                        //   print("Pressed");
+                        // },
+                        onChanged: (value) {
+                          print(value);
+                          setState(() {
+                            currentText = value;
+                          });
+                        },
+                        beforeTextPaste: (text) {
+                          print("Allowing to paste $text");
+                          //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                          //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                          return true;
+                        },
+                      )),
+                      TView(
                         title: "Show",
                         color: pPrimaryColor,
                         size: 12.0,
-                      )),
+                      ),
                       //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.green,child: Text("text 4"))),
                     ],
                   ),
@@ -148,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: pPrimaryColor,
                       isEnabled: true,
                       tvSize: 14.0,
+                      tvColor: Colors.white,
                       height: 40.0,
                       radius: 12.0,
                       btnTitle: "Let's Go",

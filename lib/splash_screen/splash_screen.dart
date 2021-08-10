@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/routes/app_screens.dart';
 
 class SplashScreen extends StatefulWidget {

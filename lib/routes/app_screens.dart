@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:paytack/add_card_intro/presentation/add_card_tink.dart';
 import 'package:paytack/food_detail_page/presentation/detail_page.dart';
 import 'package:paytack/home/presentation/home_screen.dart';
 import 'package:paytack/intro_screen/presentation/getting_started_screen.dart';
@@ -27,5 +28,6 @@ class AppScreens {
     GetPage(name: AppRoute.login, page: () => LoginScreen()),
     GetPage(name: AppRoute.nearByAll, page: () => NearByAll()),
     GetPage(name: AppRoute.detailPage, page: () => DetailPage()),
+    GetPage(name: AppRoute.addCard, page: () => AddCardIntro()),
   ];
 }

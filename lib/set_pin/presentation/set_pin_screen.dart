@@ -196,6 +196,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                 pVerticalSpace(height: 20.0),
                 CustomButton(
                     color: pPrimaryColor,
+                    tvColor: Colors.white,
                     isEnabled: true,
                     tvSize: 14.0,
                     height: 40.0,
