@@ -3,7 +3,8 @@ import 'package:paytack/add_card_intro/presentation/add_card_tink.dart';
 import 'package:paytack/food_detail_page/presentation/detail_page.dart';
 import 'package:paytack/home/presentation/home_screen.dart';
 import 'package:paytack/intro_screen/presentation/getting_started_screen.dart';
-import 'package:paytack/login_screen/login_screen.dart';
+import 'package:paytack/login_screen/application/bindings/login_binding.dart';
+import 'package:paytack/login_screen/presentation/login_screen.dart';
 import 'package:paytack/near_by_all/presentation/near_by_screen.dart';
 import 'package:paytack/set_pin/presentation/set_pin_screen.dart';
 import 'package:paytack/sign_up/presentation/sign_up.dart';
@@ -19,7 +20,9 @@ class AppScreens {
       page: () => SplashScreen(),
       //binding: LocalAuthBinding(),
     ),
-    GetPage(name: AppRoute.login, page: () => LoginScreen()),
+    GetPage(name: AppRoute.login, page: () => LoginScreen(),
+      binding: LoginBinding()
+    ),
     GetPage(name: AppRoute.onBoarding, page: () => GettingStartedScreen()),
     GetPage(name: AppRoute.signUp, page: () => SignUpScreen()),
     GetPage(name: AppRoute.setPin, page: () => SetPinScreen()),

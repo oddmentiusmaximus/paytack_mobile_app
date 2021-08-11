@@ -13,6 +13,9 @@ dependencies:
   country_picker: ^2.0.6
   country_code_picker: ^2.0.2
   carousel_slider: ^4.0.0
+  dio: ^4.0.0
+  dartz: ^0.10.0-nullsafety.2
+  connectivity: ^3.0.6
   flutter_secure_storage: ^4.2.0
   flutter_screenutil: ^2.3.0
   flutter_svg: ^0.22.0
@@ -21,8 +24,10 @@ dependencies:
   getwidget: ^2.0.3
   introduction_screen: ^2.1.0
   intl_phone_field: ^2.0.1
+  injectable: ^1.1.2
   pin_code_fields: ^7.3.0
   sms_autofill: ^2.0.1
+
 
 
 
