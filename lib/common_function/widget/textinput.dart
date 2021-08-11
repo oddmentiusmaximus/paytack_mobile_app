@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:paytack/common_function/constants.dart';
-import 'package:paytack/common_function/widget/mytext.dart';
 
 class TInput extends StatelessWidget {
   final bool isEdit;
@@ -68,6 +67,7 @@ class TInput extends StatelessWidget {
               child: _inputFormField(context),
             ),
           ),
+
         ],
       ),
     );

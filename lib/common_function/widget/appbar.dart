@@ -5,7 +5,10 @@ import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 
 AppBar commonAppBar(String appBarTitle,
-    {bool? isTrue, double? size = 14, String? step}) {
+    {bool? isTrue,
+    double? size = 14,
+    String? step,
+    Color? color = Colors.white}) {
   return AppBar(
     automaticallyImplyLeading: false,
     elevation: 0,
@@ -33,7 +36,6 @@ AppBar commonAppBar(String appBarTitle,
         ],
       ),
     ),
-    backgroundColor: Colors.white,
-
+    backgroundColor:color,
   );
 }

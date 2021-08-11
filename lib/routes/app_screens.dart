@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
-import 'package:paytack/add_card_intro/presentation/add_card_tink.dart';
+import 'package:paytack/add_card_intro/presentation/add_card_link.dart';
 import 'package:paytack/food_detail_page/presentation/detail_page.dart';
 import 'package:paytack/home/presentation/home_screen.dart';
 import 'package:paytack/intro_screen/presentation/getting_started_screen.dart';
 import 'package:paytack/login_screen/login_screen.dart';
 import 'package:paytack/near_by_all/presentation/near_by_screen.dart';
+import 'package:paytack/permissions_screen/presentation/permissions_screen.dart';
 import 'package:paytack/set_pin/presentation/set_pin_screen.dart';
 import 'package:paytack/sign_up/presentation/sign_up.dart';
 import 'package:paytack/splash_screen/splash_screen.dart';
@@ -29,5 +30,6 @@ class AppScreens {
     GetPage(name: AppRoute.nearByAll, page: () => NearByAll()),
     GetPage(name: AppRoute.detailPage, page: () => DetailPage()),
     GetPage(name: AppRoute.addCard, page: () => AddCardIntro()),
+    GetPage(name: AppRoute.permissions, page: () => PermissionsScreen()),
   ];
 }

@@ -21,17 +21,28 @@ class _AddCardIntroState extends State<AddCardIntro> {
 
   @override
   Widget build(BuildContext context) {
-    final IconData icon;
-    return Scaffold(
-        appBar: commonAppBar("", isTrue: true, size: 14, step: "1"),
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 20.0,
-            vertical: 2.0,
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(background_image), fit: BoxFit.fill),
           ),
-          child: body,
-        ));
+        ),
+        Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: commonAppBar("",
+                isTrue: true, size: 14, step: "1", color: Colors.transparent),
+            resizeToAvoidBottomInset: false,
+            body: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 2.0,
+              ),
+              child: body,
+            )),
+      ],
+    );
   }
 }
 
@@ -47,6 +58,7 @@ Widget middleSection = new Expanded(
             add_card,
             fit: BoxFit.contain,
             height: 250.0,
+            width: 250,
           ),
         ),
         pVerticalSpace(height: 15.0),
@@ -61,7 +73,7 @@ Widget middleSection = new Expanded(
             color: pTextColor,
           ),
         ),
-        pVerticalSpace(height: 10.0),
+        pVerticalSpace(height: 15.0),
       ],
     ),
   ),
@@ -80,7 +92,7 @@ Widget bottomBanner = Column(
         onPress: () {
           Get.toNamed(AppRoute.setPin);
         }),
-    pVerticalSpace(height: 14.0),
+    pVerticalSpace(height: 15.0),
     CustomButton(
         color: Colors.white,
         isEnabled: true,
@@ -90,9 +102,9 @@ Widget bottomBanner = Column(
         tvColor: pPrimaryColor,
         btnTitle: "I'll add later",
         onPress: () {
-          //Get.toNamed(AppRoute.addCard);
+          Get.toNamed(AppRoute.permissions);
         }),
-    pVerticalSpace(height: 10.0),
+    pVerticalSpace(height: 15.0),
     TView(
       title: "PayTack commitment to security",
       size: 14.0,

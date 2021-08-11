@@ -1,4 +1,5 @@
 part of 'app_screens.dart';
+
 abstract class AppRoute {
   static const splash = '/splash-screen';
   static const login = '/login-screen';
@@ -10,5 +11,5 @@ abstract class AppRoute {
   static const nearByAll = '/nearByAll-screen';
   static const detailPage = '/detailPage-screen';
   static const addCard = '/addcard-screen';
-
+  static const permissions = '/permissions-screen';
 }

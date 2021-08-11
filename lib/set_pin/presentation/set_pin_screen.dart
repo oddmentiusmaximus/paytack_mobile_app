@@ -69,7 +69,6 @@ class _SetPinScreenState extends State<SetPinScreen> {
                             color: Colors.green.shade600,
                             fontWeight: FontWeight.bold,
                           ),
-
                           mainAxisAlignment: MainAxisAlignment.start,
                           length: 4,
                           obscureText: true,
@@ -77,15 +76,12 @@ class _SetPinScreenState extends State<SetPinScreen> {
                           blinkWhenObscuring: true,
                           animationType: AnimationType.fade,
                           validator: (v) {
-
                               return null;
-
                           },
-
                           pinTheme: PinTheme(
                               shape: PinCodeFieldShape.box,
                               fieldOuterPadding: EdgeInsets.symmetric(
-                                  horizontal: 7.0, vertical: 2.0),
+                                  horizontal: 4.0, vertical: 2.0),
                               borderRadius: BorderRadius.circular(10),
                               fieldHeight: 50,
                               fieldWidth: 50,
@@ -161,7 +157,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                           pinTheme: PinTheme(
                               shape: PinCodeFieldShape.box,
                               fieldOuterPadding: EdgeInsets.symmetric(
-                                  horizontal: 7.0, vertical: 2.0),
+                                  horizontal: 4.0, vertical: 2.0),
                               borderRadius: BorderRadius.circular(10),
                               fieldHeight: 50,
                               fieldWidth: 50,
