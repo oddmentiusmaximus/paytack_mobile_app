@@ -219,6 +219,8 @@ class PermissionsScreen extends StatelessWidget {
                     size: 12,
                     align: TextAlign.start,
                     color: pBottomNav,
+                    isMaxLines: true,
+
                     title:
                         'I consent to link and other necessary payment providers to monitor purchase made from my bank so that I can collect rewards through cashback app on my qualifying purchase and for such payment with PayTack',
                   ),
@@ -288,6 +290,7 @@ class PermissionsScreen extends StatelessWidget {
                       size: 12,
                       align: TextAlign.start,
                       color: pBottomNav,
+                      isMaxLines: true,
                       title:
                           'I consent to cashback app providing merchants I engage with, read only access to my first name, age group, gender and transactions in their store in order to bill them, collect my rewards, and pay me. Your email address and phone number is never shared.'),
                   trailing: CupertinoSwitch(
