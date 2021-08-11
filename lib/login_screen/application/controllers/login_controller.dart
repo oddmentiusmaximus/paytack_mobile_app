@@ -22,6 +22,8 @@ class LoginController extends GetxController {
         success: (success) {
           print(success.toString());
         },
-        error: (error) {});
+        error: (error) {
+
+        });
   }
 }
