@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as main;
 import 'package:injectable/injectable.dart';
 import 'package:paytack/common_function/network/response_success.dart';
+import 'package:paytack/common_function/secure_storage.dart';
 import 'global_file.dart';
 
 enum Method { GET, POST, DELETE, PUT, HEAD, PATCH }
@@ -67,11 +68,12 @@ class DioHelper {
 
       Options requestOptions = options ?? Options();
       requestOptions.headers = requestOptions.headers ?? Map();
-
-      // GLOBAL OR COMMON AUTHORIZATION HEADER
-      Map<String, dynamic>? authorization = getAuthorizationHeader();
-      if (authorization != null) {
-        requestOptions.headers!.addAll(authorization);
+      final token = await CommonStorage.readSecureStorageData("access_token");
+      if (token != null) {
+        print(token);
+        print("token");
+        headers = {'Authorization': 'Bearer $token'};
+        requestOptions.headers!.addAll(headers);
       }
 
       // TODO COOKIE MANAGE
@@ -150,12 +152,13 @@ class DioHelper {
   }
 
   /// AUTHORIZATION HEADER
-  Map<String, dynamic>? getAuthorizationHeader() {
+  Future<Map<String, dynamic>> getAuthorizationHeader() async {
     Map<String, dynamic>? headers;
-    if (Global.accessToken != null) {
-      headers = {'Authorization': 'Bearer ${Global.accessToken}'};
+    final token = await CommonStorage.readSecureStorageData("access_token");
+    if (token != null) {
+      headers = {'Authorization': 'Bearer $token'};
     }
-    return headers;
+    return headers!;
   }
 
   ErrorEntity _getError(DioError error) {

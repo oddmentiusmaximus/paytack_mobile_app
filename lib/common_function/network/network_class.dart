@@ -26,7 +26,7 @@ class NetworkProvider {
   }
 
   //GET API CALLING
-  void getMethod(
+  void  getMethod(
       {String? baseUrl,
       Map<String, dynamic>? parameter,
       @required HttpSuccessCallback? success,

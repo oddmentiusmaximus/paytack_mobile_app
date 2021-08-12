@@ -10,6 +10,7 @@ import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/common_function/widget/textinput.dart';
+import 'package:paytack/login_screen/application/controllers/login_controller.dart';
 import 'package:paytack/routes/app_screens.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -22,6 +23,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController textEditingController = TextEditingController();
+  LoginController _loginController = Get.find();
   StreamController<ErrorAnimationType>? errorController;
   bool hasError = false;
   String currentText = "";
@@ -175,7 +177,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           radius: 12.0,
                           btnTitle: "Let's Go",
                           onPress: () {
-                            Get.offAllNamed(AppRoute.homeLanding);
+                            _loginController.getLogin();
+                           // Get.offAllNamed(AppRoute.homeLanding);
                           }),
                       pVerticalSpace(height: 20.0),
                     ],

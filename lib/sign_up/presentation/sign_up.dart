@@ -167,6 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           btnTitle: "Next",
                           onPress: () {
                             Get.toNamed(AppRoute.addCard);
+
                           }),
                       pVerticalSpace(height: 30.0),
                       Center(

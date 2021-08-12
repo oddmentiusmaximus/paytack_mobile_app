@@ -26,6 +26,12 @@ dependencies:
   intl_phone_field: ^2.0.1
   injectable: ^1.1.2
   pin_code_fields: ^7.3.0
+  permission_handler: ^4.2.0
+  image_picker:
+  fluttertoast: ^8.0.8
+
+
+  path:
   sms_autofill: ^2.0.1
 
 
