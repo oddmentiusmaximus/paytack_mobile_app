@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/utils/loading_class.dart';
 import 'package:paytack/common_function/utils/permission.dart';
 import 'package:paytack/home/application/controllers/dashboard_controller.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-Future<void> _showChoiceDialog(BuildContext context) {
+Future<void> showChoiceDialog(BuildContext context) {
   return showDialog(
       context: context,
       builder: (BuildContext popupContext) {
         return AlertDialog(
           title: Text(
-            'Select Profile Photo From:',
+            'Upload Bill From:',
             style: commonTextStyle(),
           ),
           content: SingleChildScrollView(
@@ -24,9 +27,11 @@ Future<void> _showChoiceDialog(BuildContext context) {
                 GestureDetector(
                   onTap: () async {
                     bool permission = await PermissionHandle()
-                        .checkPermissionStorage(context: context);
+                        .checkPermissionStorage(
+                            context: context,
+                            permissionGroup: Permission.storage);
                     if (permission == true) {
-                      openCamera(popupContext, true);
+                       openCamera(popupContext, true);
                     } else {
                       ///show messge
                     }
@@ -60,7 +65,9 @@ Future<void> _showChoiceDialog(BuildContext context) {
                 GestureDetector(
                   onTap: () async {
                     bool permission = await PermissionHandle()
-                        .checkPermissionStorage(context: context);
+                        .checkPermissionStorage(
+                            context: context,
+                            permissionGroup: Permission.storage);
                     if (permission == true) {
                       openCamera(popupContext, false);
                     } else {
@@ -100,11 +107,14 @@ openCamera(BuildContext buildContext, bool type) async {
   var picture;
   if (type) {
     picture = await ImagePicker.platform.pickImage(source: ImageSource.camera);
+   // onchange(picture);
   } else {
     picture = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+  //  onchange(picture);
   }
-
   Navigator.pop(buildContext);
+  Get.find<DashBoardController>().uploadBill(picture,buildContext);
+  //Loading.show(context: buildContext);
 }
 
 showToast(
@@ -119,7 +129,7 @@ showToast(
       msg: msg,
       toastLength: toastLength,
       fontSize: fontSize,
-      gravity: gravity ?? ToastGravity.BOTTOM,
+      gravity: gravity,
       backgroundColor: backgroundColor ?? Colors.white,
       textColor: textColor ?? pPrimaryColor);
 }

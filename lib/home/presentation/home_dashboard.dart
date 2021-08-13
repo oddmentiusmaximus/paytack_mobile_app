@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/utils/camera_utils.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/dropdown_with_icon.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
@@ -27,6 +29,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Get.find<DashBoardController>();
   }
 
   @override
@@ -82,8 +85,8 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                                   TView(
                                     size: 14.0,
                                     color: pTextColors,
-                                    title:
-                                        val.availableCashback.toString() + " kr",
+                                    title: val.availableCashback.toString() +
+                                        " kr",
                                     weight: FontWeight.bold,
                                   )
                                 ],

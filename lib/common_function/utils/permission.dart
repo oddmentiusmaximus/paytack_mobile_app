@@ -7,12 +7,9 @@ final permissionChecker = PermissionHandle();
 
 class PermissionHandle {
   Future<bool> checkPermissionStorage(
-      {BuildContext? context, PermissionGroup? permissionGroup}) async {
-    await PermissionHandler()
-        .requestPermissions([permissionGroup ?? PermissionGroup.storage]);
-    PermissionStatus permission = await PermissionHandler()
-        .checkPermissionStatus(permissionGroup ?? PermissionGroup.storage);
-    if (permission == PermissionStatus.neverAskAgain) {
+      {BuildContext? context, Permission? permissionGroup}) async {
+    final status = await permissionGroup!.request();
+    if (status.isDenied) {
       Get.defaultDialog(
         title: "Allow Permission",
         middleText: "Go to Settings and provide Storage Permission!",
@@ -21,7 +18,7 @@ class PermissionHandle {
         middleTextStyle: commonTextStyle(),
       );
       return false;
-    } else if (permission == PermissionStatus.granted) {
+    } else if (status.isGranted) {
       return true;
     } else {
       return false;

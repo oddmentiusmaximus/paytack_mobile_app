@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
+import 'package:paytack/common_function/common_dialog.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/utils/camera_utils.dart';
 import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
@@ -23,6 +25,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController textEditingController = TextEditingController();
+  TextEditingController forgotPinEmailController = TextEditingController();
   LoginController _loginController = Get.find();
   StreamController<ErrorAnimationType>? errorController;
   bool hasError = false;
@@ -73,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       pVerticalSpace(height: 14.0),
                       TInput(
-                        hintText: "Name",
+                        hintText: "Email",
                         maxLines: 1,
                         type: 'B1',
                         isEdit: false,
@@ -162,10 +165,56 @@ class _LoginScreenState extends State<LoginScreen> {
                           //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.green,child: Text("text 4"))),
                         ],
                       ),
-                      TView(
-                        title: "Forgot PIN?",
-                        color: pPrimaryColor,
-                        size: 14.0,
+                      InkWell(
+                        onTap: () {
+                          showCommonWithWidget(
+                            barrierDismissible: false,
+                            context: context,
+                            title: "Forgot PIN",
+                            message:
+                                "Enter your registered email and we \nwill send you your PIN to your email",
+                            widget: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: [
+                                  TInput(
+                                    hintText: "Email",
+                                    maxLines: 1,
+                                    type: 'B1',
+                                    controller: forgotPinEmailController,
+                                    isEdit: false,
+                                    isError: false,
+                                    isInput: true,
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(20)
+                                    ],
+                                    keyboardType: TextInputType.name,
+                                  ),
+                                  pVerticalSpace(height: 30.0),
+                                  CustomButton(
+                                      color: pPrimaryColor,
+                                      isEnabled: true,
+                                      tvSize: 16.0,
+                                      tvColor: Colors.white,
+                                      height: 45.0,
+                                      radius: 12.0,
+                                      btnTitle: "Send",
+                                      onPress: () {
+                                        if (forgotPinEmailController
+                                            .text.isEmpty) {
+                                          showToast(msg: "Enter Email Id");
+                                        }
+                                      }),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        child: TView(
+                          title: "Forgot PIN?",
+                          color: pPrimaryColor,
+                          size: 14.0,
+                        ),
                       ),
                       pVerticalSpace(height: 50.0),
                       CustomButton(
@@ -178,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           btnTitle: "Let's Go",
                           onPress: () {
                             _loginController.getLogin();
-                           // Get.offAllNamed(AppRoute.homeLanding);
+                            // Get.offAllNamed(AppRoute.homeLanding);
                           }),
                       pVerticalSpace(height: 20.0),
                     ],

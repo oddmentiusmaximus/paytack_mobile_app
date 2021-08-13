@@ -1,11 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/utils/camera_utils.dart';
+import 'package:paytack/common_function/utils/loading_class.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
+import 'package:paytack/home/application/controllers/dashboard_controller.dart';
 
 class Carousel extends StatefulWidget {
   Carousel({Key? key}) : super(key: key);
@@ -65,6 +69,10 @@ class _CarouselState extends State<Carousel> {
                                   verticalPadding: 1.0,
                                   tvSize: 14.0,
                                   btnColor: Colors.white,
+                                  onPressed: () {
+                                    showChoiceDialog(context);
+
+                                  },
                                   textColor: Colors.black,
                                   btnTitle: "Scan Bill",
                                 ),
@@ -88,7 +96,6 @@ class _CarouselState extends State<Carousel> {
             ),
           ),
         ),
-
       ],
     );
   }
