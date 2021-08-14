@@ -211,7 +211,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                     radius: 12.0,
                     btnTitle: "Set PIN",
                     onPress: () {
-                      Get.offAllNamed(AppRoute.optionalDetails);
+                      Get.toNamed(AppRoute.optionalDetails);
                     }),
               ],
             ),

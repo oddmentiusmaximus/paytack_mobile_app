@@ -30,7 +30,7 @@ dependencies:
   permission_handler: ^6.0.0
   image_picker:
   fluttertoast: ^8.0.8
-
+  intl:
 
   path:
   sms_autofill: ^2.0.1

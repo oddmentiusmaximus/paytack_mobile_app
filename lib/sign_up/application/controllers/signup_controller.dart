@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:paytack/common_function/network/api_helper.dart';
 import 'package:paytack/common_function/network/network_class.dart';
@@ -10,6 +11,13 @@ class SignupController extends GetxController {
   SignupController(this._networkRepository);
 
   final NetworkProvider _networkRepository;
+
+  ///SignUp Screen
+  TextEditingController? signUpName ;
+  TextEditingController? signUpEmail ;
+  TextEditingController? signUpReferralCode ;
+
+
 
   Future<void> getSignIn() async {
     Map<String, dynamic> params = {
@@ -40,5 +48,18 @@ class SignupController extends GetxController {
           print(success.toString());
         },
         error: (error) {});
+  }
+
+  ///optional Details Screen
+  String birthdayDate = 'Birthday';
+  String anniversaryDate = 'Anniversary';
+
+  updateDate(bool birthdateUpdate, String _selectedDate) {
+    if (birthdateUpdate == true) {
+      birthdayDate = _selectedDate;
+    } else {
+      anniversaryDate = _selectedDate;
+    }
+    update();
   }
 }

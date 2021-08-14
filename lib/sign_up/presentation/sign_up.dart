@@ -55,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       pVerticalSpace(height: 25.0),
                       TInput(
-                          controller: TextEditingController(),
+                          controller: ,
                           type: 'B1',
                           hintText: "Name*",
                           maxLines: 1,
@@ -71,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }),
                       pVerticalSpace(height: 25.0),
                       TInput(
-                        controller: TextEditingController(),
+                        controller: ,
                         type: 'B1',
                         hintText: "Email*",
                         maxLines: 1,
@@ -150,6 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         hintText: "Have a referral code? (Optional)",
                         type: 'B1',
                         maxLines: 1,
+                        controller: ,
                         isEdit: false,
                         isError: false,
                         isInput: true,
