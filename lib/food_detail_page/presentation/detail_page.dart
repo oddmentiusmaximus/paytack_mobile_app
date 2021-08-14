@@ -15,46 +15,49 @@ class _DetailPageState extends State<DetailPage> {
     String args = Get.arguments;
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Stack(
-              children: [
-                Image.network(
-                  args,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: Get.height * 0.4,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipOval(
-                    child: Material(
-                      color: Colors.white, // Button color
-                      child: InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Center(
-                                child: Icon(
-                              Icons.arrow_back_ios,
-                              size: 20,
-                            ))),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Stack(
+                children: [
+                  Image.network(
+                    args,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: Get.height * 0.4,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.white, // Button color
+                        child: InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: Center(
+                                  child: Icon(
+                                Icons.arrow_back_ios,
+                                size: 20,
+                              ))),
+                        ),
                       ),
                     ),
-                  ),
-                )
-              ],
-            ),
-            Expanded(
-              child: Column(
-                children: <Widget>[],
+                  )
+                ],
               ),
-            ),
-          ],
+              Expanded(
+                child: Column(
+                  children: <Widget>[],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
