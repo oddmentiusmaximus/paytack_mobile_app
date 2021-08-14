@@ -12,6 +12,7 @@ const pHomePageTextColor = Color(0xFF7C8D9D);
 const pBorderGrey = Color(0xFFCDCDCD);
 const pBottomNav = Color(0xFF939393);
 const pSlider = Color(0xFFC4F2ED);
+const pError = Color(0xFFF32D2D);
 /*Fonts*/
 const latoFont = 'assets/fonts/Lato-Black.ttf';
 const latoFontRegular = 'assets/fonts/Lato-Regular.ttf';
@@ -29,7 +30,7 @@ Widget pAssetIcon({String path: "", width: 35.0, height: 35.0}) =>
 // Jio Text Style
 TextStyle commonTextStyle({
   String type: "B1",
-  Color color=pTextColor,
+  Color color = pTextColor,
   FontWeight weight: FontWeight.normal,
 }) {
   FontWeight fontWeight;
@@ -67,3 +68,5 @@ const mobile_type_size = {
   "18": 18.0,
   "8": 8.0,
 };
+
+const secure_access_key = 'access_token';

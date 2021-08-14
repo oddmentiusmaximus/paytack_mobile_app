@@ -77,7 +77,7 @@ void actionPopup({
   );
 }
 
-void showCommonWithWidget({
+Future<void> showCommonWithWidget({
   BuildContext? context,
   Widget? widget,
   String? image,
@@ -85,7 +85,7 @@ void showCommonWithWidget({
   String? title,
   String? message,
   bool barrierDismissible = false,
-}) {
+}) async {
   showDialog(
     context: context!,
     barrierDismissible: barrierDismissible,

@@ -24,16 +24,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController textEditingController = TextEditingController();
-  TextEditingController forgotPinEmailController = TextEditingController();
   LoginController _loginController = Get.find();
-  StreamController<ErrorAnimationType>? errorController;
-  bool hasError = false;
-  String currentText = "";
 
   @override
   void dispose() {
-    textEditingController.dispose();
     super.dispose();
   }
 
@@ -76,15 +70,37 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       pVerticalSpace(height: 14.0),
                       TInput(
-                        hintText: "Email",
-                        maxLines: 1,
-                        type: 'B1',
-                        isEdit: false,
-                        isError: false,
-                        isInput: true,
-                        inputFormatters: [LengthLimitingTextInputFormatter(20)],
-                        keyboardType: TextInputType.name,
-                      ),
+                          controller: _loginController.loginEmailController,
+                          hintText: "Email",
+                          maxLines: 1,
+                          type: 'B1',
+                          isEdit: false,
+                          isError: false,
+                          isInput: true,
+                          keyboardType: TextInputType.name,
+                          onChange: (val) {
+                            if (val.toString() == 'null' || val.isEmpty) {
+                              _loginController.isEmailError.value = true;
+                            } else if (!GetUtils.isEmail(val)) {
+                              _loginController.isEmailError.value = true;
+                            } else {
+                              _loginController.isEmailError.value = false;
+                            }
+                          }),
+                      Obx(() {
+                        return Visibility(
+                            visible: _loginController.isEmailError.isTrue,
+                            child: Column(
+                              children: [
+                                pVerticalSpace(height: 5.0),
+                                TView(
+                                  title: 'Please enter valid Email',
+                                  size: 12,
+                                  color: pError,
+                                ),
+                              ],
+                            ));
+                      }),
                       pVerticalSpace(height: 20.0),
                       TView(
                         title: "Enter Pin",
@@ -96,75 +112,89 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: pBottomNav,
                       ),
                       pVerticalSpace(height: 5.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                              flex: 3,
-                              child: PinCodeTextField(
-                                appContext: context,
-                                pastedTextStyle: TextStyle(
-                                  color: Colors.green.shade600,
-                                  fontWeight: FontWeight.bold,
+                      Obx(() {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                                flex: 3,
+                                child: PinCodeTextField(
+                                  appContext: context,
+                                  controller:
+                                      _loginController.loginPinController,
+                                  pastedTextStyle: TextStyle(
+                                    color: Colors.green.shade600,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  length: 4,
+                                  obscureText: _loginController.isPin.value,
+                                  obscuringCharacter: '*',
+                                  blinkWhenObscuring: true,
+                                  animationType: AnimationType.fade,
+                                  pinTheme: PinTheme(
+                                      shape: PinCodeFieldShape.box,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      fieldOuterPadding: EdgeInsets.symmetric(
+                                          horizontal: 4.0, vertical: 2.0),
+                                      //borderRadius: BorderRadius.circular(5),
+                                      fieldHeight: 50,
+                                      fieldWidth: 50,
+                                      inactiveColor: pBorderGrey,
+                                      inactiveFillColor: Colors.white,
+                                      activeFillColor: Colors.white,
+                                      selectedFillColor: Colors.white,
+                                      selectedColor: pPrimaryColor,
+                                      activeColor: pPrimaryColor),
+
+                                  cursorColor: Colors.black,
+                                  animationDuration:
+                                      Duration(milliseconds: 300),
+                                  enableActiveFill: true,
+
+                                  // errorAnimationController: errorController,
+                                  // controller: textEditingController,
+                                  keyboardType: TextInputType.number,
+                                  onCompleted: (v) {
+                                    print("Completed");
+                                  },
+                                  // onTap: () {
+                                  //   print("Pressed");
+                                  // },
+                                  onChanged: (value) {
+                                    print(value);
+                                  },
+                                  beforeTextPaste: (text) {
+                                    print("Allowing to paste $text");
+                                    //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                                    //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                                    return true;
+                                  },
+                                )),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  _loginController.toggleObscureText();
+                                },
+                                child: Visibility(
+                                  visible: _loginController.isPin.isTrue,
+                                  replacement: TView(
+                                    title: "Hide",
+                                    color: pProgress,
+                                    size: 14.0,
+                                  ),
+                                  child: TView(
+                                    title: "Show",
+                                    color: pProgress,
+                                    size: 14.0,
+                                  ),
                                 ),
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                length: 4,
-                                obscureText: true,
-                                obscuringCharacter: '*',
-                                blinkWhenObscuring: true,
-                                animationType: AnimationType.fade,
-                                pinTheme: PinTheme(
-                                    shape: PinCodeFieldShape.box,
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    fieldOuterPadding: EdgeInsets.symmetric(
-                                        horizontal: 4.0, vertical: 2.0),
-                                    //borderRadius: BorderRadius.circular(5),
-                                    fieldHeight: 50,
-                                    fieldWidth: 50,
-                                    inactiveColor: pBorderGrey,
-                                    inactiveFillColor: Colors.white,
-                                    activeFillColor: Colors.white,
-                                    selectedFillColor: Colors.white,
-                                    selectedColor: pPrimaryColor,
-                                    activeColor: pPrimaryColor),
-
-                                cursorColor: Colors.black,
-                                animationDuration: Duration(milliseconds: 300),
-                                enableActiveFill: true,
-
-                                // errorAnimationController: errorController,
-                                // controller: textEditingController,
-                                keyboardType: TextInputType.number,
-                                onCompleted: (v) {
-                                  print("Completed");
-                                },
-                                // onTap: () {
-                                //   print("Pressed");
-                                // },
-                                onChanged: (value) {
-                                  print(value);
-                                  setState(() {
-                                    currentText = value;
-                                  });
-                                },
-                                beforeTextPaste: (text) {
-                                  print("Allowing to paste $text");
-                                  //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                                  //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                                  return true;
-                                },
-                              )),
-                          Expanded(
-                            flex: 1,
-                            child: TView(
-                              title: "Show",
-                              color: pProgress,
-                              size: 14.0,
+                              ),
                             ),
-                          ),
-                          //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.green,child: Text("text 4"))),
-                        ],
-                      ),
+                            //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.green,child: Text("text 4"))),
+                          ],
+                        );
+                      }),
                       InkWell(
                         onTap: () {
                           showCommonWithWidget(
@@ -178,10 +208,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Column(
                                 children: [
                                   TInput(
+                                    onChange: (val) {},
                                     hintText: "Email",
                                     maxLines: 1,
                                     type: 'B1',
-                                    controller: forgotPinEmailController,
+                                    controller: _loginController
+                                        .forgotPinEmailController,
                                     isEdit: false,
                                     isError: false,
                                     isInput: true,
@@ -200,8 +232,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       radius: 12.0,
                                       btnTitle: "Send",
                                       onPress: () {
-                                        if (forgotPinEmailController
-                                            .text.isEmpty) {
+                                        if (_loginController
+                                            .forgotPinEmailController!
+                                            .text
+                                            .isEmpty) {
                                           showToast(msg: "Enter Email Id");
                                         }
                                       }),
@@ -226,8 +260,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           radius: 12.0,
                           btnTitle: "Let's Go",
                           onPress: () {
-                            _loginController.getLogin();
-                            // Get.offAllNamed(AppRoute.homeLanding);
+                            if (_loginController.loginEmailController!.text
+                                    .trim()
+                                    .isNotEmpty &&
+                                _loginController.isEmailError.isFalse &&
+                                _loginController
+                                    .loginPinController!.text.isNotEmpty &&
+                                _loginController
+                                        .loginPinController!.text.length ==
+                                    4) {
+                              _loginController.getLogin(context);
+                            } else {
+                              showToast(
+                                  msg: 'Please Validate all required Fields');
+                              // Get.offAllNamed(AppRoute.homeLanding);
+                            }
                           }),
                       pVerticalSpace(height: 20.0),
                     ],

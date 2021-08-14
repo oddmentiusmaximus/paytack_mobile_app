@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/common_dialog.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/secure_storage.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/routes/app_screens.dart';
 
@@ -149,8 +150,9 @@ class MyProfileTab extends StatelessWidget {
                             message: "Are you sure you want to sign out?",
                             rightButtonText: "Yes",
                             leftButtonText: "No",
-                            rightBtnCallBack: () {
+                            rightBtnCallBack: () async {
                               //Get.back(canPop: true, closeOverlays: true);
+                              await CommonStorage.delete();
                               Navigator.of(context, rootNavigator: true).pop();
                               Get.offAllNamed(AppRoute.login);
                             },

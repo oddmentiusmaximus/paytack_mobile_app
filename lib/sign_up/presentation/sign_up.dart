@@ -6,11 +6,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/utils/camera_utils.dart';
 import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/common_function/widget/textinput.dart';
 import 'package:paytack/routes/app_screens.dart';
+import 'package:paytack/sign_up/application/controllers/signup_controller.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -20,6 +22,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final SignupController _signUpController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -55,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       pVerticalSpace(height: 25.0),
                       TInput(
-                          controller: ,
+                          controller: _signUpController.signUpName,
                           type: 'B1',
                           hintText: "Name*",
                           maxLines: 1,
@@ -63,23 +67,55 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           isError: false,
                           isInput: true,
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(20)
+                            LengthLimitingTextInputFormatter(240)
                           ],
                           keyboardType: TextInputType.name,
                           onChange: (val) {
-                            if (val.toString() != 'null' || val.isNotEmpty) {}
+                            if (val.isEmpty) {
+                              _signUpController.isNameError.value = true;
+                            } else {
+                              _signUpController.isNameError.value = false;
+                            }
                           }),
+                      pVerticalSpace(height: 5.0),
+                      Obx(() {
+                        return Visibility(
+                            visible: _signUpController.isNameError.isTrue,
+                            child: TView(
+                              title: 'Please enter your Name',
+                              size: 12,
+                              color: pError,
+                            ));
+                      }),
                       pVerticalSpace(height: 25.0),
                       TInput(
-                        controller: ,
-                        type: 'B1',
-                        hintText: "Email*",
-                        maxLines: 1,
-                        isEdit: false,
-                        isError: false,
-                        isInput: true,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
+                          controller: _signUpController.signUpEmail,
+                          type: 'B1',
+                          hintText: "Email*",
+                          maxLines: 1,
+                          isEdit: false,
+                          isError: false,
+                          isInput: true,
+                          keyboardType: TextInputType.emailAddress,
+                          onChange: (val) {
+                            if (val.toString() == 'null' || val.isEmpty) {
+                              _signUpController.isEmailError.value = true;
+                            } else if (!GetUtils.isEmail(val)) {
+                              _signUpController.isEmailError.value = true;
+                            } else {
+                              _signUpController.isEmailError.value = false;
+                            }
+                          }),
+                      pVerticalSpace(height: 5.0),
+                      Obx(() {
+                        return Visibility(
+                            visible: _signUpController.isEmailError.isTrue,
+                            child: TView(
+                              title: 'Please enter valid Email',
+                              size: 12,
+                              color: pError,
+                            ));
+                      }),
                       // pVerticalSpace(height: 15.0),
                       //  Row(
                       //   children: [
@@ -147,10 +183,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // ),
                       pVerticalSpace(height: 25.0),
                       TInput(
+                        onChange: (val){
+
+                        },
                         hintText: "Have a referral code? (Optional)",
                         type: 'B1',
                         maxLines: 1,
-                        controller: ,
+                        controller: _signUpController.signUpReferralCode,
                         isEdit: false,
                         isError: false,
                         isInput: true,
@@ -167,8 +206,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           radius: 12.0,
                           btnTitle: "Next",
                           onPress: () {
-                            Get.toNamed(AppRoute.addCard);
-
+                            if (_signUpController.isEmailError.isFalse &&
+                                _signUpController
+                                    .signUpEmail!.text.isNotEmpty &&
+                                _signUpController.isNameError.isFalse &&
+                                _signUpController.signUpName!.text.isNotEmpty) {
+                              _signUpController.checkEmail(context);
+                            } else {
+                              showToast(
+                                  msg: 'Please Validate All Required Fields');
+                            }
                           }),
                       pVerticalSpace(height: 30.0),
                       Center(

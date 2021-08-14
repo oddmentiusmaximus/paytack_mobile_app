@@ -41,7 +41,7 @@ class TInput extends StatelessWidget {
       this.isPadding = false,
       this.label = "",
       this.hintText,
-      this.onChange,
+      required this.onChange,
       this.disable = false,
       this.type = 'B2'})
       : super(key: key);
@@ -67,7 +67,6 @@ class TInput extends StatelessWidget {
               child: _inputFormField(context),
             ),
           ),
-
         ],
       ),
     );
@@ -110,11 +109,11 @@ class TInput extends StatelessWidget {
                 //  when the TextFormField in unfocused
                 ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: pPrimaryColor),
+                borderSide: BorderSide(color: pPrimaryColor),
                 borderRadius: BorderRadius.circular(10.0)
 
-              //  when the TextFormField in focused
-            ),
+                //  when the TextFormField in focused
+                ),
             border: new OutlineInputBorder(
                 borderSide: new BorderSide(color: pBorderGrey)),
           ),

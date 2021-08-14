@@ -89,6 +89,7 @@ class _OptionalDetailsScreenState extends State<OptionalDetailsScreen> {
                               showDropDownButton: false,
                               favorite: ['dk'],
                               builder: (value) {
+                                logic.countryCode = value!.dialCode!;
                                 return Container(
                                   padding: EdgeInsets.symmetric(horizontal: 8),
                                   child: Row(
@@ -96,7 +97,7 @@ class _OptionalDetailsScreenState extends State<OptionalDetailsScreen> {
                                       Expanded(
                                         child: Image.asset(
                                           'packages/country_code_picker/' +
-                                              value!.flagUri!,
+                                              value.flagUri!,
                                           scale: 2.4,
                                         ),
                                       ),
@@ -128,10 +129,11 @@ class _OptionalDetailsScreenState extends State<OptionalDetailsScreen> {
                             hintText: "Mobile number",
                             type: 'B1',
                             maxLines: 1,
-                            controller: TextEditingController(),
+                            controller: logic.optionalDetailsMobileNo,
                             isEdit: false,
                             isError: false,
                             isInput: true,
+                            onChange: (val) {},
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(10)
                             ],
@@ -214,9 +216,10 @@ class _OptionalDetailsScreenState extends State<OptionalDetailsScreen> {
                     ),
                     pVerticalSpace(height: 25.0),
                     TInput(
-                      controller: TextEditingController(),
+                      controller: logic.optionalDetailsCity,
                       hintText: 'City',
                       type: 'B1',
+                      onChange: (val) {},
                     ),
                     pVerticalSpace(height: 10.0),
                     TView(
@@ -234,7 +237,8 @@ class _OptionalDetailsScreenState extends State<OptionalDetailsScreen> {
                         radius: 12.0,
                         btnTitle: "Next",
                         onPress: () {
-                          Get.toNamed(AppRoute.homeLanding);
+                          logic.getSignIn(context);
+                          // Get.toNamed(AppRoute.homeLanding);
                         }),
                     pVerticalSpace(height: 15.0),
                     CustomButton(
@@ -246,7 +250,9 @@ class _OptionalDetailsScreenState extends State<OptionalDetailsScreen> {
                         tvColor: pPrimaryColor,
                         btnTitle: "I'll add later",
                         onPress: () {
-                          Get.toNamed(AppRoute.homeLanding);
+                          logic.getSignIn(context);
+
+                          // Get.toNamed(AppRoute.homeLanding);
                         }),
                     pVerticalSpace(height: 15.0),
                   ],

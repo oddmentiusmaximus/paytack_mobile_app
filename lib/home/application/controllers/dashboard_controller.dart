@@ -77,7 +77,32 @@ class DashBoardController extends GetxController {
     var res1 = await sendForm(
         ApiHelpers.baseUrl + ApiHelpers.uploadBill, {'file': _image});
     if (res1.statusCode == 200) {
-      Navigator.pop(context);
+      Get.back();
+      Get.back();
+      showCommonWithWidget(
+        barrierDismissible: false,
+        context: context,
+        title: "",
+        image: success_tick,
+        message:
+            'We just need to verify your purchase so we\n can add the cashback you deserve',
+        imageTrue: true,
+        widget: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: CustomButton(
+              color: pPrimaryColor,
+              isEnabled: true,
+              tvSize: 16.0,
+              width: 100,
+              tvColor: Colors.white,
+              height: 45.0,
+              radius: 12.0,
+              btnTitle: "Ok",
+              onPress: () {
+                Get.back();
+              }),
+        ),
+      );
     } else {
       Get.back();
       showToast(msg: 'Error For Uploading');

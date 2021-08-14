@@ -34,4 +34,5 @@ const web = 'assets/images/web.png';
 const signup_art = 'assets/images/signup_art.png';
 const add_card = 'assets/images/add_card.png';
 const background_image = 'assets/images/bg_img.png';
-const tick = 'assets/images/tick.png';
+const success_tick = 'assets/images/tick.png';
+const error_icon = 'assets/icons/error_icon.png';

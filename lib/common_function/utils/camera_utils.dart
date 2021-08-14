@@ -29,7 +29,7 @@ Future<void> showChoiceDialog(BuildContext context) {
                             context: context,
                             permissionGroup: Permission.storage);
                     if (permission == true) {
-                       openCamera(popupContext, true);
+                      openCamera(popupContext, true);
                     } else {
                       ///show messge
                     }
@@ -105,13 +105,15 @@ openCamera(BuildContext buildContext, bool type) async {
   var picture;
   if (type) {
     picture = await ImagePicker.platform.pickImage(source: ImageSource.camera);
-   // onchange(picture);
+    // onchange(picture);
   } else {
     picture = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-  //  onchange(picture);
+    //  onchange(picture);
   }
-  Navigator.pop(buildContext);
-  Get.find<DashBoardController>().uploadBill(picture,buildContext);
+  if (picture != null) {
+    // Navigator.pop(buildContext);
+    Get.find<DashBoardController>().uploadBill(picture, buildContext);
+  }
   //Loading.show(context: buildContext);
 }
 
@@ -129,5 +131,5 @@ showToast(
       fontSize: fontSize,
       gravity: gravity,
       backgroundColor: backgroundColor ?? Colors.white,
-      textColor: textColor ?? pPrimaryColor);
+      textColor: textColor ?? Colors.black);
 }

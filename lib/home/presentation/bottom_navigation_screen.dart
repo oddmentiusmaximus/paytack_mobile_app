@@ -45,77 +45,74 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   }
 
   Widget get bottomNavigationBar {
-    return new AspectRatio(
-      aspectRatio: 400 / 50,
-      child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-          ),
-          child: BottomNavigationBar(
-            backgroundColor: Colors.white,
-            currentIndex: _selectedTabIndex,
-            onTap: _changeIndex,
-            type: BottomNavigationBarType.fixed,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage(rewards),
+    return Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          currentIndex: _selectedTabIndex,
+          onTap: _changeIndex,
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage(rewards),
+                size: 15,
+                color: _selectedTabIndex == 0 ? pPrimaryColor : pBorderGrey,
+              ),
+              title: Text('Rewards',
+                  style: TextStyle(
+                      fontSize: 10.0,
+                      fontFamily: latoFont,
+                      color: _selectedTabIndex == 0
+                          ? pPrimaryColor
+                          : pBottomNav)),
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage(discover),
+                size: 15,
+                color: _selectedTabIndex == 1 ? pPrimaryColor : pBorderGrey,
+              ),
+              title: Text('Discover',
+                  style: TextStyle(
+                      fontSize: 10.0,
+                      fontFamily: latoFont,
+                      color: _selectedTabIndex == 1
+                          ? pPrimaryColor
+                          : pBottomNav)),
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(AssetImage(history),
                   size: 15,
-                  color: _selectedTabIndex == 0 ? pPrimaryColor : pBorderGrey,
-                ),
-                title: Text('Rewards',
-                    style: TextStyle(
-                        fontSize: 10.0,
-                        fontFamily: latoFont,
-                        color: _selectedTabIndex == 0
-                            ? pPrimaryColor
-                            : pBottomNav)),
+                  color:
+                      _selectedTabIndex == 2 ? pPrimaryColor : pBorderGrey),
+              title: Text('History',
+                  style: TextStyle(
+                      fontSize: 10.0,
+                      fontFamily: latoFont,
+                      color: _selectedTabIndex == 2
+                          ? pPrimaryColor
+                          : pBottomNav)),
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage(meTab),
+                size: 15,
+                color: _selectedTabIndex == 3 ? pPrimaryColor : pBorderGrey,
               ),
-              BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage(discover),
-                  size: 15,
-                  color: _selectedTabIndex == 1 ? pPrimaryColor : pBorderGrey,
-                ),
-                title: Text('Discover',
-                    style: TextStyle(
-                        fontSize: 10.0,
-                        fontFamily: latoFont,
-                        color: _selectedTabIndex == 1
-                            ? pPrimaryColor
-                            : pBottomNav)),
-              ),
-              BottomNavigationBarItem(
-                icon: ImageIcon(AssetImage(history),
-                    size: 15,
-                    color:
-                        _selectedTabIndex == 2 ? pPrimaryColor : pBorderGrey),
-                title: Text('History',
-                    style: TextStyle(
-                        fontSize: 10.0,
-                        fontFamily: latoFont,
-                        color: _selectedTabIndex == 2
-                            ? pPrimaryColor
-                            : pBottomNav)),
-              ),
-              BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage(meTab),
-                  size: 15,
-                  color: _selectedTabIndex == 3 ? pPrimaryColor : pBorderGrey,
-                ),
-                title: Text('Me',
-                    style: TextStyle(
-                        fontSize: 10.0,
-                        fontFamily: latoFont,
-                        color: _selectedTabIndex == 3
-                            ? pPrimaryColor
-                            : pBottomNav)),
-              ),
-            ],
-          )),
-    );
+              title: Text('Me',
+                  style: TextStyle(
+                      fontSize: 10.0,
+                      fontFamily: latoFont,
+                      color: _selectedTabIndex == 3
+                          ? pPrimaryColor
+                          : pBottomNav)),
+            ),
+          ],
+        ));
   }
 }

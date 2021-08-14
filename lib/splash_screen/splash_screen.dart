@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
+import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/secure_storage.dart';
 import 'package:paytack/routes/app_screens.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,8 +20,12 @@ class _SplashScreenState extends State<SplashScreen> {
     return new Timer(_duration, navigationPage);
   }
 
-  void navigationPage() {
-    Get.offNamed(AppRoute.onBoarding);
+  Future<void> navigationPage() async {
+    String loginAccess =
+        await CommonStorage.readSecureStorageData(secure_access_key) ?? '';
+    loginAccess.isEmpty
+        ? Get.offNamed(AppRoute.onBoarding)
+        : Get.offNamed(AppRoute.homeLanding);
   }
 
   @override

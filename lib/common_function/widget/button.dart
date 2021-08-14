@@ -13,6 +13,7 @@ class CustomButton extends StatelessWidget {
   final Color? color;
   final double radius;
   final double height;
+  final double width;
   final Color? tvColor;
 
   CustomButton(
@@ -22,6 +23,7 @@ class CustomButton extends StatelessWidget {
       this.color = pPrimaryColor,
       this.radius = 4.0,
       this.height = 40.0,
+      this.width = double.infinity,
       this.isEnabled,
       this.tvColor,
       this.tvSize = 12.0});
@@ -32,7 +34,7 @@ class CustomButton extends StatelessWidget {
       onTap: () => onPress!(),
       child: Container(
         alignment: Alignment.center,
-        width: double.infinity,
+        width: width,
         height: height,
         decoration: BoxDecoration(
           color: color,
