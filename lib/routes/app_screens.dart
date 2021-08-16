@@ -10,6 +10,7 @@ import 'package:paytack/login_screen/presentation/login_screen.dart';
 import 'package:paytack/near_by_all/presentation/near_by_screen.dart';
 import 'package:paytack/optional_details_screen/presentation/optional_details.dart';
 import 'package:paytack/permissions_screen/presentation/permissions_screen.dart';
+
 import 'package:paytack/set_pin/presentation/set_pin_screen.dart';
 import 'package:paytack/sign_up/application/bindings/signin_binding.dart';
 import 'package:paytack/sign_up/presentation/sign_up.dart';
@@ -48,6 +49,8 @@ class AppScreens {
     GetPage(name: AppRoute.detailPage, page: () => DetailPage()),
     GetPage(name: AppRoute.addCard, page: () => AddCardIntro()),
     GetPage(name: AppRoute.permissions, page: () => PermissionsScreen()),
-    GetPage(name: AppRoute.optionalDetails, page: () => OptionalDetailsScreen()),
+    GetPage(
+        name: AppRoute.optionalDetails, page: () => OptionalDetailsScreen()),
+
   ];
 }

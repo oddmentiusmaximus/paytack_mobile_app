@@ -144,7 +144,9 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                               btnColor: pPrimaryColor,
                               icon: qr,
                               textColor: Colors.black,
-                              onPressed: () {},
+                              onPressed: () {
+                                val.scan(context);
+                              },
                             ),
                           ),
                           pHorizontalSpace(width: 5.0),

@@ -32,6 +32,8 @@ class MyProfileTab extends StatelessWidget {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return Scaffold(
       body: SafeArea(
+          minimum: const EdgeInsets.only(top: 20.0),
+
           child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

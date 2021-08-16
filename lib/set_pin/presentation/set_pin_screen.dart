@@ -73,6 +73,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                         flex: 3,
                         child: PinCodeTextField(
                           appContext: context,
+
                           pastedTextStyle: TextStyle(
                             color: Colors.green.shade600,
                             fontWeight: FontWeight.bold,
@@ -104,7 +105,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                           enableActiveFill: true,
                           errorAnimationController: errorController,
                           controller: _signupController.createPinController,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.phone,
                           onCompleted: (v) {
                             print("Completed");
                           },
@@ -196,7 +197,8 @@ class _SetPinScreenState extends State<SetPinScreen> {
                             enableActiveFill: true,
                             errorAnimationController: errorController,
                             controller: _signupController.confirmPinController,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.phone,
+
                             onCompleted: (v) {
                               print("Completed");
                             },

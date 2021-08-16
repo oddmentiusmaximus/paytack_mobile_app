@@ -67,11 +67,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           isError: false,
                           isInput: true,
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(240)
+                            LengthLimitingTextInputFormatter(240),
                           ],
                           keyboardType: TextInputType.name,
                           onChange: (val) {
-                            if (val.isEmpty) {
+                            if (val.isEmpty || GetUtils.isNumericOnly(val)) {
                               _signUpController.isNameError.value = true;
                             } else {
                               _signUpController.isNameError.value = false;
@@ -183,9 +183,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // ),
                       pVerticalSpace(height: 25.0),
                       TInput(
-                        onChange: (val){
-
-                        },
+                        onChange: (val) {},
                         hintText: "Have a referral code? (Optional)",
                         type: 'B1',
                         maxLines: 1,

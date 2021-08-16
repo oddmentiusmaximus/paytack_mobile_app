@@ -37,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Container(
           decoration: BoxDecoration(
+            color: Colors.transparent,
             image: DecorationImage(
                 image: AssetImage(background_image), fit: BoxFit.fill),
           ),
@@ -77,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           isEdit: false,
                           isError: false,
                           isInput: true,
-                          keyboardType: TextInputType.name,
+                          keyboardType: TextInputType.emailAddress,
                           onChange: (val) {
                             if (val.toString() == 'null' || val.isEmpty) {
                               _loginController.isEmailError.value = true;
@@ -204,44 +205,81 @@ class _LoginScreenState extends State<LoginScreen> {
                             message:
                                 "Enter your registered email and we \nwill send you your PIN to your email",
                             widget: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                children: [
-                                  TInput(
-                                    onChange: (val) {},
-                                    hintText: "Email",
-                                    maxLines: 1,
-                                    type: 'B1',
-                                    controller: _loginController
-                                        .forgotPinEmailController,
-                                    isEdit: false,
-                                    isError: false,
-                                    isInput: true,
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(20)
+                                padding: const EdgeInsets.all(10.0),
+                                child: Obx(() {
+                                  return Column(
+                                    children: [
+                                      TInput(
+                                          controller: _loginController
+                                              .forgotPinEmailController,
+                                          hintText: "Email",
+                                          maxLines: 1,
+                                          type: 'B1',
+                                          isEdit: false,
+                                          isError: false,
+                                          isInput: true,
+                                          keyboardType: TextInputType.name,
+                                          onChange: (val) {
+                                            if (val.toString() == 'null' ||
+                                                val.isEmpty) {
+                                              _loginController
+                                                  .isEmailForgotError
+                                                  .value = true;
+                                            } else if (!GetUtils.isEmail(val)) {
+                                              _loginController
+                                                  .isEmailForgotError
+                                                  .value = true;
+                                            } else {
+                                              _loginController
+                                                  .isEmailForgotError
+                                                  .value = false;
+                                            }
+                                          }),
+                                      Visibility(
+                                          visible: _loginController
+                                              .isEmailForgotError.isTrue,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              pVerticalSpace(height: 5.0),
+                                              Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: TView(
+                                                  title:
+                                                      'Please enter valid Email',
+                                                  size: 12,
+                                                  color: pError,
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                      pVerticalSpace(height: 30.0),
+                                      CustomButton(
+                                          color: pPrimaryColor,
+                                          isEnabled: true,
+                                          tvSize: 16.0,
+                                          tvColor: Colors.white,
+                                          height: 45.0,
+                                          radius: 12.0,
+                                          width: 120.0,
+                                          btnTitle: "Send",
+                                          onPress: () {
+                                            if (_loginController
+                                                    .forgotPinEmailController!
+                                                    .text
+                                                    .isNotEmpty &&
+                                                _loginController
+                                                    .isEmailForgotError
+                                                    .isFalse) {
+                                              _loginController.resetPin(context);
+                                            } else {
+                                              showToast(msg: "Enter Email Id");
+                                            }
+                                          }),
                                     ],
-                                    keyboardType: TextInputType.name,
-                                  ),
-                                  pVerticalSpace(height: 30.0),
-                                  CustomButton(
-                                      color: pPrimaryColor,
-                                      isEnabled: true,
-                                      tvSize: 16.0,
-                                      tvColor: Colors.white,
-                                      height: 45.0,
-                                      radius: 12.0,
-                                      btnTitle: "Send",
-                                      onPress: () {
-                                        if (_loginController
-                                            .forgotPinEmailController!
-                                            .text
-                                            .isEmpty) {
-                                          showToast(msg: "Enter Email Id");
-                                        }
-                                      }),
-                                ],
-                              ),
-                            ),
+                                  );
+                                })),
                           );
                         },
                         child: TView(
