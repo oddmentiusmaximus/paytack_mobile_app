@@ -70,3 +70,12 @@ const mobile_type_size = {
 };
 
 const secure_access_key = 'access_token';
+
+const List<Map<String, dynamic>> list = [
+  {"title": "one", "id": "1", "lat": 23.7985053, "lon": 90.3842538},
+  {"title": "two", "id": "2", "lat": 23.802236, "lon": 90.3700},
+  {"title": "three", "id": "3", "lat": 23.8061939, "lon": 90.3771193},
+  {"title": "three", "id": "4", "lat": 28.8061939, "lon": 90.3772193},
+  {"title": "three", "id": "5", "lat": 27.8061939, "lon": 90.3773193},
+  {"title": "three", "id": "6", "lat": 29.8061939, "lon": 90.3774193},
+];

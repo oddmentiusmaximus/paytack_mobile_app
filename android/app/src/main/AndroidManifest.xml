@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="com.pay.paytack">
+    package="com.cashback.paytack">
 
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,6 +16,9 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="paytack">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBzYsmbYWuvBqP9-9TwUN8tPvMJIcTwJh4"/>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -27,6 +30,8 @@
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
+
+
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />

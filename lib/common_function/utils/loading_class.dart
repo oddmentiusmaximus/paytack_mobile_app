@@ -16,10 +16,11 @@ class Loading {
               height: 100.0,
               width: 100.0,
               decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               alignment: Alignment.center,
               child: CupertinoActivityIndicator(
+
                 radius: 20,
               ))
         ],

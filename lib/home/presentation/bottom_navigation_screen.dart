@@ -5,6 +5,7 @@ import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/app_bar.dart';
 import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
+import 'package:paytack/discover/discover_page.dart';
 import 'package:paytack/home/presentation/home_dashboard.dart';
 import 'package:paytack/my_profile/presentation/my_profile.dart';
 
@@ -24,7 +25,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 
   List _pages = [
     HomeDashBoard(),
-    HomeDashBoard(),
+    GoogleMapsClonePage(),
     MyProfileTab(),
     MyProfileTab(),
   ];

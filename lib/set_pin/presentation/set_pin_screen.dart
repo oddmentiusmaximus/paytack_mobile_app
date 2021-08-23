@@ -174,6 +174,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                             obscureText: _signupController.isConfirmPin.value,
                             obscuringCharacter: '*',
                             blinkWhenObscuring: true,
+
                             animationType: AnimationType.fade,
                             validator: (v) {
                               return null;

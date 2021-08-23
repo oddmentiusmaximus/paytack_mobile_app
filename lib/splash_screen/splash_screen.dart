@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String loginAccess =
         await CommonStorage.readSecureStorageData(secure_access_key) ?? '';
     loginAccess.isEmpty
-        ? Get.offNamed(AppRoute.onBoarding)
+        ? Get.offNamed(AppRoute.discover_page)
         : Get.offNamed(AppRoute.homeLanding);
   }
 

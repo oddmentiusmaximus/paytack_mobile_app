@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:paytack/add_card_intro/presentation/add_card_link.dart';
+import 'package:paytack/discover/discover_page.dart';
 import 'package:paytack/food_detail_page/presentation/detail_page.dart';
 import 'package:paytack/home/application/bindings/dashboard_binding.dart';
 import 'package:paytack/home/presentation/home_screen.dart';
@@ -51,6 +52,6 @@ class AppScreens {
     GetPage(name: AppRoute.permissions, page: () => PermissionsScreen()),
     GetPage(
         name: AppRoute.optionalDetails, page: () => OptionalDetailsScreen()),
-
+    GetPage(name: AppRoute.discover_page, page: () => GoogleMapsClonePage()),
   ];
 }

@@ -13,4 +13,5 @@ abstract class AppRoute {
   static const detailPage = '/detailPage-screen';
   static const addCard = '/addcard-screen';
   static const permissions = '/permissions-screen';
+  static const discover_page = '/discover-screen';
 }
