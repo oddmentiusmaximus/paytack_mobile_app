@@ -36,6 +36,9 @@ dependencies:
   barcode_scan2: ^4.1.4
   google_maps_flutter: ^2.0.6
   change_app_package_name: ^1.0.0
+  share: ^2.0.4
+  card_swiper: ^1.0.4
+
 
 
 

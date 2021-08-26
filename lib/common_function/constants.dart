@@ -12,7 +12,9 @@ const pHomePageTextColor = Color(0xFF7C8D9D);
 const pBorderGrey = Color(0xFFCDCDCD);
 const pBottomNav = Color(0xFF939393);
 const pSlider = Color(0xFFC4F2ED);
+const pSlider1 = Color(0xFFF6D9CB);
 const pError = Color(0xFFF32D2D);
+const pIconColor = Color(0xFFE3E4F7);
 /*Fonts*/
 const latoFont = 'assets/fonts/Lato-Black.ttf';
 const latoFontRegular = 'assets/fonts/Lato-Regular.ttf';

@@ -8,6 +8,9 @@ import 'package:paytack/intro_screen/presentation/getting_started_screen.dart';
 import 'package:paytack/login_screen/presentation/login_screen.dart';
 import 'package:paytack/login_screen/application/bindings/login_binding.dart';
 import 'package:paytack/login_screen/presentation/login_screen.dart';
+import 'package:paytack/my_profile/presentation/need_help/need_help.dart';
+import 'package:paytack/my_profile/presentation/refer_earn/refer_earn.dart';
+import 'package:paytack/my_profile/presentation/terms_and_condition/terms_and_condition.dart';
 import 'package:paytack/near_by_all/presentation/near_by_screen.dart';
 import 'package:paytack/optional_details_screen/presentation/optional_details.dart';
 import 'package:paytack/permissions_screen/presentation/permissions_screen.dart';
@@ -53,5 +56,8 @@ class AppScreens {
     GetPage(
         name: AppRoute.optionalDetails, page: () => OptionalDetailsScreen()),
     GetPage(name: AppRoute.discover_page, page: () => GoogleMapsClonePage()),
+    GetPage(name: AppRoute.need_help, page: () => NeedHelp()),
+    GetPage(name: AppRoute.refer_earn, page: () => ReferEarn()),
+    GetPage(name: AppRoute.terms_condition, page: () => TermsAndCondition()),
   ];
 }

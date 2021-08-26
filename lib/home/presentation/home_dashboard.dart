@@ -113,7 +113,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                                   pHorizontalSpace(width: 10.0),
                                   Image.asset(
                                     help,
-                                    height: 20.0,
+                                    height: 30.0,
                                   ),
                                 ],
                               ),

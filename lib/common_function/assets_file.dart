@@ -36,3 +36,5 @@ const add_card = 'assets/images/add_card.png';
 const background_image = 'assets/images/bg_img.png';
 const success_tick = 'assets/images/tick.png';
 const error_icon = 'assets/icons/error_icon.png';
+const help_art = 'assets/images/help_art.png';
+const refer_earn = 'assets/images/refer_art.png';

@@ -107,7 +107,7 @@ class OutlineButtonCommon extends StatelessWidget {
           size: tvSize!,
           color: textColor!,
         ),
-        icon: ImageIcon(
+        icon: icon==null?Container():ImageIcon(
           AssetImage(icon!),
           size: 14.0,
           color: pTextColors,

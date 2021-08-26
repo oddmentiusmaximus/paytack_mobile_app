@@ -14,4 +14,7 @@ abstract class AppRoute {
   static const addCard = '/addcard-screen';
   static const permissions = '/permissions-screen';
   static const discover_page = '/discover-screen';
+  static const need_help = '/help-screen';
+  static const refer_earn = '/refer-screen';
+  static const terms_condition = '/terms-screen';
 }
