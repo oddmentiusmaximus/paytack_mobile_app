@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:paytack/common_function/assets_file.dart';
@@ -10,7 +11,6 @@ class GoogleMapsClonePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Stack(
         children: <Widget>[
           CustomGoogleMap(),
@@ -179,28 +179,38 @@ class CustomInnerContent extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 16),
+        SizedBox(height: 2),
         new Container(
             margin: EdgeInsets.symmetric(vertical: 20.0),
-            height: 140.0,
+            height: 150.0,
             child: new ListView.builder(
               scrollDirection: Axis.horizontal,
+              itemCount: 5,
               itemBuilder: (i, con) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Container(
-                          height: 100.0,
-                          width: 100.0,
-                          decoration: new BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(burger_image),
-                            ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          )),
-                      Text("Hello"),
-                    ],
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Container(
+                            height: 100.0,
+                            width: 100.0,
+                            decoration: new BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(burger_image),
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            )),
+                        Expanded(
+                          child: TView(
+                            title: "Italian",
+                            size: 14,
+                            color: pTextColor,
+                          ),
+                        ),
+                        pVerticalSpace(height: 10.0)
+                      ],
+                    ),
                   ),
                 );
               },

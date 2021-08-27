@@ -34,6 +34,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
 
   @override
   Widget build(BuildContext context) {
+    final key = GlobalKey<State<Tooltip>>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -111,9 +112,23 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                                     weight: FontWeight.bold,
                                   ),
                                   pHorizontalSpace(width: 10.0),
-                                  Image.asset(
-                                    help,
-                                    height: 30.0,
+                                  Tooltip(
+                                    key: key,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                    ),
+                                    textStyle:
+                                        commonTextStyle(color: Colors.black),
+                                    message:
+                                        'Minimum 100kr cashback can be \ntransfer back into your bank account',
+                                    child: GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () => _onTap(key),
+                                      child: Image.asset(
+                                        help,
+                                        height: 30.0,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -221,5 +236,10 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
         ),
       ),
     );
+  }
+
+  void _onTap(GlobalKey key) {
+    final dynamic tooltip = key.currentState;
+    tooltip?.ensureTooltipVisible();
   }
 }
