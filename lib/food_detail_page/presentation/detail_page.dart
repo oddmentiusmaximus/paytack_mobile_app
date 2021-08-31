@@ -46,17 +46,17 @@ class _DetailPageState extends State<DetailPage> {
                 shape: CircleBorder(),
               ),
             ),
-            SingleChildScrollView(
+            Container(
+              margin: EdgeInsets.only(top: i),
+              color: Colors.transparent,
               child: Container(
-                margin: EdgeInsets.only(top: i),
-                color: Colors.transparent,
-                child: Container(
-                    decoration: new BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: new BorderRadius.only(
-                          topLeft: const Radius.circular(35.0),
-                          topRight: const Radius.circular(35.0),
-                        )),
+                  decoration: new BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.only(
+                        topLeft: const Radius.circular(35.0),
+                        topRight: const Radius.circular(35.0),
+                      )),
+                  child: SingleChildScrollView(
                     child: Column(
                       children: [
                         Padding(
@@ -134,50 +134,47 @@ class _DetailPageState extends State<DetailPage> {
                                   ],
                                 ),
                               ),
-                              Expanded(
-                                  flex: 1,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                          width: 50,
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: pPrimaryColor,
-                                                style: BorderStyle.solid,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(30.0),
-                                              color: Colors.white),
-                                          child: Icon(
-                                            Icons.call,
-                                            size: 30,
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
                                             color: pPrimaryColor,
-                                          )),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 16.0),
-                                        child: Container(
-                                            width: 50,
-                                            height: 50,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: pPrimaryColor,
-                                                  style: BorderStyle.solid,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(30.0),
-                                                color: Colors.white),
-                                            child: Icon(
-                                              Icons.public,
-                                              size: 30,
+                                            style: BorderStyle.solid,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(30.0),
+                                          color: Colors.white),
+                                      child: Icon(
+                                        Icons.call,
+                                        size: 30,
+                                        color: pPrimaryColor,
+                                      )),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 16.0),
+                                    child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
                                               color: pPrimaryColor,
-                                            )),
-                                      ),
-                                    ],
-                                  )),
+                                              style: BorderStyle.solid,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(30.0),
+                                            color: Colors.white),
+                                        child: Icon(
+                                          Icons.public,
+                                          size: 30,
+                                          color: pPrimaryColor,
+                                        )),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -342,8 +339,8 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         )
                       ],
-                    )),
-              ),
+                    ),
+                  )),
             )
           ],
         ),

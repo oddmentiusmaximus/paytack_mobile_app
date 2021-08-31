@@ -8,6 +8,7 @@ import '../state.dart';
 
 class HistoryScreenPage extends StatelessWidget {
   final HistoryScreenLogic logic = Get.put(HistoryScreenLogic());
+
   // final HistoryScreenState state = Get
   //     .find<HistoryScreenLogic>()
   //     .state;
@@ -189,22 +190,25 @@ class HistoryScreenPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: TView(
                     title: 'TODAY',
-                    color: pTextColor3,
+                    color: pPhoneText,
                     size: 11,
                   ),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(10),
                           bottomRight: Radius.circular(10)), // radius of 10
-                      color: pBubbleColor // green as background color
-                  )),
+                      color: Colors.grey // green as background color
+                      )),
             ),
             pVerticalSpace(height: 25.0),
             Expanded(
               child: Obx(() {
                 return ListView.builder(
-                  itemCount: logic.isBankTransferIn.isTrue ? 3 : logic.isRedeem
-                      .isTrue ? 5 : 15,
+                  itemCount: logic.isBankTransferIn.isTrue
+                      ? 3
+                      : logic.isRedeem.isTrue
+                          ? 5
+                          : 15,
                   itemBuilder: (BuildContext context, int index) {
                     return listTileActivities();
                   },
@@ -244,18 +248,22 @@ class HistoryScreenPage extends StatelessWidget {
             color: pTextColor,
             align: TextAlign.start,
           ),
-          subtitle: TView(title: '21 Sept at 20:30',
+          subtitle: TView(
+            title: '21 Sept at 20:30',
             size: 12,
             color: pTextColor3,
-            align: TextAlign.start,),
+            align: TextAlign.start,
+          ),
           trailing: TView(
             title: '40 kr',
             size: 14,
             color: pTextColor,
           ),
-
         ),
-        Divider(height: 1, thickness: 1,)
+        Divider(
+          height: 1,
+          thickness: 1,
+        )
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'package:paytack/common_function/assets_file.dart';
@@ -24,6 +25,8 @@ class HomeDashBoard extends StatefulWidget {
 
 class _HomeDashBoardState extends State<HomeDashBoard> {
   List<String> filterList = ["Sort By", "Location", "CashBack"];
+  static const platform = const MethodChannel("test_activity");
+
 
   @override
   void initState() {
@@ -174,6 +177,10 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                               btnColor: pPrimaryColor,
                               textColor: Colors.black,
                               btnTitle: "Cashout",
+                              onPressed: (){
+                                _getNewActivity();
+
+                              },
                             ),
                           ),
                         ],
@@ -241,5 +248,13 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
   void _onTap(GlobalKey key) {
     final dynamic tooltip = key.currentState;
     tooltip?.ensureTooltipVisible();
+  }
+
+  _getNewActivity() async {
+    try {
+      await platform.invokeMethod('startNewActivity');
+    } on PlatformException catch (e) {
+      print(e.message);
+    }
   }
 }

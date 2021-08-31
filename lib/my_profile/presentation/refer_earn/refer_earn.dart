@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/appbar.dart';
@@ -33,7 +34,6 @@ class _ReferEarnState extends State<ReferEarn> {
 
   Widget body() {
     return Column(
-      // This makes each child fill the full width of the screen
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -71,10 +71,11 @@ class _ReferEarnState extends State<ReferEarn> {
 
   Widget middleSection() {
     return Expanded(
-      child: new Column(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          pVerticalSpace(height: 90.0),
+          pVerticalSpace(height: 40.0),
           Container(
               height: 100.0,
               width: 100.0,
@@ -94,7 +95,7 @@ class _ReferEarnState extends State<ReferEarn> {
             size: 16,
             color: pPrimaryColor,
           ),
-          pVerticalSpace(height: 70.0),
+          pVerticalSpace(height: 15.0),
           TView(
             title:
                 "Refer as many friends as you can! \nThey just need to use this referral code during \nsign up.",

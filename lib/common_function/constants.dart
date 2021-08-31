@@ -16,7 +16,7 @@ const pSlider = Color(0xFFC4F2ED);
 const pSlider1 = Color(0xFFF6D9CB);
 const pError = Color(0xFFF32D2D);
 const pIconColor = Color(0xFFE3E4F7);
-const pBubbleColor = Color(0xff93939329);
+const pBubbleColor = Color(0xFF939329);
 /*Fonts*/
 const latoFont = 'assets/fonts/Lato-Black.ttf';
 const latoFontRegular = 'assets/fonts/Lato-Regular.ttf';
