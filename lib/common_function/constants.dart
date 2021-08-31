@@ -7,6 +7,7 @@ const pDisableColor = Color(0xFFAFAFAF);
 const pTextColor = Color(0xFF41424B);
 const pPhoneText = Color(0xFF222222);
 const pTextColors = Color(0xFF41424B);
+const pTextColor3 = Color(0xFF626262);
 const pDisable = Color(0xFF424B54);
 const pHomePageTextColor = Color(0xFF7C8D9D);
 const pBorderGrey = Color(0xFFCDCDCD);
@@ -15,6 +16,7 @@ const pSlider = Color(0xFFC4F2ED);
 const pSlider1 = Color(0xFFF6D9CB);
 const pError = Color(0xFFF32D2D);
 const pIconColor = Color(0xFFE3E4F7);
+const pBubbleColor = Color(0xff93939329);
 /*Fonts*/
 const latoFont = 'assets/fonts/Lato-Black.ttf';
 const latoFontRegular = 'assets/fonts/Lato-Regular.ttf';
