@@ -7,6 +7,8 @@ import 'package:paytack/common_function/common_dialog.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/secure_storage.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
+import 'package:paytack/home/application/controllers/dashboard_controller.dart';
+import 'package:paytack/my_profile/application/profile_controller.dart';
 import 'package:paytack/my_profile/presentation/need_help/navigation.dart';
 import 'package:paytack/routes/app_screens.dart';
 
@@ -59,35 +61,38 @@ class MyProfileTab extends StatelessWidget {
                                       width: 40,
                                       fit: BoxFit.contain,
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        TView(
-                                          title: "John Doe",
-                                          color: pTextColors,
-                                          size: 20,
-                                          weight: FontWeight.bold,
-                                        ),
-                                        Row(children: [
-                                          pHorizontalSpace(width: 5.0),
+                                    GetBuilder<DashBoardController>(
+                                        builder: (profile) {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
                                           TView(
-                                            title: "john@gmail.com",
-                                            color: pBorderGrey,
-                                            size: 12,
-                                            weight: FontWeight.normal,
+                                            title: profile.userName.toString(),
+                                            color: pTextColors,
+                                            size: 20,
+                                            weight: FontWeight.bold,
                                           ),
-                                          pHorizontalSpace(width: 10.0),
-                                          ImageIcon(
-                                            AssetImage(edit),
-                                            size: 15,
-                                            color: pBorderGrey,
-                                          ),
-                                        ])
-                                      ],
-                                    )
+                                          Row(children: [
+                                            TView(
+                                              title:
+                                                  profile.userEmail.toString(),
+                                              color: pBorderGrey,
+                                              size: 12,
+                                              weight: FontWeight.normal,
+                                            ),
+                                            pHorizontalSpace(width: 10.0),
+                                            ImageIcon(
+                                              AssetImage(edit),
+                                              size: 15,
+                                              color: pBorderGrey,
+                                            ),
+                                          ])
+                                        ],
+                                      );
+                                    })
                                   ],
                                 ),
                               ],

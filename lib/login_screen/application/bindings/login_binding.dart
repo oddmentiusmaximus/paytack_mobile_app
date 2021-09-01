@@ -9,5 +9,7 @@ class LoginBinding implements Bindings {
     final apiBaseHelper = DioHelper();
     Get.lazyPut(() => NetworkProvider(apiBaseHelper));
     Get.lazyPut<LoginController>(() => LoginController(Get.find()));
+    Get.lazyPut<LoginController>(() => LoginController(Get.find()));
+
   }
 }

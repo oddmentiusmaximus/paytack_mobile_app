@@ -28,6 +28,8 @@ class DashBoardController extends GetxController {
   Map<String, dynamic>? loginSuccessResponse;
   int pendingCashback = 0;
   int availableCashback = 0;
+  String? userName = "";
+  String? userEmail = '';
 
   DashBoardController(this._networkRepository);
 
@@ -36,8 +38,22 @@ class DashBoardController extends GetxController {
   @override
   void onInit() {
     getCashBackData();
-
+    getUserData();
     super.onInit();
+  }
+
+  Future<void> getUserData() async {
+    _networkRepository.getMethod(
+        baseUrl: ApiHelpers.baseUrl + ApiHelpers.userDetails,
+        success: (success) {
+          print(success.toString());
+          if (success.toString().isNotEmpty) {
+            userName = success['clientName'];
+            userEmail = success['email'];
+          }
+          update();
+        },
+        error: (error) {});
   }
 
   Future<void> getCashBackData() async {
@@ -159,5 +175,22 @@ class DashBoardController extends GetxController {
     } else {
       ///show messge
     }
+  }
+
+  Future<void> getNearBy(double lat, double long) async {
+    _networkRepository.getMethod(
+        baseUrl: ApiHelpers.baseUrl +
+            ApiHelpers.getNearBy +
+            "?latitude=${lat}&longitude=${long}",
+        success: (success) {
+          print(success.toString());
+          if (success.toString().isNotEmpty) {
+
+          }
+          update();
+        },
+        error: (error) {
+          print(error);
+        });
   }
 }

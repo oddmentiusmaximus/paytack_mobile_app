@@ -27,7 +27,6 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
   List<String> filterList = ["Sort By", "Location", "CashBack"];
   static const platform = const MethodChannel("test_activity");
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -64,7 +63,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                               ),
                               pHorizontalSpace(width: 10.0),
                               TView(
-                                title: "Welcome, John",
+                                title: "Welcome," + " "+"${val.userName}",
                                 color: pTextColors,
                                 size: 18,
                                 weight: FontWeight.bold,
@@ -177,9 +176,8 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                               btnColor: pPrimaryColor,
                               textColor: Colors.black,
                               btnTitle: "Cashout",
-                              onPressed: (){
+                              onPressed: () {
                                 _getNewActivity();
-
                               },
                             ),
                           ),

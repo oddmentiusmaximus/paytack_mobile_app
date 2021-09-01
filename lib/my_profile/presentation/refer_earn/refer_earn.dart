@@ -7,6 +7,7 @@ import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/common_function/widget/textinput.dart';
+import 'package:paytack/my_profile/application/profile_controller.dart';
 import 'package:share/share.dart';
 
 class ReferEarn extends StatefulWidget {
@@ -17,18 +18,41 @@ class ReferEarn extends StatefulWidget {
 }
 
 class _ReferEarnState extends State<ReferEarn> {
+  ProfileController profileController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar("Refer & earn", isTrue: true),
       body: SafeArea(
-          child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 10.0,
-          vertical: 2.0,
+          child: SingleChildScrollView(
+        child: Container(
+          height: Get.height,
+          padding: EdgeInsets.symmetric(
+            horizontal: 10.0,
+            vertical: 2.0,
+          ),
+          child: body(),
         ),
-        child: body(),
       )),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: CustomButton(
+              color: pPrimaryColor,
+              isEnabled: true,
+              tvSize: 16.0,
+              height: 40.0,
+              tvColor: Colors.white,
+              radius: 12.0,
+              btnTitle: "Share",
+              onPress: () {
+                Share.share(
+                    'Hey, I am using Paytack for getting cashback. Sharing my referral code enjoy ${profileController.referralCode.toString()}');
+              }),
+        ),
+      ),
     );
   }
 
@@ -64,7 +88,6 @@ class _ReferEarnState extends State<ReferEarn> {
           ),
         ),
         middleSection(),
-        bottomBanner(),
       ],
     );
   }
@@ -90,12 +113,14 @@ class _ReferEarnState extends State<ReferEarn> {
             color: pTextColor,
           ),
           pVerticalSpace(height: 15.0),
-          TView(
-            title: "JOHN56",
-            size: 16,
-            color: pPrimaryColor,
-          ),
-          pVerticalSpace(height: 15.0),
+          GetBuilder<ProfileController>(builder: (profile) {
+            return TView(
+              title: profile.referralCode.toString(),
+              size: 16,
+              color: pPrimaryColor,
+            );
+          }),
+          pVerticalSpace(height: 90.0),
           TView(
             title:
                 "Refer as many friends as you can! \nThey just need to use this referral code during \nsign up.",
@@ -104,29 +129,6 @@ class _ReferEarnState extends State<ReferEarn> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget bottomBanner() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: CustomButton(
-              color: pPrimaryColor,
-              isEnabled: true,
-              tvSize: 16.0,
-              height: 40.0,
-              tvColor: Colors.white,
-              radius: 12.0,
-              btnTitle: "Share",
-              onPress: () {
-                Share.share(
-                    'Hey, I am using Paytack for getting cashback. Sharing my referral code enjoy');
-              }),
-        ),
-        pVerticalSpace(height: 10.0),
-      ],
     );
   }
 }

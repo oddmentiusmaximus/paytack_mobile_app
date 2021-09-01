@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/appbar.dart';
@@ -18,15 +19,35 @@ class _NeedHelpState extends State<NeedHelp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: commonAppBar("Help", isTrue: true),
       body: SafeArea(
-          child: Container(
+          child: SingleChildScrollView(
+            child: Container(
+              height: Get.height,
         padding: EdgeInsets.symmetric(
-          horizontal: 10.0,
-          vertical: 2.0,
+            horizontal: 10.0,
+            vertical: 2.0,
         ),
         child: body(),
-      )),
+      ),
+          )),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(8.0),
+        child:
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: CustomButton(
+              color: pPrimaryColor,
+              isEnabled: true,
+              tvSize: 16.0,
+              height: 40.0,
+              tvColor: Colors.white,
+              radius: 12.0,
+              btnTitle: "Send",
+              onPress: () {}),
+        ),
+      ),
     );
   }
 
@@ -67,12 +88,13 @@ class _NeedHelpState extends State<NeedHelp> {
             ),
           ),
         ),
-
         middleSection(),
-        bottomBanner(),
+        
       ],
     );
   }
+
+
 
   Widget middleSection() {
     return Expanded(
