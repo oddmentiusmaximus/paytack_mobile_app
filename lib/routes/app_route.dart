@@ -17,4 +17,9 @@ abstract class AppRoute {
   static const need_help = '/help-screen';
   static const refer_earn = '/refer-screen';
   static const terms_condition = '/terms-screen';
+  static const cashoutPage = '/cashoutPage';
+  static const bankDetailsPage = '/bankDetails';
+  static const changePin = '/changePin';
+  static const changePhoneNo = '/changePhoneNo';
+
 }

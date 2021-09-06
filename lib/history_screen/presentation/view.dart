@@ -4,7 +4,6 @@ import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 
 import '../logic.dart';
-import '../state.dart';
 
 class HistoryScreenPage extends StatelessWidget {
   final HistoryScreenLogic logic = Get.put(HistoryScreenLogic());

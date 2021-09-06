@@ -63,7 +63,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                               ),
                               pHorizontalSpace(width: 10.0),
                               TView(
-                                title: "Welcome," + " "+"${val.userName}",
+                                title: "Welcome," + " " + "${val.userName}",
                                 color: pTextColors,
                                 size: 18,
                                 weight: FontWeight.bold,
@@ -177,7 +177,8 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                               textColor: Colors.black,
                               btnTitle: "Cashout",
                               onPressed: () {
-                                _getNewActivity();
+                                // _getNewActivity();
+                                Get.toNamed(AppRoute.cashoutPage);
                               },
                             ),
                           ),

@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 import 'package:paytack/add_card_intro/presentation/add_card_link.dart';
+import 'package:paytack/cashout_screens/application/binding.dart';
+import 'package:paytack/cashout_screens/presentation/bank_details_cashout.dart';
+import 'package:paytack/cashout_screens/presentation/view.dart';
 import 'package:paytack/discover/discover_page.dart';
 import 'package:paytack/food_detail_page/presentation/detail_page.dart';
 import 'package:paytack/home/application/bindings/dashboard_binding.dart';
@@ -8,6 +11,8 @@ import 'package:paytack/intro_screen/presentation/getting_started_screen.dart';
 import 'package:paytack/login_screen/presentation/login_screen.dart';
 import 'package:paytack/login_screen/application/bindings/login_binding.dart';
 import 'package:paytack/login_screen/presentation/login_screen.dart';
+import 'package:paytack/my_profile/presentation/change_phone_no/change_phone_no.dart';
+import 'package:paytack/my_profile/presentation/change_pin/change_pin.dart';
 import 'package:paytack/my_profile/presentation/need_help/need_help.dart';
 import 'package:paytack/my_profile/presentation/refer_earn/refer_earn.dart';
 import 'package:paytack/my_profile/presentation/terms_and_condition/terms_and_condition.dart';
@@ -47,6 +52,7 @@ class AppScreens {
         name: AppRoute.homeLanding,
         page: () => HomePageLanding(),
         binding: DashBoardBinding()),
+
     GetPage(name: AppRoute.verifyOtp, page: () => VerifyOtpScreen()),
     GetPage(name: AppRoute.login, page: () => LoginScreen()),
     GetPage(name: AppRoute.nearByAll, page: () => NearByAll()),
@@ -59,5 +65,12 @@ class AppScreens {
     GetPage(name: AppRoute.need_help, page: () => NeedHelp()),
     GetPage(name: AppRoute.refer_earn, page: () => ReferEarn()),
     GetPage(name: AppRoute.terms_condition, page: () => TermsAndCondition()),
+    GetPage(name: AppRoute.changePin, page: () => ChangePinPage()),
+    GetPage(name: AppRoute.changePhoneNo, page: () => ChangePhoneNoPage()),
+    GetPage(name: AppRoute.bankDetailsPage, page: () => CashoutBankDetails()),
+    GetPage(
+        name: AppRoute.cashoutPage,
+        page: () => CashoutScreenPage(),
+        binding: CashoutScreenBinding()),
   ];
 }

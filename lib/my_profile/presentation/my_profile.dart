@@ -34,6 +34,10 @@ class MyProfileTab extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: SafeArea(
           minimum: const EdgeInsets.only(top: 20.0),
           child: SingleChildScrollView(
@@ -119,6 +123,14 @@ class MyProfileTab extends StatelessWidget {
                           ),
                           itemBuilder: (BuildContext context, int index) {
                             return ListTile(
+                              onTap: () {
+                                if (index == 0) {
+                                  Get.toNamed(AppRoute.changePhoneNo);
+                                }
+                                if (index == 2) {
+                                  Get.toNamed(AppRoute.changePin);
+                                }
+                              },
                               title: TView(
                                 title: settingMenuList[index],
                                 align: TextAlign.start,
