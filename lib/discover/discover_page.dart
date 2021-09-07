@@ -46,8 +46,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
   Completer<GoogleMapController> _controller = Completer();
 
   Iterable markers = [];
-
-  Iterable _markers = Iterable.generate(list.length, (index) {
+  Iterable _markers = Iterable.generate(list.length, (index) async {
     return Marker(
         markerId: MarkerId(list[index]['id']),
         position: LatLng(
@@ -60,12 +59,13 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
   @override
   void initState() {
     // TODO: implement initState
-
     setState(() {
       markers = _markers;
     });
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {

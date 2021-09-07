@@ -27,7 +27,7 @@ class MyProfileTab extends StatelessWidget {
     "Terms and conditions",
     "Sign out"
   ];
-  List<String> moreIconList = [refer, help, privacy, signOut];
+  List<String> moreIconList = [refer, help_menu, privacy, signOut];
 
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,7 @@ dependencies:
   dio: ^4.0.0
   dartz: ^0.10.0-nullsafety.2
   connectivity: ^3.0.6
-  flutter_secure_storage: ^4.2.0
+  flutter_secure_storage: ^4.2.1
   flutter_screenutil: ^2.3.0
   flutter_svg: ^0.22.0
   freezed_annotation: ^0.12.0

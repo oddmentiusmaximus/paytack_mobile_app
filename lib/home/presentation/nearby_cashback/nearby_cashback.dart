@@ -51,6 +51,7 @@ class _NearByCashBackState extends State<NearByCashBack> {
             .getNearBy(position.latitude, position.longitude);
       }).catchError((e) {
         print(e);
+
       });
     } else {}
   }

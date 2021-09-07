@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as main;
 import 'package:injectable/injectable.dart';
+import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/network/response_success.dart';
 import 'package:paytack/common_function/secure_storage.dart';
 import 'global_file.dart';

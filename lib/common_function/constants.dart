@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 const pPrimaryColor = Color(0xFF2BC5B4);
 const pBackgroundScreen = Color(0xFFFFFFFF);
@@ -54,7 +55,12 @@ TextStyle commonTextStyle({
     fontFamily: "Lato",
   );
 }
-
+Future<BitmapDescriptor> createMarkerImageFromAsset(String iconPath) async {
+  ImageConfiguration configuration = ImageConfiguration();
+  BitmapDescriptor customIcon = await BitmapDescriptor.fromAssetImage(
+      configuration,iconPath);
+  return customIcon;
+}
 /*Size*/
 const mobile_type_size = {
   "D1": 50.0,
