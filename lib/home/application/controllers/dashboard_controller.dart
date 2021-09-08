@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:barcode_scan2/barcode_scan2.dart';
@@ -6,6 +7,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:paytack/common_function/utils/permission.dart';
+import 'package:paytack/common_function/widget/mytext.dart';
+import 'package:paytack/common_function/widget/textinput.dart';
+import 'package:paytack/home/domain/near_by_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:flutter/material.dart';
@@ -30,6 +34,9 @@ class DashBoardController extends GetxController {
   int availableCashback = 0;
   String? userName = "";
   String? userEmail = '';
+  List<NearByModel> listNearByBusiness = [];
+  TextEditingController? redeemController;
+  bool loader = false;
 
   DashBoardController(this._networkRepository);
 
@@ -145,51 +152,84 @@ class DashBoardController extends GetxController {
     if (permission == true) {
       try {
         var result = await BarcodeScanner.scan();
+        /*if (result.rawContent.isNotEmpty) {*/
         showCommonWithWidget(
           barrierDismissible: false,
           context: context,
-          title: result.rawContent,
-          image: success_tick,
-          message: 'Congratulations You Got The Cashback for code',
-          imageTrue: true,
+          title: "Enter amount to redeem",
+          //  image: success_tick,
+          message: '',
+          imageTrue: false,
           widget: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: CustomButton(
-                color: pPrimaryColor,
-                isEnabled: true,
-                tvSize: 16.0,
-                width: 100,
-                tvColor: Colors.white,
-                height: 45.0,
-                radius: 12.0,
-                btnTitle: "Okay",
-                onPress: () {
-                  Get.back();
-                }),
+            child: Column(
+              children: [
+                TInput(
+                    controller: redeemController,
+                    hintText: "0 kr.",
+                    maxLines: 1,
+                    type: 'B1',
+                    isEdit: false,
+                    isError: false,
+                    isInput: true,
+                    keyboardType: TextInputType.number,
+                    onChange: (val) {
+                      if (val.toString() == 'null' || val.isEmpty) {}
+                    }),
+                pVerticalSpace(height: 15.0),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TView(
+                    title: "Available balance $availableCashback" + " Kr.",
+                    size: 14.0,
+                    color: pTextColor,
+                  ),
+                ),
+                pVerticalSpace(height: 15.0),
+                CustomButton(
+                    color: pPrimaryColor,
+                    isEnabled: true,
+                    tvSize: 16.0,
+                    width: 100,
+                    tvColor: Colors.white,
+                    height: 45.0,
+                    radius: 12.0,
+                    btnTitle: "Confirm",
+                    onPress: () {
+                      Get.back();
+                    }),
+              ],
+            ),
           ),
         );
+        /*}*/
       } on PlatformException catch (e) {
         if (e.code == BarcodeScanner.cameraAccessDenied) {
         } else {}
       } on FormatException {} catch (e) {}
     } else {
-      ///show messge
+      ///show message
     }
   }
 
   Future<void> getNearBy(double lat, double long) async {
+    loader = false;
     _networkRepository.getMethod(
         baseUrl: ApiHelpers.baseUrl +
             ApiHelpers.getNearBy +
-            "?latitude=${lat}&longitude=${long}",
+            "?latitude=${80.02}&longitude=${84.00}",
         success: (success) {
-          print(success.toString());
           if (success.toString().isNotEmpty) {
-
+            List<NearByModel> list = List<NearByModel>.from(
+                success.map((i) => NearByModel.fromJson(i)));
+            listNearByBusiness = list;
+            loader = true;
           }
           update();
         },
         error: (error) {
+          loader = false;
+          update();
           print(error);
         });
   }

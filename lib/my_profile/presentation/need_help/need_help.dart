@@ -20,7 +20,11 @@ class _NeedHelpState extends State<NeedHelp> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: commonAppBar("Help", isTrue: true),
+      appBar: commonAppBar("Help",  isTrue: true,
+          size: 18,
+          step: "1",
+          color: Colors.transparent,
+          textColor: pTextColor),
       body: SafeArea(
           child: SingleChildScrollView(
             child: Container(

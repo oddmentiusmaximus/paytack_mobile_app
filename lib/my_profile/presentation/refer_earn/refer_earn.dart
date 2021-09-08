@@ -23,7 +23,11 @@ class _ReferEarnState extends State<ReferEarn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar("Refer & earn", isTrue: true),
+      appBar: commonAppBar("Refer & earn",  isTrue: true,
+          size: 18,
+          step: "1",
+          color: Colors.transparent,
+          textColor: pTextColor),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Container(

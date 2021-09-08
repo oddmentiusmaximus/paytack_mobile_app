@@ -46,7 +46,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
   Completer<GoogleMapController> _controller = Completer();
 
   Iterable markers = [];
-  Iterable _markers = Iterable.generate(list.length, (index) async {
+  Iterable _markers = Iterable.generate(list.length, (index) {
     return Marker(
         markerId: MarkerId(list[index]['id']),
         position: LatLng(
@@ -76,9 +76,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
         mapType: MapType.normal,
         initialCameraPosition:
             CameraPosition(target: LatLng(23.7985053, 90.3842538), zoom: 13),
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
+
         markers: Set.from(markers),
       )),
     );

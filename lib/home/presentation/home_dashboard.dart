@@ -31,6 +31,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     Get.find<DashBoardController>();
   }
 
@@ -38,8 +39,10 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
   Widget build(BuildContext context) {
     final key = GlobalKey<State<Tooltip>>();
     return MaterialApp(
+
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+
         backgroundColor: Colors.white,
         body: SafeArea(
           child: SingleChildScrollView(
@@ -233,7 +236,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                         ],
                       ),
                     ),
-                    NearByCashBack()
+                    NearByCashBack(callBack: 1,)
                   ],
                 );
               },

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,6 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
+import 'package:paytack/home/domain/near_by_model.dart';
+import 'package:paytack/home/domain/opening_hours_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatefulWidget {
   @override
@@ -13,22 +18,45 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   double i = 0;
+  List<OpeningHours> listOpeningHours = [];
 
   @override
   Widget build(BuildContext context) {
     // give the current args from currentScreen
-    String args = Get.arguments;
+    var listNearByBusiness = Get.arguments;
+    // String jsonsDataString = response.body.toString(); // toString of Response's body is assigned to jsonDataString
+    // String withoutEquals = listNearByBusiness.openingHours.replaceAll(RegExp("\ "), '');
+    listOpeningHours.clear();
+    if (listNearByBusiness.openingHours == "string" ||
+        listNearByBusiness.openingHours.isEmpty) {
+      listOpeningHours = [];
+    } else {
+      Map<String, dynamic> map = json.decode(listNearByBusiness.openingHours);
+      map.forEach((key, value) {
+        print(key);
+        listOpeningHours.add(
+            OpeningHours(day: key, start: value["start"], end: value["end"]));
+      });
+    }
     i = (Get.height * 0.4) - 40;
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
-            Image.network(
-              args,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: Get.height * 0.4,
-            ),
+            listNearByBusiness.logoUrl!.isEmpty ||
+                    listNearByBusiness.logoUrl == "string"
+                ? Image.network(
+                    noImage,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: Get.height * 0.4,
+                  )
+                : Image.network(
+                    listNearByBusiness.logoUrl.toString(),
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: Get.height * 0.4,
+                  ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 7.0, horizontal: 1.0),
               child: MaterialButton(
@@ -73,15 +101,26 @@ class _DetailPageState extends State<DetailPage> {
                                       child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(40.0),
-                                          child: Image.network(
-                                              "https://www.visitcurrituck.com/wp-content/uploads/2013/11/burger-king.png")),
+                                          child: listNearByBusiness
+                                                      .logoUrl!.isEmpty ||
+                                                  listNearByBusiness.logoUrl ==
+                                                      "string"
+                                              ? Image.network(
+                                                  noImage,
+                                                  fit: BoxFit.cover,
+                                                  width: double.infinity,
+                                                  height: Get.height * 0.4,
+                                                )
+                                              : Image.network(
+                                                  listNearByBusiness.logoUrl)),
                                     ),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         TView(
-                                          title: "Burger King",
+                                          title:
+                                              listNearByBusiness.businessName,
                                           size: 20.0,
                                           color: Colors.black,
                                           weight: FontWeight.bold,
@@ -102,7 +141,9 @@ class _DetailPageState extends State<DetailPage> {
                                                 padding: const EdgeInsets.only(
                                                     left: 4.0),
                                                 child: TView(
-                                                  title: "1 KM",
+                                                  title: listNearByBusiness
+                                                      .distance
+                                                      .toStringAsFixed(2),
                                                   size: 12.0,
                                                   color: Colors.grey,
                                                 ),
@@ -136,23 +177,29 @@ class _DetailPageState extends State<DetailPage> {
                               ),
                               Row(
                                 children: [
-                                  Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: pPrimaryColor,
-                                            style: BorderStyle.solid,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                          color: Colors.white),
-                                      child: Icon(
-                                        Icons.call,
-                                        size: 30,
-                                        color: pPrimaryColor,
-                                      )),
+                                  InkWell(
+                                    onTap: () {
+                                      _makeLaunch(
+                                          'tel:${listNearByBusiness.phoneNumber}');
+                                    },
+                                    child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: pPrimaryColor,
+                                              style: BorderStyle.solid,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(30.0),
+                                            color: Colors.white),
+                                        child: Icon(
+                                          Icons.call,
+                                          size: 30,
+                                          color: pPrimaryColor,
+                                        )),
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 16.0),
                                     child: Container(
@@ -186,16 +233,18 @@ class _DetailPageState extends State<DetailPage> {
                               Text("  •  ",
                                   style: TextStyle(color: Colors.black54)),
                               TView(
-                                title: "Fast food ",
+                                title: listNearByBusiness.category,
                                 size: 12.0,
                                 color: Colors.black54,
                               ),
                               Text("      •  ",
                                   style: TextStyle(color: Colors.black54)),
-                              TView(
-                                title: "Jaggarvej 23, copenhagen",
-                                size: 12.0,
-                                color: Colors.black54,
+                              Expanded(
+                                child: TView(
+                                  title: listNearByBusiness.address,
+                                  size: 12.0,
+                                  color: Colors.black54,
+                                ),
                               ),
                             ],
                           ),
@@ -241,7 +290,8 @@ class _DetailPageState extends State<DetailPage> {
                           child: Divider(color: Colors.grey),
                         ),
                         TView(
-                            title: "Upto 5% Cashback",
+                            title:
+                                "Upto ${listNearByBusiness.discountPercenatage.toString()} % Cashback",
                             size: 20.0,
                             color: pTextColor,
                             weight: FontWeight.bold),
@@ -275,44 +325,65 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                 ),
                                 pVerticalSpace(height: 10.0),
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: 5,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            TView(
-                                              title: "Monday - Friday",
-                                              size: 14.0,
-                                              color: pTextColor,
-                                            ),
-                                            Spacer(),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Icon(
-                                                  Icons.watch_later_outlined,
-                                                  size: 15,
-                                                ),
-                                                pHorizontalSpace(width: 4.0),
-                                                TView(
-                                                  title: "10:00 - 07:00 PM",
-                                                  size: 14.0,
-                                                  color: pTextColor,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                listOpeningHours.isEmpty
+                                    ? Center(
+                                        child: TView(
+                                          title: "Opening Hours Not Added",
+                                          color: pTextColor,
+                                          size: 12,
                                         ),
-                                        pVerticalSpace(height: 15.0),
-                                      ],
-                                    );
-                                  },
-                                ),
+                                      )
+                                    : ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: listOpeningHours.length,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  TView(
+                                                    title:
+                                                        listOpeningHours[index]
+                                                            .day
+                                                            .toString(),
+                                                    size: 14.0,
+                                                    color: pTextColor,
+                                                  ),
+                                                  Spacer(),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .watch_later_outlined,
+                                                        size: 15,
+                                                      ),
+                                                      pHorizontalSpace(
+                                                          width: 4.0),
+                                                      TView(
+                                                        title: listOpeningHours[
+                                                                    index]
+                                                                .start
+                                                                .toString() +
+                                                            " - " +
+                                                            listOpeningHours[
+                                                                    index]
+                                                                .end
+                                                                .toString(),
+                                                        size: 14.0,
+                                                        color: pTextColor,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              pVerticalSpace(height: 15.0),
+                                            ],
+                                          );
+                                        },
+                                      ),
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: TView(
@@ -346,5 +417,13 @@ class _DetailPageState extends State<DetailPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _makeLaunch(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

@@ -2,7 +2,7 @@ class NearByModel {
   String? businessName;
   String? category;
   String? countryCode;
-  int? distance;
+  double? distance = 0.0;
   String? openingHours;
   String? address;
   String? city;
@@ -10,6 +10,8 @@ class NearByModel {
   String? latitude;
   String? longitude;
   String? logoUrl;
+  String? phoneNumber;
+
   String? discountPercenatage;
   BusinessCashbackConfig? businessCashbackConfig;
 
@@ -26,16 +28,18 @@ class NearByModel {
       this.longitude,
       this.logoUrl,
       this.discountPercenatage,
+      this.phoneNumber,
       this.businessCashbackConfig});
 
   NearByModel.fromJson(Map<String, dynamic> json) {
     businessName = json['businessName'];
     category = json['category'];
     countryCode = json['countryCode'];
-    distance = json['distance'];
+    distance = json['distance'] == null ? 0.0 : json['distance'].toDouble();
     openingHours = json['openingHours'];
     address = json['address'];
     city = json['city'];
+    phoneNumber = json['phoneNumber'];
     country = json['country'];
     latitude = json['latitude'];
     longitude = json['longitude'];

@@ -28,7 +28,7 @@ class CashoutBankDetails extends StatelessWidget {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             pVerticalSpace(height: 25.0),
             TView(
@@ -99,7 +99,7 @@ class CashoutBankDetails extends StatelessWidget {
               isOverflow: false,
               color: pTextColor,
             ),
-            Spacer(),
+
             CustomButton(
                 color: pPrimaryColor,
                 isEnabled: true,

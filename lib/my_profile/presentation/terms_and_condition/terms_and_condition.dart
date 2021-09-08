@@ -20,7 +20,11 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar("Terms & conditions", isTrue: true),
+      appBar: commonAppBar("Terms & conditions",  isTrue: true,
+          size: 18,
+          step: "1",
+          color: Colors.transparent,
+          textColor: pTextColor),
       body: SafeArea(
           child: Container(
         padding: EdgeInsets.symmetric(

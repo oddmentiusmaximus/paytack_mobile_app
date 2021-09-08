@@ -21,6 +21,7 @@ const pBubbleColor = Color(0xFF939329);
 /*Fonts*/
 const latoFont = 'assets/fonts/Lato-Black.ttf';
 const latoFontRegular = 'assets/fonts/Lato-Regular.ttf';
+const noImage = 'https://freepikpsd.com/media/2019/10/no-image-available-icon-png-8-Transparent-Images.png';
 
 /*Widget*/
 Widget pVerticalSpace({height: 10.0}) => SizedBox(height: height);

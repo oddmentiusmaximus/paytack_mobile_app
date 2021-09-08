@@ -18,6 +18,35 @@ class CashoutScreenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Obx(() {
+        return CustomButton(
+            color:
+            logic.transferAlert.isTrue ? pPrimaryColor : pBottomNav,
+            isEnabled: true,
+            tvSize: 16.0,
+            tvColor: Colors.white,
+            height: 50.0,
+            radius: 12.0,
+            btnTitle: "Transfer",
+            onPress: () {
+              if (logic.transferAlert.isFalse) {
+                showCommonWithWidget(
+                    context: context,
+                    widget: CustomButton(
+                      color: pPrimaryColor,
+                      tvColor: Colors.white,
+                      isEnabled: true,
+                      tvSize: 16.0,
+                      radius: 12.0,
+                      btnTitle: 'OK',
+                      onPress: () {},
+                    ),
+                    title: " Transfer TDF 3990 was successful",
+                    message:
+                    "Your cashback will be paid into the bank account provided within 7 working days");
+              }
+            });
+      }),
       appBar: commonAppBar("Cashout",
           isTrue: true,
           size: 18,
@@ -102,12 +131,13 @@ class CashoutScreenPage extends StatelessWidget {
             Visibility(
               visible: false,
               replacement: SizedBox(
-                height: 300,
+                height: Get.height,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Expanded(
                       child: ListView.builder(
+                        shrinkWrap:true,
                         itemBuilder: (BuildContext context, int index) {
                           return listOfBankPaymentsOptions();
                         },
@@ -150,37 +180,6 @@ class CashoutScreenPage extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
-            Obx(() {
-              return CustomButton(
-                  color:
-                      logic.transferAlert.isTrue ? pPrimaryColor : pBottomNav,
-                  isEnabled: true,
-                  tvSize: 16.0,
-                  tvColor: Colors.white,
-                  height: 50.0,
-                  radius: 12.0,
-                  btnTitle: "Transfer",
-                  onPress: () {
-                    if (logic.transferAlert.isFalse) {
-                      showCommonWithWidget(
-                          context: context,
-                          widget: CustomButton(
-                            color: pPrimaryColor,
-                            tvColor: Colors.white,
-                            isEnabled: true,
-                            tvSize: 16.0,
-                            radius: 12.0,
-                            btnTitle: 'OK',
-                            onPress: () {},
-                          ),
-                          title: " Transfer TDF 3990 was successful",
-                          message:
-                              "Your cashback will be paid into the bank account provided within 7 working days");
-                    }
-                  });
-            }),
-            pVerticalSpace(height: 25.0),
           ],
         ),
       ),
