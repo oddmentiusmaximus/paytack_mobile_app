@@ -21,5 +21,6 @@ abstract class AppRoute {
   static const bankDetailsPage = '/bankDetails';
   static const changePin = '/changePin';
   static const changePhoneNo = '/changePhoneNo';
+  static const addTinkCard = '/addTink';
 
 }

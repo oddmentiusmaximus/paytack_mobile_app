@@ -40,3 +40,4 @@ const help_art = 'assets/images/help_art.png';
 const refer_earn = 'assets/images/refer_art.png';
 const gray_dot = 'assets/images/gray_dot.png';
 const green_dot = 'assets/images/green_dot.png';
+const not_found = 'assets/images/not_found.png';

@@ -90,7 +90,8 @@ Widget bottomBanner = Column(
         radius: 12.0,
         btnTitle: "Next",
         onPress: () {
-          Get.toNamed(AppRoute.setPin);
+          //Get.toNamed(AppRoute.setPin);
+          Get.toNamed(AppRoute.permissions);
         }),
     pVerticalSpace(height: 15.0),
     CustomButton(

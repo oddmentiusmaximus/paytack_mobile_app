@@ -66,183 +66,210 @@ class _NearByCashBackState extends State<NearByCashBack> {
           ? Center(
               child: CupertinoActivityIndicator(),
             )
-          : ListView.separated(
-              itemCount: widget.callBack == 1
-                  ? 3
-                  : dashboardController.listNearByBusiness.length,
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                String cashback = dashboardController
-                    .listNearByBusiness[index].discountPercenatage
-                    .toString();
-                if (cashback == "null") {
-                  cashback = "0";
-                }
-                return InkWell(
-                  onTap: () {
-                    Get.toNamed(AppRoute.detailPage,
-                        arguments:
-                            dashboardController.listNearByBusiness[index]);
-                  },
-                  child: Container(
-                      margin: EdgeInsets.all(16.0),
-                      child: Column(children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            new Column(
+          : dashboardController.listNearByBusiness.isEmpty
+              ? Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Image.asset(not_found),
+                    ),
+                    pVerticalSpace(height: 10.0),
+                    TView(
+                        title: "Hard time finding your destination",
+                        color: Colors.black,
+                        weight: FontWeight.bold,
+                        size: 20.0),
+                    pVerticalSpace(height: 10.0),
+                    TView(
+                        title: "We are not yet operational near you.",
+                        color: pTextColor,
+                        size: 14.0),
+                    pVerticalSpace(height: 10.0),
+                  ],
+                )
+              : ListView.separated(
+                  itemCount: widget.callBack == 1
+                      ? 3
+                      : dashboardController.listNearByBusiness.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    String cashback = dashboardController
+                        .listNearByBusiness[index].discountPercenatage
+                        .toString();
+                    if (cashback == "null") {
+                      cashback = "0";
+                    }
+                    return InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoute.detailPage,
+                            arguments:
+                                dashboardController.listNearByBusiness[index]);
+                      },
+                      child: Container(
+                          margin: EdgeInsets.all(16.0),
+                          child: Column(children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Row(
+                                new Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    CircleAvatar(
-                                      radius: 25.0,
-                                      backgroundColor: Colors.white,
-                                      child: CircleAvatar(
-                                        radius: 35.0,
-                                        backgroundImage: dashboardController
-                                                    .listNearByBusiness[index]
-                                                    .logoUrl!
-                                                    .isEmpty ||
-                                                dashboardController
+                                    Row(
+                                      children: <Widget>[
+                                        CircleAvatar(
+                                          radius: 25.0,
+                                          backgroundColor: Colors.white,
+                                          child: CircleAvatar(
+                                            radius: 35.0,
+                                            backgroundImage: dashboardController
                                                         .listNearByBusiness[
                                                             index]
-                                                        .logoUrl ==
-                                                    "string"
-                                            ? NetworkImage(noImage)
-                                            : NetworkImage(dashboardController
-                                                .listNearByBusiness[index]
-                                                .logoUrl!),
-                                      ),
-                                    ),
-                                    pHorizontalSpace(width: 5.0),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        RichText(
-                                          overflow: TextOverflow.ellipsis,
-                                          strutStyle:
-                                              StrutStyle(fontSize: 20.0),
-                                          text: TextSpan(
-                                              style: commonTextStyle(),
-                                              text: dashboardController
-                                                  .listNearByBusiness[index]
-                                                  .businessName),
+                                                        .logoUrl!
+                                                        .isEmpty ||
+                                                    dashboardController
+                                                            .listNearByBusiness[
+                                                                index]
+                                                            .logoUrl ==
+                                                        "string"
+                                                ? NetworkImage(noImage)
+                                                : NetworkImage(
+                                                    dashboardController
+                                                        .listNearByBusiness[
+                                                            index]
+                                                        .logoUrl!),
+                                          ),
                                         ),
-                                        Row(
+                                        pHorizontalSpace(width: 5.0),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Image.asset(
-                                              marker,
-                                              height: 15,
-                                              width: 15,
+                                            RichText(
+                                              overflow: TextOverflow.ellipsis,
+                                              strutStyle:
+                                                  StrutStyle(fontSize: 20.0),
+                                              text: TextSpan(
+                                                  style: commonTextStyle(),
+                                                  text: dashboardController
+                                                      .listNearByBusiness[index]
+                                                      .businessName),
                                             ),
-                                            pHorizontalSpace(
-                                              width: 5.0,
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  marker,
+                                                  height: 15,
+                                                  width: 15,
+                                                ),
+                                                pHorizontalSpace(
+                                                  width: 5.0,
+                                                ),
+                                                TView(
+                                                  title: dashboardController
+                                                      .listNearByBusiness[index]
+                                                      .distance!
+                                                      .toStringAsFixed(2),
+                                                  size: 14.0,
+                                                  color: pHomePageTextColor,
+                                                ),
+                                                pHorizontalSpace(
+                                                  width: 5.0,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  size: 17,
+                                                  color: pHomePageTextColor,
+                                                ),
+                                                TView(
+                                                  title: doubleInRange(
+                                                          random, 3.5, 5.0)
+                                                      .toStringAsFixed(1),
+                                                  size: 14.0,
+                                                  color: pHomePageTextColor,
+                                                ),
+                                                pHorizontalSpace(
+                                                  width: 5.0,
+                                                ),
+                                              ],
                                             ),
-                                            TView(
-                                              title: dashboardController
-                                                  .listNearByBusiness[index]
-                                                  .distance!
-                                                  .toStringAsFixed(2),
-                                              size: 14.0,
-                                              color: pHomePageTextColor,
-                                            ),
-                                            pHorizontalSpace(
-                                              width: 5.0,
-                                            ),
-                                            Icon(
-                                              Icons.star,
-                                              size: 17,
-                                              color: pHomePageTextColor,
-                                            ),
-                                            TView(
-                                              title: doubleInRange(
-                                                      random, 3.5, 5.0)
-                                                  .toStringAsFixed(1),
-                                              size: 14.0,
-                                              color: pHomePageTextColor,
-                                            ),
-                                            pHorizontalSpace(
-                                              width: 5.0,
-                                            ),
+                                            pHorizontalSpace(width: 10.0),
                                           ],
                                         ),
-                                        pHorizontalSpace(width: 10.0),
                                       ],
                                     ),
-                                  ],
-                                ),
-                                pVerticalSpace(height: 5.0),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Image.asset(
-                                      flash,
-                                      height: 15,
-                                      width: 15,
-                                    ),
-                                    pHorizontalSpace(
-                                      width: 5.0,
-                                    ),
-                                    Column(
+                                    pVerticalSpace(height: 5.0),
+                                    Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        TView(
-                                          title: cashback + " Extra Cashback",
-                                          size: 14.0,
-                                          color: pHomePageTextColor,
+                                        Image.asset(
+                                          flash,
+                                          height: 15,
+                                          width: 15,
                                         ),
-                                        TView(
-                                          title: "No minimum purchase",
-                                          size: 14.0,
-                                          color: pHomePageTextColor,
+                                        pHorizontalSpace(
+                                          width: 5.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            TView(
+                                              title:
+                                                  cashback + " Extra Cashback",
+                                              size: 14.0,
+                                              color: pHomePageTextColor,
+                                            ),
+                                            TView(
+                                              title: "No minimum purchase",
+                                              size: 14.0,
+                                              color: pHomePageTextColor,
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
+                                    pVerticalSpace(height: 5.0),
                                   ],
                                 ),
-                                pVerticalSpace(height: 5.0),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    Container(
-                                      height: 90.0,
-                                      width: 90.0,
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                        child: Image.network(
-                                          noImage,
-                                          fit: BoxFit.cover,
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        Container(
+                                          height: 90.0,
+                                          width: 90.0,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20.0),
+                                            child: Image.network(
+                                              noImage,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
+                                    pVerticalSpace(height: 9.0),
                                   ],
                                 ),
-                                pVerticalSpace(height: 9.0),
                               ],
-                            ),
-                          ],
-                        )
-                      ])),
+                            )
+                          ])),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Divider();
+                  },
                 );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider();
-              },
-            );
     }));
   }
 

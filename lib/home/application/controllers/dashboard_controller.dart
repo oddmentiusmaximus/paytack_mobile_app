@@ -217,7 +217,7 @@ class DashBoardController extends GetxController {
     _networkRepository.getMethod(
         baseUrl: ApiHelpers.baseUrl +
             ApiHelpers.getNearBy +
-            "?latitude=${80.02}&longitude=${84.00}",
+            "?latitude=${lat}&longitude=${long}",
         success: (success) {
           if (success.toString().isNotEmpty) {
             List<NearByModel> list = List<NearByModel>.from(

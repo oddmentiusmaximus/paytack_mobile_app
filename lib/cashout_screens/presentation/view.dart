@@ -19,33 +19,36 @@ class CashoutScreenPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Obx(() {
-        return CustomButton(
-            color:
-            logic.transferAlert.isTrue ? pPrimaryColor : pBottomNav,
-            isEnabled: true,
-            tvSize: 16.0,
-            tvColor: Colors.white,
-            height: 50.0,
-            radius: 12.0,
-            btnTitle: "Transfer",
-            onPress: () {
-              if (logic.transferAlert.isFalse) {
-                showCommonWithWidget(
-                    context: context,
-                    widget: CustomButton(
-                      color: pPrimaryColor,
-                      tvColor: Colors.white,
-                      isEnabled: true,
-                      tvSize: 16.0,
-                      radius: 12.0,
-                      btnTitle: 'OK',
-                      onPress: () {},
-                    ),
-                    title: " Transfer TDF 3990 was successful",
-                    message:
-                    "Your cashback will be paid into the bank account provided within 7 working days");
-              }
-            });
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: CustomButton(
+              color:
+              logic.transferAlert.isTrue ? pPrimaryColor : pBottomNav,
+              isEnabled: true,
+              tvSize: 16.0,
+              tvColor: Colors.white,
+              height: 50.0,
+              radius: 12.0,
+              btnTitle: "Transfer",
+              onPress: () {
+                if (logic.transferAlert.isFalse) {
+                  showCommonWithWidget(
+                      context: context,
+                      widget: CustomButton(
+                        color: pPrimaryColor,
+                        tvColor: Colors.white,
+                        isEnabled: true,
+                        tvSize: 16.0,
+                        radius: 12.0,
+                        btnTitle: 'OK',
+                        onPress: () {},
+                      ),
+                      title: " Transfer TDF 3990 was successful",
+                      message:
+                      "Your cashback will be paid into the bank account provided within 7 working days");
+                }
+              }),
+        );
       }),
       appBar: commonAppBar("Cashout",
           isTrue: true,
@@ -58,129 +61,130 @@ class CashoutScreenPage extends StatelessWidget {
           horizontal: 20.0,
           vertical: 2.0,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            pVerticalSpace(height: 25.0),
-            Row(
-              children: [
-                InkWell(
-                  onTap: () {
-                    //TODO:Install Popup
-                  },
-                  child: TView(
-                    title: "Enter amount",
-                    size: 16.0,
-                    weight: FontWeight.bold,
-                    align: TextAlign.start,
-                    isMaxLines: false,
-                    isOverflow: false,
-                    color: pTextColor,
-                  ),
-                ),
-                pHorizontalSpace(width: 5.0),
-                Icon(
-                  Icons.help_outline,
-                  size: 20,
-                  color: pPrimaryColor,
-                )
-              ],
-            ),
-            pVerticalSpace(height: 5.0),
-            TInput(
-                controller: logic.amtController,
-                type: 'B1',
-                hintText: "0 Kr",
-                maxLines: 1,
-                isEdit: false,
-                isError: false,
-                isInput: true,
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(240),
-                ],
-                keyboardType: TextInputType.name,
-                onChange: (val) {
-                  if (val.isEmpty) {
-                    logic.amtError.value = true;
-                  } else {
-                    logic.amtError.value = false;
-                  }
-                }),
-            pVerticalSpace(height: 5.0),
-            Obx(() {
-              return Visibility(
-                  visible: logic.amtError.isTrue,
-                  child: TView(
-                    title: 'Please enter an Amount',
-                    size: 12,
-                    color: pError,
-                  ));
-            }),
-            pVerticalSpace(height: 45.0),
-            TView(
-              title: "Select your account to transfer cashback",
-              size: 16.0,
-              weight: FontWeight.bold,
-              align: TextAlign.start,
-              isMaxLines: false,
-              isOverflow: false,
-              color: pTextColor,
-            ),
-            pVerticalSpace(height: 25.0),
-            Visibility(
-              visible: false,
-              replacement: SizedBox(
-                height: Get.height,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                        shrinkWrap:true,
-                        itemBuilder: (BuildContext context, int index) {
-                          return listOfBankPaymentsOptions();
-                        },
-                      ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      //TODO:Install Popup
+                    },
+                    child: TView(
+                      title: "Enter amount",
+                      size: 16.0,
+                      weight: FontWeight.bold,
+                      align: TextAlign.start,
+                      isMaxLines: false,
+                      isOverflow: false,
+                      color: pTextColor,
                     ),
-                  ],
-                ),
+                  ),
+                  pHorizontalSpace(width: 5.0),
+                  Icon(
+                    Icons.help_outline,
+                    size: 20,
+                    color: pPrimaryColor,
+                  )
+                ],
               ),
-              child: GestureDetector(
-                onTap: () {
-                  Get.toNamed(AppRoute.bankDetailsPage);
-                },
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: pPrimaryColor, width: 1),
-                      borderRadius: BorderRadius.circular(10.0)),
-                  child: Row(
+              pVerticalSpace(height: 5.0),
+              TInput(
+                  controller: logic.amtController,
+                  type: 'B1',
+                  hintText: "0 Kr",
+                  maxLines: 1,
+                  isEdit: false,
+                  isError: false,
+                  isInput: true,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(240),
+                  ],
+                  keyboardType: TextInputType.name,
+                  onChange: (val) {
+                    if (val.isEmpty) {
+                      logic.amtError.value = true;
+                    } else {
+                      logic.amtError.value = false;
+                    }
+                  }),
+              pVerticalSpace(height: 5.0),
+              Obx(() {
+                return Visibility(
+                    visible: logic.amtError.isTrue,
+                    child: TView(
+                      title: 'Please enter an Amount',
+                      size: 12,
+                      color: pError,
+                    ));
+              }),
+              pVerticalSpace(height: 45.0),
+              TView(
+                title: "Select your account to transfer cashback",
+                size: 16.0,
+                weight: FontWeight.bold,
+                align: TextAlign.start,
+                isMaxLines: false,
+                isOverflow: false,
+                color: pTextColor,
+              ),
+              pVerticalSpace(height: 25.0),
+              Visibility(
+                visible: false,
+                replacement: SizedBox(
+                  height: Get.height,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Expanded(
-                        child: TView(
-                          title: "Add your payment method",
-                          size: 14.0,
-                          weight: FontWeight.bold,
-                          align: TextAlign.center,
-                          isMaxLines: false,
-                          isOverflow: false,
-                          color: pTextColor,
+                        child: ListView.builder(
+                          shrinkWrap:true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return listOfBankPaymentsOptions();
+                          },
                         ),
                       ),
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: Icon(
-                            Icons.add_circle_outline,
-                            color: pPrimaryColor,
-                          ))
                     ],
                   ),
                 ),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoute.bankDetailsPage);
+                  },
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: pPrimaryColor, width: 1),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TView(
+                            title: "Add your payment method",
+                            size: 14.0,
+                            weight: FontWeight.bold,
+                            align: TextAlign.center,
+                            isMaxLines: false,
+                            isOverflow: false,
+                            color: pTextColor,
+                          ),
+                        ),
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: Icon(
+                              Icons.add_circle_outline,
+                              color: pPrimaryColor,
+                            ))
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

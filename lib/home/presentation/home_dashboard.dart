@@ -37,7 +37,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
 
   @override
   Widget build(BuildContext context) {
-    final key = GlobalKey<State<Tooltip>>();
+     final key = GlobalKey<State<Tooltip>>();
     return MaterialApp(
 
       debugShowCheckedModeBanner: false,
@@ -182,6 +182,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                               onPressed: () {
                                 // _getNewActivity();
                                 Get.toNamed(AppRoute.cashoutPage);
+                                //Get.toNamed(AppRoute.addTinkCard);
                               },
                             ),
                           ),
