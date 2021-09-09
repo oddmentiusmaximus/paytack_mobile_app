@@ -54,7 +54,7 @@ class AppScreens {
         page: () => HomePageLanding(),
         binding: DashBoardBinding()),
 
-    GetPage(name: AppRoute.verifyOtp, page: () => VerifyOtpScreen()),
+    // GetPage(name: AppRoute.verifyOtp, page: () => VerifyOtpScreen()),
     GetPage(name: AppRoute.login, page: () => LoginScreen()),
     GetPage(name: AppRoute.nearByAll, page: () => NearByAll()),
     GetPage(name: AppRoute.detailPage, page: () => DetailPage()),

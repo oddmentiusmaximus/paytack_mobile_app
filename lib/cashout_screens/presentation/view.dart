@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -22,8 +23,7 @@ class CashoutScreenPage extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(20.0),
           child: CustomButton(
-              color:
-              logic.transferAlert.isTrue ? pPrimaryColor : pBottomNav,
+              color: logic.transferAlert.isTrue ? pPrimaryColor : pBottomNav,
               isEnabled: true,
               tvSize: 16.0,
               tvColor: Colors.white,
@@ -31,21 +31,62 @@ class CashoutScreenPage extends StatelessWidget {
               radius: 12.0,
               btnTitle: "Transfer",
               onPress: () {
-                if (logic.transferAlert.isFalse) {
+                if (logic.transferAlert.isTrue) {
                   showCommonWithWidget(
+                      imageTrue: true,
+                      image: success_tick,
                       context: context,
-                      widget: CustomButton(
-                        color: pPrimaryColor,
-                        tvColor: Colors.white,
-                        isEnabled: true,
-                        tvSize: 16.0,
-                        radius: 12.0,
-                        btnTitle: 'OK',
-                        onPress: () {},
+                      widget: Column(
+                        children: [
+                          TView(
+                            title: "Transfer TDF 3990 was successful",
+                            color: Colors.black,
+                            size: 22,
+                            weight: FontWeight.bold,
+                          ),
+                          pVerticalSpace(height: 20.0),
+                          TView(
+                            title: "24 Sept, 2020 At 10:00 PM",
+                            color: pTextColor,
+                            size: 14,
+                            weight: FontWeight.normal,
+                          ),
+                          pVerticalSpace(height: 25.0),
+                          TView(
+                            title: "Cashback transferred to account",
+                            color: pTextColor,
+                            size: 16,
+                            weight: FontWeight.bold,
+                          ),
+                          pVerticalSpace(height: 25.0),
+                          TView(
+                            title:
+                                "Your cashback will be paid into the bank account provided within 7 working days",
+                            color: pTextColor,
+                            size: 14,
+                            weight: FontWeight.normal,
+                          ),
+                          pVerticalSpace(height: 35.0),
+                          CustomButton(
+                            color: pPrimaryColor,
+                            tvColor: Colors.white,
+                            isEnabled: true,
+                            tvSize: 16.0,
+                            radius: 12.0,
+                            width: 120.0,
+                            height: 45.0,
+                            btnTitle: 'OK',
+                            onPress: () {
+                              Get.back();
+                              Get.back();
+                            },
+                          ),
+                          pVerticalSpace(height: 15.0),
+
+                        ],
                       ),
-                      title: " Transfer TDF 3990 was successful",
-                      message:
-                      "Your cashback will be paid into the bank account provided within 7 working days");
+                      title: '',
+                      message: '');
                 }
               }),
         );
@@ -131,58 +172,63 @@ class CashoutScreenPage extends StatelessWidget {
                 color: pTextColor,
               ),
               pVerticalSpace(height: 25.0),
-              Visibility(
-                visible: false,
-                replacement: SizedBox(
-                  height: Get.height,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap:true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return listOfBankPaymentsOptions();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    Get.toNamed(AppRoute.bankDetailsPage);
-                  },
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: pPrimaryColor, width: 1),
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: Row(
+              Obx(() {
+                return Visibility(
+                  visible: logic.dummy.length >= 2
+                      ? logic.showList.isTrue
+                      : logic.showList.isFalse,
+                  replacement: SizedBox(
+                    height: Get.height,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Expanded(
-                          child: TView(
-                            title: "Add your payment method",
-                            size: 14.0,
-                            weight: FontWeight.bold,
-                            align: TextAlign.center,
-                            isMaxLines: false,
-                            isOverflow: false,
-                            color: pTextColor,
+                          child: ListView.builder(
+                            itemCount: logic.dummy.length,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              return listOfBankPaymentsOptions(index);
+                            },
                           ),
                         ),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: Icon(
-                              Icons.add_circle_outline,
-                              color: pPrimaryColor,
-                            ))
                       ],
                     ),
                   ),
-                ),
-              ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppRoute.bankDetailsPage);
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: pPrimaryColor, width: 1),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TView(
+                              title: "Add your payment method",
+                              size: 14.0,
+                              weight: FontWeight.bold,
+                              align: TextAlign.center,
+                              isMaxLines: false,
+                              isOverflow: false,
+                              color: pTextColor,
+                            ),
+                          ),
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Icon(
+                                Icons.add_circle_outline,
+                                color: pPrimaryColor,
+                              ))
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }),
             ],
           ),
         ),
@@ -190,52 +236,65 @@ class CashoutScreenPage extends StatelessWidget {
     );
   }
 
-  Widget listOfBankPaymentsOptions() {
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-          margin: EdgeInsets.symmetric(
-            vertical: 8.0,
-          ),
-          decoration: BoxDecoration(
-              border: Border.all(color: pPrimaryColor, width: 1),
-              borderRadius: BorderRadius.circular(10.0)),
-          child: ListTile(
-            leading: CircleAvatar(
-              radius: 25.0,
-              backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: 25.0,
-                backgroundImage: NetworkImage(
-                    "https://i.etsystatic.com/23304690/r/il/77fca0/2328867732/il_fullxfull.2328867732_tunp.jpg"),
+  Widget listOfBankPaymentsOptions(int index) {
+    return Obx(() {
+      return Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
+            margin: EdgeInsets.symmetric(
+              vertical: 8.0,
+            ),
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: logic.isSelectedRadio.value == index
+                        ? pPrimaryColor
+                        : pDisableColor,
+                    width: 1),
+                borderRadius: BorderRadius.circular(10.0)),
+            child: ListTile(
+              leading: CircleAvatar(
+                radius: 20.0,
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                  radius: 25.0,
+                  backgroundImage: NetworkImage(
+                      "https://i.etsystatic.com/23304690/r/il/77fca0/2328867732/il_fullxfull.2328867732_tunp.jpg"),
+                ),
+              ),
+              title: TView(
+                title: 'Swedbank Bank ABP',
+                size: 12,
+                weight: FontWeight.normal,
+                color: pTextColor,
+                align: TextAlign.start,
+              ),
+              subtitle: TView(
+                title: 'Custome .....2657',
+                size: 10,
+                color: pTextColor3,
+                align: TextAlign.start,
+              ),
+              trailing: Transform.scale(
+                scale: 1.5,
+                child: Radio(
+                    fillColor: logic.isSelectedRadio.value == index
+                        ? MaterialStateProperty.all(pPrimaryColor)
+                        : MaterialStateProperty.all(pDisableColor),
+                    value: index,
+                    groupValue: logic.isSelectedRadio.value,
+                    onChanged: (val) {
+                      logic.onChange(val);
+                    }),
               ),
             ),
-            title: TView(
-              title: 'Pizza Hut',
-              size: 15,
-              weight: FontWeight.bold,
-              color: pTextColor,
-              align: TextAlign.start,
-            ),
-            subtitle: TView(
-              title: '21 Sept at 20:30',
-              size: 12,
-              color: pTextColor3,
-              align: TextAlign.start,
-            ),
-            trailing: TView(
-              title: '40 kr',
-              size: 14,
-              color: pTextColor,
-            ),
           ),
-        ),
-        Divider(
-          height: 1,
-          thickness: 1,
-        )
-      ],
-    );
+          Divider(
+            height: 1,
+            thickness: 1,
+          )
+        ],
+      );
+    });
   }
 }
