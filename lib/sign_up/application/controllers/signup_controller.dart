@@ -72,6 +72,8 @@ class SignupController extends GetxController {
           Get.back();
           await CommonStorage.writeSecureStorageData(
               secure_access_key, success['token']);
+          await CommonStorage.writeSecureStorageData(
+              login_pin_key, confirmPinController!.text.trim());
           Get.offAllNamed(AppRoute.homeLanding);
           print(success.toString());
         },
@@ -162,23 +164,6 @@ class SignupController extends GetxController {
     update();
   }
 
-  ///Permission Screen
-  bool emailPermission = true;
-  bool pnPermission = true;
-  bool smsPermission = true;
-
-  togglePermission(bool isEmail, bool isPN, bool isSMS) {
-    if (isEmail) {
-      emailPermission = !emailPermission;
-    } else if (isPN) {
-      pnPermission = !pnPermission;
-    } else if (isSMS) {
-      smsPermission = !smsPermission;
-    } else {
-      showToast(msg: 'Permission Required');
-    }
-    update();
-  }
 
   ///Set Pin Screen
   TextEditingController? confirmPinController;

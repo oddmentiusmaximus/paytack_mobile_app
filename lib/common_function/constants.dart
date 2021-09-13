@@ -81,6 +81,7 @@ const mobile_type_size = {
 };
 
 const secure_access_key = 'access_token';
+const login_pin_key = 'access_token';
 
 const List<Map<String, dynamic>> list = [
   {"title": "one", "id": "1", "lat": 23.7985053, "lon": 90.3842538},

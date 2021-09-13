@@ -8,7 +8,9 @@ class ProfileController extends GetxController {
 
   final NetworkProvider _networkRepository;
   String? referralCode = '';
-
+///myprofile
+  RxBool popUpVerifyPin = false.obs;
+  TextEditingController? popUpPinController;
   ///ChangePinPage
   RxBool showPin = false.obs;
   RxBool showConfirmPin = false.obs;
@@ -23,6 +25,7 @@ class ProfileController extends GetxController {
     super.onInit();
     getReferralCode();
     optionalDetailsMobileNo = TextEditingController();
+    popUpPinController = TextEditingController();
   }
 
   Future<void> getReferralCode() async {
@@ -46,5 +49,11 @@ class ProfileController extends GetxController {
     } else if (isConfirm) {
       showConfirmPin.value = !showConfirmPin.value;
     }
+  }
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    popUpPinController!.dispose();
+    super.onClose();
   }
 }
