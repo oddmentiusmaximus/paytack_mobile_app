@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,21 +8,33 @@ import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/common_dialog.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/secure_storage.dart';
+import 'package:paytack/common_function/utils/camera_utils.dart';
+import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/home/application/controllers/dashboard_controller.dart';
 import 'package:paytack/my_profile/application/profile_controller.dart';
 import 'package:paytack/my_profile/presentation/need_help/navigation.dart';
 import 'package:paytack/routes/app_screens.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class MyProfileTab extends StatelessWidget {
-  MyProfileTab({Key? key}) : super(key: key);
+  final profileController = Get.find<ProfileController>();
+  StreamController<ErrorAnimationType>? errorController;
+
   List<String> settingMenuList = [
     "Change phone number",
     "Choose Language",
     "Change PIN",
-    "Payment details"
+    "Payment details",
+    "Permissions"
   ];
-  List<String> settingIconList = [phone, language, change_pin, card];
+  List<String> settingIconList = [
+    phone,
+    language,
+    change_pin,
+    card,
+    permission
+  ];
   List<String> moreMenuList = [
     "Refer and earn",
     "Need help?",
@@ -124,11 +138,25 @@ class MyProfileTab extends StatelessWidget {
                           itemBuilder: (BuildContext context, int index) {
                             return ListTile(
                               onTap: () {
-                                if (index == 0) {
-                                  Get.toNamed(AppRoute.changePhoneNo);
-                                }
-                                if (index == 2) {
-                                  Get.toNamed(AppRoute.changePin);
+                                switch (index) {
+                                  case 0:
+                                    verifyPinPopUp(context,
+                                        route: AppRoute.changePhoneNo);
+                                    break;
+                                  case 1:
+                                    break;
+                                  case 2:
+                                    verifyPinPopUp(context,
+                                        route: AppRoute.changePin);
+                                    break;
+                                  case 3:
+                                    break;
+                                  case 4:
+                                    verifyPinPopUp(context,
+                                        route: AppRoute.permissions);
+                                    break;
+                                  default:
+                                    break;
                                 }
                               },
                               title: TView(
@@ -234,5 +262,127 @@ class MyProfileTab extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  verifyPinPopUp(
+    BuildContext context, {
+    required String route,
+  }) {
+    return showCommonWithWidget(
+        imageTrue: false,
+        context: context,
+        widget: Column(
+          children: [
+            Obx(() {
+              return Row(
+                children: <Widget>[
+                  //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.red,child: Text("text 1"))),
+                  Expanded(
+                    flex: 5,
+                    child: PinCodeTextField(
+                      appContext: context,
+
+                      pastedTextStyle: TextStyle(
+                        color: Colors.green.shade600,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      length: 4,
+                      obscureText: profileController.popUpVerifyPin.isTrue,
+                      obscuringCharacter: '*',
+                      blinkWhenObscuring: true,
+                      animationType: AnimationType.fade,
+                      validator: (v) {
+                        return null;
+                      },
+                      pinTheme: PinTheme(
+                          shape: PinCodeFieldShape.box,
+                          fieldOuterPadding: EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 4.0),
+                          borderRadius: BorderRadius.circular(10),
+                          fieldHeight: 50,
+                          fieldWidth: 50,
+                          inactiveColor: pBorderGrey,
+                          inactiveFillColor: Colors.white,
+                          activeFillColor: Colors.white,
+                          selectedFillColor: Colors.white,
+                          selectedColor: pPrimaryColor,
+                          activeColor: pPrimaryColor),
+                      autoDisposeControllers: false,
+                      cursorColor: Colors.black,
+                      animationDuration: Duration(milliseconds: 300),
+                      enableActiveFill: true,
+                      errorAnimationController: errorController,
+                      controller: profileController.popUpPinController,
+                      keyboardType: TextInputType.phone,
+                      onCompleted: (v) {
+                        print("Completed");
+                      },
+                      // onTap: () {
+                      //   print("Pressed");
+                      // },
+                      onChanged: (value) {
+                        print(value);
+                      },
+                      beforeTextPaste: (text) {
+                        print("Allowing to paste $text");
+                        //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                        //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                        return true;
+                      },
+                    ),
+                  ),
+                  Expanded(
+                      child: GestureDetector(
+                    onTap: () {
+                      profileController.popUpVerifyPin.value =
+                          !profileController.popUpVerifyPin.value;
+                    },
+                    child: Visibility(
+                      visible: profileController.popUpVerifyPin.isTrue,
+                      replacement: TView(
+                        title: "Hide",
+                        color: pProgress,
+                        size: 14.0,
+                      ),
+                      child: TView(
+                        title: "Show",
+                        color: pProgress,
+                        size: 14.0,
+                      ),
+                    ),
+                  )),
+                  //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.green,child: Text("text 4"))),
+                ],
+              );
+            }),
+            pVerticalSpace(height: 25.0),
+            CustomButton(
+              color: pPrimaryColor,
+              tvColor: Colors.white,
+              isEnabled: true,
+              tvSize: 16.0,
+              radius: 12.0,
+              width: 120.0,
+              height: 45.0,
+              btnTitle: 'Confirm',
+              onPress: () async {
+                var pin =
+                    await CommonStorage.readSecureStorageData(login_pin_key);
+                if (profileController.popUpPinController!.text.trim() == pin) {
+                  Get.back();
+                  Get.toNamed(route);
+                  profileController.popUpPinController!.clear();
+                } else {
+                  profileController.popUpPinController!.clear();
+                  showToast(msg: 'Enter a Valid Pin');
+                }
+              },
+            ),
+            pVerticalSpace(height: 15.0),
+          ],
+        ),
+        title: 'Enter your PIN',
+        message: '');
   }
 }
