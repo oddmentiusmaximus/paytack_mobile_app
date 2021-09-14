@@ -23,6 +23,7 @@ class _AppConfigState extends State<AppConfig> {
       getPages: AppScreens.all,
       initialRoute: AppRoute.splash,
       enableLog: true,
+
       navigatorKey: Get.key,
       locale: Locale('en', 'US'),
       fallbackLocale: TranslationService.fallbackLocale,

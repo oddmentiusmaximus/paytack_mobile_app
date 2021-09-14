@@ -42,7 +42,6 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
 
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-
         backgroundColor: Colors.white,
         body: SafeArea(
           child: SingleChildScrollView(
@@ -71,6 +70,23 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                                 size: 18,
                                 weight: FontWeight.bold,
                               ),
+                              Spacer(),
+                              Container(
+                                child: OutlineButtonCommon(
+                                  btnTitle: "Redeem",
+                                  tvSize: 14.0,
+                                  height: 15.0,
+                                  horizontalPadding: 1.0,
+                                  verticalPadding: 1.0,
+                                  btnColor: Colors.grey.shade100,
+                                  icon: qr,
+                                  color: pPrimaryColor,
+                                  textColor: Colors.black,
+                                  onPressed: () {
+                                    val.scan(context);
+                                  },
+                                ),
+                              )
                             ],
                           )),
                     ),
@@ -148,47 +164,47 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                       ),
                     ),
                     pVerticalSpace(height: 10.0),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 5.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: OutlineButtonCommon(
-                              btnTitle: "Redeem",
-                              tvSize: 14.0,
-                              horizontalPadding: 1.0,
-                              verticalPadding: 1.0,
-                              btnColor: pPrimaryColor,
-                              icon: qr,
-                              textColor: Colors.black,
-                              onPressed: () {
-                                val.scan(context);
-                              },
-                            ),
-                          ),
-                          pHorizontalSpace(width: 5.0),
-                          Expanded(
-                            child: OutlineButtonCommon(
-                              horizontalPadding: 1.0,
-                              icon: bank,
-                              verticalPadding: 1.0,
-                              tvSize: 14.0,
-                              btnColor: pPrimaryColor,
-                              textColor: Colors.black,
-                              btnTitle: "Cashout",
-                              onPressed: () {
-                                // _getNewActivity();
-                                Get.toNamed(AppRoute.cashoutPage);
-                                //Get.toNamed(AppRoute.addTinkCard);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 20.0, vertical: 5.0),
+                    //   child: Row(
+                    //     mainAxisSize: MainAxisSize.min,
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       Expanded(
+                    //         child: OutlineButtonCommon(
+                    //           btnTitle: "Redeem",
+                    //           tvSize: 14.0,
+                    //           horizontalPadding: 1.0,
+                    //           verticalPadding: 1.0,
+                    //           btnColor: pPrimaryColor,
+                    //           icon: qr,
+                    //           textColor: Colors.black,
+                    //           onPressed: () {
+                    //             val.scan(context);
+                    //           },
+                    //         ),
+                    //       ),
+                    //       pHorizontalSpace(width: 5.0),
+                    //       Expanded(
+                    //         child: OutlineButtonCommon(
+                    //           horizontalPadding: 1.0,
+                    //           icon: bank,
+                    //           verticalPadding: 1.0,
+                    //           tvSize: 14.0,
+                    //           btnColor: pPrimaryColor,
+                    //           textColor: Colors.black,
+                    //           btnTitle: "Cashout",
+                    //           onPressed: () {
+                    //             // _getNewActivity();
+                    //             Get.toNamed(AppRoute.cashoutPage);
+                    //             //Get.toNamed(AppRoute.addTinkCard);
+                    //           },
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     Carousel(),
                     Stack(
                       alignment: Alignment.center,

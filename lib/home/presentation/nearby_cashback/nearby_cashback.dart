@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
+import 'package:paytack/common_function/common_dialog.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/utils/permission.dart';
+import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/home/application/controllers/dashboard_controller.dart';
 import 'package:paytack/routes/app_screens.dart';
@@ -41,6 +43,11 @@ class _NearByCashBackState extends State<NearByCashBack> {
   _getCurrentLocation() async {
     bool permission = await PermissionHandle().checkPermissionStorage(
         context: context, permissionGroup: Permission.locationWhenInUse);
+    bool permissions = await PermissionHandle().checkPermissionStorage(
+        context: context, permissionGroup: Permission.location);
+    bool permissions1 = await PermissionHandle().checkPermissionStorage(
+        context: context, permissionGroup: Permission.locationAlways);
+
     print("here");
     print(permission);
     if (permission == true) {
@@ -52,7 +59,46 @@ class _NearByCashBackState extends State<NearByCashBack> {
         Get.find<DashBoardController>()
             .getNearBy(position.latitude, position.longitude);
       }).catchError((e) {
-        print(e);
+        showCommonWithWidget(
+            barrierDismissible: false,
+            imageTrue: false,
+            context: context,
+            title: "Location disabled",
+            message:
+                'Please enable location services to find \nbest offers nearest to you',
+            widget: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  CustomButton(
+                      color: pPrimaryColor,
+                      isEnabled: true,
+                      tvSize: 16.0,
+                      width: 150,
+                      tvColor: Colors.white,
+                      height: 45.0,
+                      radius: 12.0,
+                      btnTitle: "Enable location",
+                      onPress: () async {
+                        await openAppSettings();
+                        //PermissionHandle().permission();
+                      }),
+                  pVerticalSpace(height: 15.0),
+                  InkWell(
+                    onTap: () {
+                      Get.find<DashBoardController>().loader = true;
+                      Get.back();
+                    },
+                    child: TView(
+                      title: "Not now",
+                      color: pPrimaryColor,
+                      size: 14.0,
+                    ),
+                  )
+                ],
+              ),
+            ));
+        print(e.toString());
       });
     } else {}
   }
