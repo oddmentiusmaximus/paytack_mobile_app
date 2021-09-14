@@ -50,6 +50,8 @@ class LoginController extends GetxController {
           Get.back();
           await CommonStorage.writeSecureStorageData(
               secure_access_key, success['token']);
+          await CommonStorage.writeSecureStorageData(
+              login_pin_key, loginPinController!.text.trim());
           Get.offAllNamed(AppRoute.homeLanding);
         },
         error: (error) {

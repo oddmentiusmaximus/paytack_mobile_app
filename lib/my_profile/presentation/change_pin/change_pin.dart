@@ -104,7 +104,7 @@ class ChangePinPage extends StatelessWidget {
                           profileController.toggleObscureText(true, false);
                         },
                         child: Visibility(
-                          visible: profileController.showPin.isFalse,
+                          visible: profileController.showPin.isTrue,
                           replacement: TView(
                             title: "Hide",
                             color: pProgress,
@@ -195,7 +195,7 @@ class ChangePinPage extends StatelessWidget {
                             profileController.toggleObscureText(false, true);
                           },
                           child: Visibility(
-                            visible: profileController.showConfirmPin.isFalse,
+                            visible: profileController.showConfirmPin.isTrue,
                             replacement: TView(
                               title: "Hide",
                               color: pProgress,

@@ -6,8 +6,8 @@ import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
+import 'package:paytack/permissions_screen/application/controller.dart';
 import 'package:paytack/routes/app_screens.dart';
-import 'package:paytack/sign_up/application/controllers/signup_controller.dart';
 import 'package:get/get.dart';
 
 class PermissionsScreen extends StatelessWidget {
@@ -28,7 +28,7 @@ class PermissionsScreen extends StatelessWidget {
             isTrue: true, size: 14, step: "1", color: Colors.transparent),
         resizeToAvoidBottomInset: false,
         body: SafeArea(
-          child: GetBuilder<SignupController>(builder: (logic) {
+          child: GetBuilder<PermissionsController>(builder: (logic) {
             return ListView(
               children: [
                 Padding(
@@ -319,9 +319,12 @@ class PermissionsScreen extends StatelessWidget {
                       tvSize: 16.0,
                       height: 50.0,
                       radius: 12.0,
-                      btnTitle: "Save and proceed",
+                      btnTitle: logic.isSignUp ? "Save and proceed" : "Update",
                       onPress: () {
-                        Get.toNamed(AppRoute.setPin);
+                        if (logic.isSignUp)
+                          Get.toNamed(AppRoute.setPin);
+                        else
+                          Get.back();
                       }),
                 ),
               ],

@@ -7,6 +7,7 @@ import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
+import 'package:paytack/permissions_screen/application/controller.dart';
 import 'package:paytack/routes/app_screens.dart';
 
 class AddCardIntro extends StatefulWidget {
@@ -91,6 +92,7 @@ Widget bottomBanner = Column(
         btnTitle: "Next",
         onPress: () {
           //Get.toNamed(AppRoute.setPin);
+          Get.put(PermissionsController()).isSignUp = true;
           Get.toNamed(AppRoute.permissions);
         }),
     pVerticalSpace(height: 15.0),
@@ -103,6 +105,7 @@ Widget bottomBanner = Column(
         tvColor: pPrimaryColor,
         btnTitle: "I'll add later",
         onPress: () {
+          Get.put(PermissionsController()).isSignUp = true;
           Get.toNamed(AppRoute.permissions);
         }),
     pVerticalSpace(height: 15.0),

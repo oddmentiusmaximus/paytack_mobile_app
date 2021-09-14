@@ -19,6 +19,7 @@ import 'package:paytack/my_profile/presentation/refer_earn/refer_earn.dart';
 import 'package:paytack/my_profile/presentation/terms_and_condition/terms_and_condition.dart';
 import 'package:paytack/near_by_all/presentation/near_by_screen.dart';
 import 'package:paytack/optional_details_screen/presentation/optional_details.dart';
+import 'package:paytack/permissions_screen/application/binding.dart';
 import 'package:paytack/permissions_screen/presentation/permissions_screen.dart';
 
 import 'package:paytack/set_pin/presentation/set_pin_screen.dart';
@@ -54,12 +55,15 @@ class AppScreens {
         page: () => HomePageLanding(),
         binding: DashBoardBinding()),
 
-    GetPage(name: AppRoute.verifyOtp, page: () => VerifyOtpScreen()),
+    // GetPage(name: AppRoute.verifyOtp, page: () => VerifyOtpScreen()),
     GetPage(name: AppRoute.login, page: () => LoginScreen()),
     GetPage(name: AppRoute.nearByAll, page: () => NearByAll()),
     GetPage(name: AppRoute.detailPage, page: () => DetailPage()),
     GetPage(name: AppRoute.addCard, page: () => AddCardIntro()),
-    GetPage(name: AppRoute.permissions, page: () => PermissionsScreen()),
+    GetPage(
+        name: AppRoute.permissions,
+        page: () => PermissionsScreen(),
+        binding: PermissionBinding()),
     GetPage(
         name: AppRoute.optionalDetails, page: () => OptionalDetailsScreen()),
     GetPage(name: AppRoute.discover_page, page: () => GoogleMapsClonePage()),
