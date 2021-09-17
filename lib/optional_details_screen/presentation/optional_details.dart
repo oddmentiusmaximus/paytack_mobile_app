@@ -10,6 +10,7 @@ import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/common_function/widget/textinput.dart';
+import 'package:paytack/food_detail_page/application/controllers/detail_page_controller.dart';
 import 'package:paytack/routes/app_screens.dart';
 import 'package:paytack/sign_up/application/controllers/signup_controller.dart';
 
@@ -21,6 +22,12 @@ class OptionalDetailsScreen extends StatefulWidget {
 }
 
 class _OptionalDetailsScreenState extends State<OptionalDetailsScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(

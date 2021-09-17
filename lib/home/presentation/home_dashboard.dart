@@ -37,9 +37,8 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
 
   @override
   Widget build(BuildContext context) {
-     final key = GlobalKey<State<Tooltip>>();
+    final key = GlobalKey<State<Tooltip>>();
     return MaterialApp(
-
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -70,7 +69,51 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                                 size: 18,
                                 weight: FontWeight.bold,
                               ),
-                              Spacer(),
+                            ],
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 45.0, vertical: 5.0),
+                      child: Row(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TView(
+                                color: pHomePageTextColor,
+                                title: "CASHBACK BALANCE",
+                              ),
+                              pVerticalSpace(height: 10.0),
+                              TView(
+                                size: 23.0,
+                                color: pTextColors,
+                                title: val.availableCashback.toString() + " kr",
+                                weight: FontWeight.bold,
+                              ),
+                              pVerticalSpace(height: 15.0),
+                              Row(
+                                children: [
+                                  TView(
+                                    color: Colors.grey,
+                                    title:
+                                        val.pendingCashback.toString() + " kr.",
+                                    size: 14.0,
+                                    weight: FontWeight.bold,
+                                  ),
+                                  pHorizontalSpace(width: 2.0),
+                                  TView(
+                                    title: "Cashback Pending",
+                                    color: pHomePageTextColor,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            children: [
                               Container(
                                 child: OutlineButtonCommon(
                                   btnTitle: "Redeem",
@@ -78,7 +121,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                                   height: 15.0,
                                   horizontalPadding: 1.0,
                                   verticalPadding: 1.0,
-                                  btnColor: Colors.grey.shade100,
+                                  btnColor: pPrimaryColor,
                                   icon: qr,
                                   color: pPrimaryColor,
                                   textColor: Colors.black,
@@ -86,44 +129,8 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                                     val.scan(context);
                                   },
                                 ),
-                              )
-                            ],
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 48.0, vertical: 5.0),
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    wallet,
-                                    height: 20.0,
-                                  ),
-                                  pHorizontalSpace(width: 10.0),
-                                  TView(
-                                    size: 14.0,
-                                    color: pTextColors,
-                                    title: val.availableCashback.toString() +
-                                        " kr",
-                                    weight: FontWeight.bold,
-                                  )
-                                ],
                               ),
-                              pVerticalSpace(height: 10.0),
-                              TView(
-                                color: pHomePageTextColor,
-                                title: "Cashback Balance",
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          Column(
-                            children: [
-                              Row(
+                              /* Row(
                                 children: [
                                   TView(
                                     color: Colors.grey,
@@ -157,7 +164,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                               TView(
                                 title: "Pending Cashback",
                                 color: pHomePageTextColor,
-                              ),
+                              ),*/
                             ],
                           )
                         ],
@@ -241,6 +248,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                           ),
                           InkWell(
                             onTap: () {
+                              //_getNewActivity();
                               Get.toNamed(AppRoute.nearByAll);
                             },
                             child: TView(
@@ -253,7 +261,9 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                         ],
                       ),
                     ),
-                    NearByCashBack(callBack: 1,)
+                    NearByCashBack(
+                      callBack: 1,
+                    )
                   ],
                 );
               },

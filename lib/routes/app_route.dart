@@ -22,5 +22,6 @@ abstract class AppRoute {
   static const changePin = '/changePin';
   static const changePhoneNo = '/changePhoneNo';
   static const addTinkCard = '/addTink';
+  static const setForgotPassword = '/forgot-pin';
 
 }

@@ -53,211 +53,205 @@ class MyProfileTab extends StatelessWidget {
         elevation: 0,
       ),
       body: SafeArea(
-          minimum: const EdgeInsets.only(top: 20.0),
+          //minimum: const EdgeInsets.only(top: 10.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 pVerticalSpace(height: 10.0),
-                Card(
-                  elevation: 2,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            padding: const EdgeInsets.all(10.0),
-                            color: Colors.white,
-                            margin: MediaQuery.of(context).padding,
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Image.asset(
-                                      logo_mark,
-                                      height: 40,
-                                      width: 40,
-                                      fit: BoxFit.contain,
-                                    ),
-                                    GetBuilder<DashBoardController>(
-                                        builder: (profile) {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(10.0),
+                          color: Colors.white,
+                          margin: MediaQuery.of(context).padding,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    logo_mark,
+                                    height: 40,
+                                    width: 40,
+                                    fit: BoxFit.contain,
+                                  ),
+                                  GetBuilder<DashBoardController>(
+                                      builder: (profile) {
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        TView(
+                                          title: profile.userName.toString(),
+                                          color: pTextColors,
+                                          size: 20,
+                                          weight: FontWeight.bold,
+                                        ),
+                                        Row(children: [
                                           TView(
-                                            title: profile.userName.toString(),
-                                            color: pTextColors,
-                                            size: 20,
-                                            weight: FontWeight.bold,
+                                            title:
+                                                profile.userEmail.toString(),
+                                            color: pBorderGrey,
+                                            size: 12,
+                                            weight: FontWeight.normal,
                                           ),
-                                          Row(children: [
-                                            TView(
-                                              title:
-                                                  profile.userEmail.toString(),
-                                              color: pBorderGrey,
-                                              size: 12,
-                                              weight: FontWeight.normal,
-                                            ),
-                                            pHorizontalSpace(width: 10.0),
-                                            ImageIcon(
-                                              AssetImage(edit),
-                                              size: 15,
-                                              color: pBorderGrey,
-                                            ),
-                                          ])
-                                        ],
-                                      );
-                                    })
-                                  ],
-                                ),
-                              ],
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 15),
-                          child: TView(
-                            title: "Settings",
-                            weight: FontWeight.bold,
-                            color: pTextColors,
-                            size: 16,
-                          ),
-                        ),
-                        ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: settingIconList.length,
-                          separatorBuilder: (BuildContext context, int index) =>
-                              Divider(
-                            height: 1,
-                            indent: 70,
-                            thickness: 0.5,
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              onTap: () {
-                                switch (index) {
-                                  case 0:
-                                    verifyPinPopUp(context,
-                                        route: AppRoute.changePhoneNo);
-                                    break;
-                                  case 1:
-                                    break;
-                                  case 2:
-                                    verifyPinPopUp(context,
-                                        route: AppRoute.changePin);
-                                    break;
-                                  case 3:
-                                    break;
-                                  case 4:
-                                    verifyPinPopUp(context,
-                                        route: AppRoute.permissions);
-                                    break;
-                                  default:
-                                    break;
-                                }
-                              },
-                              title: TView(
-                                title: settingMenuList[index],
-                                align: TextAlign.start,
-                                color: pTextColors,
-                                size: 14.0,
+                                          pHorizontalSpace(width: 10.0),
+                                          ImageIcon(
+                                            AssetImage(edit),
+                                            size: 15,
+                                            color: pBorderGrey,
+                                          ),
+                                        ])
+                                      ],
+                                    );
+                                  })
+                                ],
                               ),
-                              leading: Padding(
-                                padding: const EdgeInsets.only(top: 4.0),
-                                child: Image.asset(
-                                  settingIconList[index],
-                                  fit: BoxFit.cover,
-                                  height: 18.0,
-                                ),
-                              ),
-                            );
-                          },
+                            ],
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 15),
+                        child: TView(
+                          title: "Settings",
+                          weight: FontWeight.bold,
+                          color: pTextColors,
+                          size: 16,
                         ),
-                        Divider(height: 1)
-                      ]),
-                ),
+                      ),
+                      ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: settingIconList.length,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            Divider(
+                          height: 1,
+                          indent: 70,
+                          thickness: 0.5,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            onTap: () {
+                              switch (index) {
+                                case 0:
+                                  verifyPinPopUp(context,
+                                      route: AppRoute.changePhoneNo);
+                                  break;
+                                case 1:
+                                  break;
+                                case 2:
+                                  verifyPinPopUp(context,
+                                      route: AppRoute.changePin);
+                                  break;
+                                case 3:
+                                  break;
+                                case 4:
+                                  verifyPinPopUp(context,
+                                      route: AppRoute.permissions);
+                                  break;
+                                default:
+                                  break;
+                              }
+                            },
+                            title: TView(
+                              title: settingMenuList[index],
+                              align: TextAlign.start,
+                              color: pTextColors,
+                              size: 14.0,
+                            ),
+                            leading: Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Image.asset(
+                                settingIconList[index],
+                                fit: BoxFit.cover,
+                                height: 18.0,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      Divider(height: 1)
+                    ]),
                 pVerticalSpace(height: 10.0),
-                Card(
-                  elevation: 2,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 15),
-                          child: TView(
-                            title: "More",
-                            weight: FontWeight.bold,
-                            color: pTextColors,
-                            size: 16,
-                          ),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 15),
+                        child: TView(
+                          title: "More",
+                          weight: FontWeight.bold,
+                          color: pTextColors,
+                          size: 16,
                         ),
-                        ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: moreIconList.length,
-                          separatorBuilder: (BuildContext context, int index) =>
-                              Divider(
-                            height: 1,
-                            indent: 70,
-                            thickness: 0.5,
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              onTap: () {
-                                if (moreMenuList[index] == "Sign out") {
-                                  actionPopup(
-                                      context: context,
-                                      icon: ImageIcon(
-                                        AssetImage(signOut),
-                                        color: Colors.red,
-                                        size: 70.0,
-                                      ),
-                                      message:
-                                          "Are you sure you want to sign out?",
-                                      rightButtonText: "Yes",
-                                      leftButtonText: "No",
-                                      rightBtnCallBack: () async {
-                                        //Get.back(canPop: true, closeOverlays: true);
-                                        await CommonStorage.delete();
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop();
-                                        Get.offAllNamed(AppRoute.login);
-                                      },
-                                      leftBtnCallBack: () {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop();
-                                        //Get.back(result: "hi");
-                                      });
-                                } else {
-                                  Get.toNamed(navigation[index]['route']);
-                                }
-                              },
-                              title: TView(
-                                title: moreMenuList[index],
-                                align: TextAlign.start,
-                                color: pTextColors,
-                                size: 14.0,
-                              ),
-                              leading: Padding(
-                                padding: const EdgeInsets.only(top: 4.0),
-                                child: Image.asset(
-                                  moreIconList[index],
-                                  fit: BoxFit.cover,
-                                  height: 18.0,
-                                ),
-                              ),
-                            );
-                          },
+                      ),
+                      ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: moreIconList.length,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            Divider(
+                          height: 1,
+                          indent: 70,
+                          thickness: 0.5,
                         ),
-                        Divider(height: 1)
-                      ]),
-                )
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            onTap: () {
+                              if (moreMenuList[index] == "Sign out") {
+                                actionPopup(
+                                    context: context,
+                                    icon: ImageIcon(
+                                      AssetImage(signOut),
+                                      color: Colors.red,
+                                      size: 70.0,
+                                    ),
+                                    message:
+                                        "Are you sure you want to sign out?",
+                                    rightButtonText: "Yes",
+                                    leftButtonText: "No",
+                                    rightBtnCallBack: () async {
+                                      //Get.back(canPop: true, closeOverlays: true);
+                                      await CommonStorage.delete();
+                                      Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pop();
+                                      Get.offAllNamed(AppRoute.login);
+                                    },
+                                    leftBtnCallBack: () {
+                                      Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pop();
+                                      //Get.back(result: "hi");
+                                    });
+                              } else {
+                                Get.toNamed(navigation[index]['route']);
+                              }
+                            },
+                            title: TView(
+                              title: moreMenuList[index],
+                              align: TextAlign.start,
+                              color: pTextColors,
+                              size: 14.0,
+                            ),
+                            leading: Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Image.asset(
+                                moreIconList[index],
+                                fit: BoxFit.cover,
+                                height: 18.0,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      Divider(height: 1)
+                    ])
               ],
             ),
           )),
@@ -275,13 +269,13 @@ class MyProfileTab extends StatelessWidget {
           children: [
             Obx(() {
               return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.red,child: Text("text 1"))),
                   Expanded(
-                    flex: 5,
-                    child: PinCodeTextField(
+                    child:
+                    PinCodeTextField(
                       appContext: context,
-
                       pastedTextStyle: TextStyle(
                         color: Colors.green.shade600,
                         fontWeight: FontWeight.bold,
@@ -332,26 +326,25 @@ class MyProfileTab extends StatelessWidget {
                       },
                     ),
                   ),
-                  Expanded(
-                      child: GestureDetector(
+                  GestureDetector(
                     onTap: () {
-                      profileController.popUpVerifyPin.value =
-                          !profileController.popUpVerifyPin.value;
+                  profileController.popUpVerifyPin.value =
+                      !profileController.popUpVerifyPin.value;
                     },
                     child: Visibility(
-                      visible: profileController.popUpVerifyPin.isTrue,
-                      replacement: TView(
-                        title: "Hide",
-                        color: pProgress,
-                        size: 14.0,
-                      ),
-                      child: TView(
-                        title: "Show",
-                        color: pProgress,
-                        size: 14.0,
-                      ),
+                  visible: profileController.popUpVerifyPin.isTrue,
+                  replacement: TView(
+                    title: "Hide",
+                    color: pProgress,
+                    size: 14.0,
+                  ),
+                  child: TView(
+                    title: "Show",
+                    color: pProgress,
+                    size: 14.0,
+                  ),
                     ),
-                  )),
+                  ),
                   //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.green,child: Text("text 4"))),
                 ],
               );

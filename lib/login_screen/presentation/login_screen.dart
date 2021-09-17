@@ -218,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           isEdit: false,
                                           isError: false,
                                           isInput: true,
-                                          keyboardType: TextInputType.name,
+                                          keyboardType: TextInputType.emailAddress,
                                           onChange: (val) {
                                             if (val.toString() == 'null' ||
                                                 val.isEmpty) {

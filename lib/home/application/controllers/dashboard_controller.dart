@@ -49,6 +49,11 @@ class DashBoardController extends GetxController {
     super.onInit();
   }
 
+
+  updateLoader(bool val){
+    loader=val;
+    update();
+  }
   Future<void> getUserData() async {
     _networkRepository.getMethod(
         baseUrl: ApiHelpers.baseUrl + ApiHelpers.userDetails,
@@ -217,19 +222,21 @@ class DashBoardController extends GetxController {
     _networkRepository.getMethod(
         baseUrl: ApiHelpers.baseUrl +
             ApiHelpers.getNearBy +
-            "?latitude=${lat}&longitude=${long}",
+            "?latitude=${lat.toStringAsFixed(4)}&longitude=${long.toStringAsFixed(4)}&isRequiredAllBussiness=${true}",
         success: (success) {
           if (success.toString().isNotEmpty) {
             List<NearByModel> list = List<NearByModel>.from(
                 success.map((i) => NearByModel.fromJson(i)));
             listNearByBusiness = list;
-            loader = true;
+            updateLoader(true);
+
           }
           update();
         },
         error: (error) {
-          loader = false;
-          update();
+          updateLoader(true);
+          //loader = false;
+          //update();
           print(error);
         });
   }

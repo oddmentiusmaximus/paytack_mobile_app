@@ -6,6 +6,7 @@ const pBackgroundScreen = Color(0xFFFFFFFF);
 const pProgress = Color(0xFF159A8C);
 const pDisableColor = Color(0xFFAFAFAF);
 const pTextColor = Color(0xFF41424B);
+const pButtonColor = Color(0xFFC5C5C5);
 const pPhoneText = Color(0xFF222222);
 const pTextColors = Color(0xFF41424B);
 const pTextColor3 = Color(0xFF626262);
@@ -81,7 +82,7 @@ const mobile_type_size = {
 };
 
 const secure_access_key = 'access_token';
-const login_pin_key = 'access_token';
+const login_pin_key = 'pin';
 
 const List<Map<String, dynamic>> list = [
   {"title": "one", "id": "1", "lat": 23.7985053, "lon": 90.3842538},

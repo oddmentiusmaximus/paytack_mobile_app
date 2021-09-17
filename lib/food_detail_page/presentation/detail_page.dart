@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
+import 'package:paytack/food_detail_page/application/controllers/detail_page_controller.dart';
 import 'package:paytack/home/domain/near_by_model.dart';
 import 'package:paytack/home/domain/opening_hours_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,6 +20,16 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   double i = 0;
   List<OpeningHours> listOpeningHours = [];
+  DetailPageController _detailPageController = Get.find();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    var listNearByBusinessData = Get.arguments;
+    _detailPageController.getLoyaltyProgramStatus(
+        listNearByBusinessData.businessCashbackConfig.payTackUserId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +42,11 @@ class _DetailPageState extends State<DetailPage> {
         listNearByBusiness.openingHours.isEmpty) {
       listOpeningHours = [];
     } else {
-      Map<String, dynamic> map = json.decode(listNearByBusiness.openingHours);
-      map.forEach((key, value) {
+      var map = json.decode(listNearByBusiness.openingHours);
+      var maps = json.decode(map);
+      print(map);
+
+      maps.forEach((key, value) {
         print(key);
         listOpeningHours.add(
             OpeningHours(day: key, start: value["start"], end: value["end"]));
@@ -92,7 +106,6 @@ class _DetailPageState extends State<DetailPage> {
                           child: Row(
                             children: [
                               Expanded(
-                                flex: 2,
                                 child: Row(
                                   children: [
                                     new SizedBox(
@@ -118,12 +131,16 @@ class _DetailPageState extends State<DetailPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        TView(
-                                          title:
-                                              listNearByBusiness.businessName,
-                                          size: 20.0,
-                                          color: Colors.black,
-                                          weight: FontWeight.bold,
+                                        SizedBox(
+                                          width: 100.0,
+                                          child: TView(
+                                            title:
+                                                listNearByBusiness.businessName,
+                                            size: 20.0,
+                                            isMaxLines: true,
+                                            color: Colors.black,
+                                            weight: FontWeight.bold,
+                                          ),
                                         ),
                                         Padding(
                                           padding:
@@ -179,8 +196,12 @@ class _DetailPageState extends State<DetailPage> {
                                 children: [
                                   InkWell(
                                     onTap: () {
+                                      String mobile = listNearByBusiness
+                                          .phoneNumber
+                                          .toString()
+                                          .replaceAll('-', '');
                                       _makeLaunch(
-                                          'tel:${listNearByBusiness.phoneNumber}');
+                                          'tel://${mobile.replaceAll(' ', '')}');
                                     },
                                     child: Container(
                                         width: 50,
@@ -200,25 +221,31 @@ class _DetailPageState extends State<DetailPage> {
                                           color: pPrimaryColor,
                                         )),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 16.0),
-                                    child: Container(
-                                        width: 50,
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: pPrimaryColor,
-                                              style: BorderStyle.solid,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
-                                            color: Colors.white),
-                                        child: Icon(
-                                          Icons.public,
-                                          size: 30,
-                                          color: pPrimaryColor,
-                                        )),
+                                  InkWell(
+                                    onTap: () {
+                                      _makeLaunch('');
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 16.0),
+                                      child: Container(
+                                          width: 50,
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: pPrimaryColor,
+                                                style: BorderStyle.solid,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                              color: Colors.white),
+                                          child: Icon(
+                                            Icons.public,
+                                            size: 30,
+                                            color: pPrimaryColor,
+                                          )),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -249,40 +276,89 @@ class _DetailPageState extends State<DetailPage> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16.0, right: 16.0, top: 26.0, bottom: 20.0),
-                          child: MaterialButton(
-                            height: 55,
-                            minWidth: double.infinity,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(12)),
-                            onPressed: () {},
-                            child: TView(
-                              title: "Join Loyalty Program",
-                              size: 19.0,
-                              color: Colors.white,
-                            ),
-                            color: pPrimaryColor,
+                        GetBuilder<DetailPageController>(builder: (logic) {
+                          return logic.loyaltyStatus == true
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16.0,
+                                      top: 26.0,
+                                      bottom: 20.0),
+                                  child: MaterialButton(
+                                    height: 55,
+                                    minWidth: double.infinity,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(12)),
+                                    onPressed: () {
+                                      logic.joinLoyaltyProgram(
+                                          listNearByBusiness
+                                              .businessCashbackConfig
+                                              .payTackUserId,
+                                          false,
+                                          context);
+                                    },
+                                    child: TView(
+                                      title: "Leave Cashback Program",
+                                      size: 19.0,
+                                      color: Colors.white,
+                                    ),
+                                    color: pButtonColor,
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16.0,
+                                      top: 26.0,
+                                      bottom: 20.0),
+                                  child: MaterialButton(
+                                    height: 55,
+                                    minWidth: double.infinity,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(12)),
+                                    onPressed: () {
+                                      logic.joinLoyaltyProgram(
+                                          listNearByBusiness
+                                              .businessCashbackConfig
+                                              .payTackUserId,
+                                          true,
+                                          context);
+                                    },
+                                    child: TView(
+                                      title: "Join Loyalty Program",
+                                      size: 19.0,
+                                      color: Colors.white,
+                                    ),
+                                    color: pPrimaryColor,
+                                  ),
+                                );
+                        }),
+                        InkWell(
+                          onTap: () {
+                            String googleUrl =
+                                'https://www.google.com/maps/search/?api=1&query=${listNearByBusiness.latitude},${listNearByBusiness.longitude}';
+                            _makeLaunch(googleUrl);
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.location_pin,
+                                color: pPrimaryColor,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              TView(
+                                title: "Get directions",
+                                size: 18.0,
+                                color: pPrimaryColor,
+                              ),
+                            ],
                           ),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.location_pin,
-                              color: pPrimaryColor,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            TView(
-                              title: "Get directions",
-                              size: 18.0,
-                              color: pPrimaryColor,
-                            ),
-                          ],
                         ),
                         Padding(
                           padding:
@@ -420,7 +496,7 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Future<void> _makeLaunch(String url) async {
-    if (await canLaunch(url)) {
+    if (await canLaunch(url) != null) {
       await launch(url);
     } else {
       throw 'Could not launch $url';

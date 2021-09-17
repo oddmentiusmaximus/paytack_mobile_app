@@ -167,9 +167,7 @@ class SignupController extends GetxController {
 
   ///Set Pin Screen
   TextEditingController? confirmPinController;
-
   TextEditingController? createPinController;
-
   RxBool isCreatePin = true.obs;
   RxBool isConfirmPin = true.obs;
 

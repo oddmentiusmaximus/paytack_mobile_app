@@ -70,7 +70,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                       fontSize: 10.0,
                       fontFamily: latoFont,
                       color: _selectedTabIndex == 0
-                          ? pPrimaryColor
+                          ? pTextColor
                           : pBottomNav)),
             ),
             BottomNavigationBarItem(
@@ -84,7 +84,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                       fontSize: 10.0,
                       fontFamily: latoFont,
                       color: _selectedTabIndex == 1
-                          ? pPrimaryColor
+                          ? pTextColor
                           : pBottomNav)),
             ),
             BottomNavigationBarItem(
@@ -97,7 +97,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                       fontSize: 10.0,
                       fontFamily: latoFont,
                       color: _selectedTabIndex == 2
-                          ? pPrimaryColor
+                          ? pTextColor
                           : pBottomNav)),
             ),
             BottomNavigationBarItem(
@@ -111,7 +111,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                       fontSize: 10.0,
                       fontFamily: latoFont,
                       color: _selectedTabIndex == 3
-                          ? pPrimaryColor
+                          ? pTextColor
                           : pBottomNav)),
             ),
           ],

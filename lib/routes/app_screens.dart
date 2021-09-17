@@ -5,6 +5,7 @@ import 'package:paytack/cashout_screens/application/binding.dart';
 import 'package:paytack/cashout_screens/presentation/bank_details_cashout.dart';
 import 'package:paytack/cashout_screens/presentation/view.dart';
 import 'package:paytack/discover/discover_page.dart';
+import 'package:paytack/food_detail_page/application/bindings/detail_page_binding.dart';
 import 'package:paytack/food_detail_page/presentation/detail_page.dart';
 import 'package:paytack/home/application/bindings/dashboard_binding.dart';
 import 'package:paytack/home/presentation/home_screen.dart';
@@ -12,6 +13,7 @@ import 'package:paytack/intro_screen/presentation/getting_started_screen.dart';
 import 'package:paytack/login_screen/presentation/login_screen.dart';
 import 'package:paytack/login_screen/application/bindings/login_binding.dart';
 import 'package:paytack/login_screen/presentation/login_screen.dart';
+import 'package:paytack/login_screen/presentation/set_forgot_screen.dart';
 import 'package:paytack/my_profile/presentation/change_phone_no/change_phone_no.dart';
 import 'package:paytack/my_profile/presentation/change_pin/change_pin.dart';
 import 'package:paytack/my_profile/presentation/need_help/need_help.dart';
@@ -58,7 +60,10 @@ class AppScreens {
     // GetPage(name: AppRoute.verifyOtp, page: () => VerifyOtpScreen()),
     GetPage(name: AppRoute.login, page: () => LoginScreen()),
     GetPage(name: AppRoute.nearByAll, page: () => NearByAll()),
-    GetPage(name: AppRoute.detailPage, page: () => DetailPage()),
+    GetPage(
+        name: AppRoute.detailPage,
+        page: () => DetailPage(),
+        binding: DetailPageBinding()),
     GetPage(name: AppRoute.addCard, page: () => AddCardIntro()),
     GetPage(
         name: AppRoute.permissions,
@@ -74,6 +79,7 @@ class AppScreens {
     GetPage(name: AppRoute.changePhoneNo, page: () => ChangePhoneNoPage()),
     GetPage(name: AppRoute.bankDetailsPage, page: () => CashoutBankDetails()),
     GetPage(name: AppRoute.addTinkCard, page: () => AddTinkCard()),
+    GetPage(name: AppRoute.setForgotPassword, page: () => SetForgotPinScreen()),
     GetPage(
         name: AppRoute.cashoutPage,
         page: () => CashoutScreenPage(),

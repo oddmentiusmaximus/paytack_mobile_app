@@ -4,6 +4,7 @@ import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
+import 'package:paytack/home/application/controllers/dashboard_controller.dart';
 import 'package:paytack/routes/app_screens.dart';
 
 void actionPopup({
@@ -78,6 +79,7 @@ void actionPopup({
 }
 
 Future<void> showCommonWithWidget({
+  bool locationPopup = false,
   BuildContext? context,
   Widget? widget,
   String? image,
@@ -115,7 +117,12 @@ Future<void> showCommonWithWidget({
                         children: [
                           InkWell(
                             onTap: () {
-                              Get.back();
+                              if (locationPopup == true) {
+                                Get.find<DashBoardController>().updateLoader(true);
+                                Get.back();
+                              } else {
+                                Get.back();
+                              }
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
