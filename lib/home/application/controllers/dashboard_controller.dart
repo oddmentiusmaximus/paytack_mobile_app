@@ -45,6 +45,7 @@ class DashBoardController extends GetxController {
   //
   TextEditingController? redeemController;
   bool loader = false;
+  bool loaderMap = false;
 
   // BitmapDescriptor mapMarker;
 
@@ -61,6 +62,12 @@ class DashBoardController extends GetxController {
 
   updateLoader(bool val) {
     loader = val;
+    update();
+  }
+
+
+  updateNearBy(bool val) {
+    loaderMap = val;
     update();
   }
 
@@ -251,39 +258,33 @@ class DashBoardController extends GetxController {
   }
 
   void getDiscover(double lat, double long) {
-    loader = false;
+    loaderMap = false;
     _networkRepository.getMethod(
         baseUrl: ApiHelpers.baseUrl +
             ApiHelpers.getNearBy +
             "?latitude=${lat.toStringAsFixed(4)}&longitude=${long.toStringAsFixed(4)}&isRequiredAllBussiness=${true}",
-        success: (success) {
+        success: (success) async {
           if (success.toString().isNotEmpty) {
             List<NearByModel> list = List<NearByModel>.from(
                 success.map((i) => NearByModel.fromJson(i)));
             listDiscover = list;
-            // setCustomMarker();
+            BitmapDescriptor customIcons = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(48,48)), green_dot);
             markers = Iterable.generate(list.length, (index) {
               return Marker(
                   markerId: MarkerId(list[index].businessName ?? ''),
-                  // icon: await BitmapDescriptor.fromAssetImage(
-                  //   ImageConfiguration(size: Size(48, 48)),
-                  //   green_dot,
-                  // ),
+                 icon:customIcons,
                   position: LatLng(
                     double.tryParse(list[index].latitude ?? '0.0') ?? 0.0,
                     double.tryParse(list[index].longitude ?? '0.0') ?? 0.0,
                   ),
                   infoWindow: InfoWindow(title: list[index].businessName));
             });
-
-            updateLoader(true);
+            updateNearBy(true);
           }
           update();
         },
         error: (error) {
-          updateLoader(true);
-          //loader = false;
-          //update();
+          updateNearBy(true);
           print(error);
         });
   }
