@@ -88,7 +88,7 @@ class HistoryScreenPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Flexible(
+                        /*Flexible(
                           child: GestureDetector(
                             onTap: () => logic.changePage(false, true, false),
                             child: Visibility(
@@ -130,7 +130,7 @@ class HistoryScreenPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ),
+                        ),*/
                         Flexible(
                           child: GestureDetector(
                             onTap: () => logic.changePage(false, false, true),

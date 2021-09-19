@@ -103,7 +103,7 @@ class _NearByCashBackState extends State<NearByCashBack> {
     return RefreshIndicator(
       onRefresh: getCurrentLocation,
       child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(), // new
+          //physics: const AlwaysScrollableScrollPhysics(), // new
           child:
               GetBuilder<DashBoardController>(builder: (dashboardController) {
             return dashboardController.loader == false

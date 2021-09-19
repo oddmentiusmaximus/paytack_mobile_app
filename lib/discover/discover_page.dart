@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -153,33 +154,18 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     }
   }
 
-  //Center(
-  //           child: GoogleMap(
-  //         mapType: MapType.normal,
-  //         initialCameraPosition:
-  //             CameraPosition(target: LatLng(23.7985053, 90.3842538), zoom: 13),
-  //         markers: Set.from(markers),
-  //       )
-
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.blue[50],
-      // child: GetBuilder<DashBoardController>(builder: (dashboardController) {
-      //   return dashboardController.loader == false
-      //       ? Container(
-      //
-      //   ) : dashboardController.listNearByBusiness.isEmpty
-      //       ? Container(
-      //     child: Text(""),
-      //   )
-      // })
-
       child: GetBuilder<DashBoardController>(
         builder: (dashboardController) {
           return Container(
             child: Center(
-              child: GoogleMap(
+              child: dashboardController.loaderMap==false?SpinKitRipple(
+                color: pPrimaryColor,
+                borderWidth: 7.0,
+              ):GoogleMap(
                 mapType: MapType.normal,
                 initialCameraPosition: CameraPosition(
                     target: LatLng(
