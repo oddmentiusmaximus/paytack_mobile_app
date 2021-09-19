@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -6,6 +7,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:paytack/common_function/utils/permission.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/common_function/widget/textinput.dart';
@@ -35,8 +37,16 @@ class DashBoardController extends GetxController {
   String? userName = "";
   String? userEmail = '';
   List<NearByModel> listNearByBusiness = [];
+  List<LatLng> latLong = [];
+
+  //
+  List<NearByModel> listDiscover = [];
+
+  //
   TextEditingController? redeemController;
   bool loader = false;
+
+  // BitmapDescriptor mapMarker;
 
   DashBoardController(this._networkRepository);
 
@@ -49,11 +59,11 @@ class DashBoardController extends GetxController {
     super.onInit();
   }
 
-
-  updateLoader(bool val){
-    loader=val;
+  updateLoader(bool val) {
+    loader = val;
     update();
   }
+
   Future<void> getUserData() async {
     _networkRepository.getMethod(
         baseUrl: ApiHelpers.baseUrl + ApiHelpers.userDetails,
@@ -229,7 +239,6 @@ class DashBoardController extends GetxController {
                 success.map((i) => NearByModel.fromJson(i)));
             listNearByBusiness = list;
             updateLoader(true);
-
           }
           update();
         },
@@ -240,4 +249,44 @@ class DashBoardController extends GetxController {
           print(error);
         });
   }
+
+  void getDiscover(double lat, double long) {
+    loader = false;
+    _networkRepository.getMethod(
+        baseUrl: ApiHelpers.baseUrl +
+            ApiHelpers.getNearBy +
+            "?latitude=${lat.toStringAsFixed(4)}&longitude=${long.toStringAsFixed(4)}&isRequiredAllBussiness=${true}",
+        success: (success) {
+          if (success.toString().isNotEmpty) {
+            List<NearByModel> list = List<NearByModel>.from(
+                success.map((i) => NearByModel.fromJson(i)));
+            listDiscover = list;
+            // setCustomMarker();
+            markers = Iterable.generate(list.length, (index) {
+              return Marker(
+                  markerId: MarkerId(list[index].businessName ?? ''),
+                  // icon: await BitmapDescriptor.fromAssetImage(
+                  //   ImageConfiguration(size: Size(48, 48)),
+                  //   green_dot,
+                  // ),
+                  position: LatLng(
+                    double.tryParse(list[index].latitude ?? '0.0') ?? 0.0,
+                    double.tryParse(list[index].longitude ?? '0.0') ?? 0.0,
+                  ),
+                  infoWindow: InfoWindow(title: list[index].businessName));
+            });
+
+            updateLoader(true);
+          }
+          update();
+        },
+        error: (error) {
+          updateLoader(true);
+          //loader = false;
+          //update();
+          print(error);
+        });
+  }
+
+  Iterable markers = [];
 }
