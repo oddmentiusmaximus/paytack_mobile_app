@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:paytack/common_function/utils/permission.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/common_function/widget/textinput.dart';
+import 'package:paytack/discover/categories_model.dart';
 import 'package:paytack/home/domain/near_by_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -40,9 +41,13 @@ class DashBoardController extends GetxController {
   List<LatLng> latLong = [];
 
   //
+  Iterable markers = [];
   List<NearByModel> listDiscover = [];
 
   //
+
+  List<CategoriesModel> listCategories = [];
+
   TextEditingController? redeemController;
   bool loader = false;
   bool loaderMap = false;
@@ -64,7 +69,6 @@ class DashBoardController extends GetxController {
     loader = val;
     update();
   }
-
 
   updateNearBy(bool val) {
     loaderMap = val;
@@ -239,7 +243,7 @@ class DashBoardController extends GetxController {
     _networkRepository.getMethod(
         baseUrl: ApiHelpers.baseUrl +
             ApiHelpers.getNearBy +
-            "?latitude=${lat.toStringAsFixed(4)}&longitude=${long.toStringAsFixed(4)}&isRequiredAllBussiness=${true}",
+            "?latitude=${lat.toStringAsFixed(4)}&longitude=${long.toStringAsFixed(4)}&isRequiredAllBussiness=${false}",
         success: (success) {
           if (success.toString().isNotEmpty) {
             List<NearByModel> list = List<NearByModel>.from(
@@ -268,11 +272,13 @@ class DashBoardController extends GetxController {
             List<NearByModel> list = List<NearByModel>.from(
                 success.map((i) => NearByModel.fromJson(i)));
             listDiscover = list;
-            BitmapDescriptor customIcons = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(48,48)), green_dot);
+            BitmapDescriptor customIcons =
+                await BitmapDescriptor.fromAssetImage(
+                    ImageConfiguration(size: Size(48, 48)), green_dot);
             markers = Iterable.generate(list.length, (index) {
               return Marker(
                   markerId: MarkerId(list[index].businessName ?? ''),
-                 icon:customIcons,
+                  icon: customIcons,
                   position: LatLng(
                     double.tryParse(list[index].latitude ?? '0.0') ?? 0.0,
                     double.tryParse(list[index].longitude ?? '0.0') ?? 0.0,
@@ -289,5 +295,24 @@ class DashBoardController extends GetxController {
         });
   }
 
-  Iterable markers = [];
+  // /api/clients/categories
+  void getCategories() {
+    loaderMap = false;
+    _networkRepository.getMethod(
+        baseUrl: ApiHelpers.baseUrl + ApiHelpers.getCategories,
+        success: (success) async {
+          if (success.toString().isNotEmpty) {
+            List<CategoriesModel> list = List<CategoriesModel>.from(
+                success.map((i) => CategoriesModel.fromJson(i)));
+            listCategories = list;
+            updateNearBy(true);
+          }
+          update();
+        },
+        error: (error) {
+          updateNearBy(true);
+          print(error);
+        });
+  }
+
 }

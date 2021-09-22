@@ -10,8 +10,14 @@ import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/common_function/widget/textinput.dart';
 import 'package:paytack/my_profile/application/profile_controller.dart';
 
-class ChangePhoneNoPage extends StatelessWidget {
+class ChangePhoneNoPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ChangePhoneNoPageState();
+}
+
+class _ChangePhoneNoPageState extends State<ChangePhoneNoPage> {
   final profileController = Get.find<ProfileController>();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -102,19 +108,30 @@ class ChangePhoneNoPage extends StatelessWidget {
               ],
             ),
             Spacer(),
-            CustomButton(
-                color: pPrimaryColor,
-                isEnabled: true,
-                tvSize: 16.0,
-                height: 50.0,
-                radius: 12.0,
-                tvColor: Colors.white,
-                btnTitle: "Update",
-                onPress: () {
-                  // Get.toNamed(AppRoute.homeLanding);
-                }),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                isLoading
+                    ? CircularProgressIndicator(
+                        color: pPrimaryColor,
+                      )
+                    : CustomButton(
+                        color: pPrimaryColor,
+                        isEnabled: true,
+                        tvSize: 16.0,
+                        height: 50.0,
+                        radius: 12.0,
+                        tvColor: Colors.white,
+                        btnTitle: "Update",
+                        onPress: () {
+                          Get.find<ProfileController>().updatePhone(context);
+                          setState(() {
+                            isLoading = true;
+                          });
+                        })
+              ],
+            ),
             pVerticalSpace(height: 25.0),
-
           ],
         ),
       ),

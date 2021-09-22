@@ -27,19 +27,6 @@ class GoogleMapsClonePage extends StatelessWidget {
         children: <Widget>[
           CustomGoogleMap(),
           CustomHeader(),
-          DraggableScrollableSheet(
-            initialChildSize: 0.30,
-            // minChildSize: .10,
-            minChildSize: 0.10,
-            maxChildSize: 0.5,
-            // initialChildSize: .30,
-            builder: (BuildContext context, ScrollController scrollController) {
-              return SingleChildScrollView(
-                controller: scrollController,
-                child: CustomScrollViewContent(),
-              );
-            },
-          ),
         ],
       ),
     );
@@ -108,6 +95,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
           desiredAccuracy: LocationAccuracy.high);
       Get.find<DashBoardController>()
           .getDiscover(position.latitude, position.longitude);
+      Get.find<DashBoardController>().getCategories();
     } else {
       Get.find<DashBoardController>().updateLoader(true);
       showCommonWithWidget(
@@ -161,28 +149,50 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
       child: GetBuilder<DashBoardController>(
         builder: (dashboardController) {
           return Container(
-            child: Center(
-              child: dashboardController.loaderMap==false?SpinKitRipple(
-                color: pPrimaryColor,
-                borderWidth: 7.0,
-              ):GoogleMap(
-                mapType: MapType.normal,
-                initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                      double.tryParse(
-                              dashboardController.listDiscover[0].latitude ??
-                                  '0.0') ??
-                          0.0,
-                      double.tryParse(
-                              dashboardController.listDiscover[0].longitude ??
-                                  '0.0') ??
-                          0.0,
-                    ),
-                    zoom: 13),
-                markers: Set.from(dashboardController.markers),
-              ),
+            child: Stack(
+              children: <Widget>[
+                Center(
+                  child: dashboardController.loaderMap == false
+                      ? SpinKitRipple(
+                          color: pPrimaryColor,
+                          borderWidth: 7.0,
+                        )
+                      : GoogleMap(
+                          mapType: MapType.normal,
+                          initialCameraPosition: CameraPosition(
+                              target: LatLng(
+                                double.tryParse(dashboardController
+                                            .listDiscover[0].latitude ??
+                                        '0.0') ??
+                                    0.0,
+                                double.tryParse(dashboardController
+                                            .listDiscover[0].longitude ??
+                                        '0.0') ??
+                                    0.0,
+                              ),
+                              zoom: 13),
+                          markers: Set.from(dashboardController.markers),
+                        ),
 
-              // ),
+                  // ),
+                ),
+                DraggableScrollableSheet(
+                  initialChildSize: 0.29,
+                  // minChildSize: .10,
+                  minChildSize: 0.10,
+                  maxChildSize: 0.48,
+                  // initialChildSize: .30,
+                  builder: (BuildContext context,
+                      ScrollController scrollController) {
+                    return SingleChildScrollView(
+                      controller: scrollController,
+                      child: CustomScrollViewContent(
+                        dashboardController: dashboardController,
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           );
         },
@@ -233,10 +243,10 @@ class CustomHeader extends StatelessWidget {
                 color: Colors.white, borderRadius: BorderRadius.circular(30)),
             child: Row(
               children: <Widget>[
-                pHorizontalSpace(width: 5.0),
+                pHorizontalSpace(width: 10.0),
                 Icon(
                   Icons.search,
-                  color: pTextColors,
+                  color: Colors.grey.shade400,
                 ),
                 CustomTextField(),
               ],
@@ -256,9 +266,9 @@ class CustomTextField extends StatelessWidget {
         maxLines: 1,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(15),
-          hintText: "Search Venues",
+          hintText: "Search venues..",
           hintStyle: TextStyle(
-              color: pTextColors,
+              color: Colors.grey.shade500,
               fontSize: 14.0,
               fontWeight: FontWeight.normal,
               fontFamily: "Lato"),
@@ -271,102 +281,134 @@ class CustomTextField extends StatelessWidget {
 
 /// Content of the DraggableBottomSheet's child SingleChildScrollView
 class CustomScrollViewContent extends StatelessWidget {
+  final DashBoardController dashboardController;
+
+  const CustomScrollViewContent({Key? key, required this.dashboardController})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 10.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12.0), topLeft: Radius.circular(12.0))),
       margin: const EdgeInsets.all(0),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
         ),
-        child: CustomInnerContent(),
+        child: CustomInnerContent(
+          dashboardController: dashboardController,
+        ),
       ),
     );
   }
 }
 
 class CustomInnerContent extends StatelessWidget {
+  final DashBoardController dashboardController;
+
+  const CustomInnerContent({Key? key, required this.dashboardController})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        pVerticalSpace(height: 4.0),
+        pVerticalSpace(height: 8.0),
         Container(
-          height: 3,
-          width: 40,
+          height: 4,
+          width: 45,
           decoration: BoxDecoration(
               color: Colors.grey[200], borderRadius: BorderRadius.circular(16)),
         ),
-        pVerticalSpace(height: 12.0),
+        pVerticalSpace(height: 20.0),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Align(
             alignment: Alignment.centerLeft,
             child: TView(
               title: "Categories",
               color: pTextColor,
               weight: FontWeight.bold,
-              size: 16.0,
+              size: 18.0,
             ),
           ),
         ),
-        SizedBox(height: 2),
-        new Container(
-            margin: EdgeInsets.symmetric(vertical: 20.0),
-            height: 150.0,
-            child: new ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (i, con) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: Column(
-                      children: [
-                        Container(
-                            height: 100.0,
-                            width: 100.0,
-                            decoration: new BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(burger_image),
-                              ),
-                              borderRadius: BorderRadius.circular(10.0),
-                            )),
-                        Expanded(
-                          child: TView(
-                            title: "Italian",
-                            size: 14,
-                            color: pTextColor,
-                          ),
-                        ),
-                        pVerticalSpace(height: 10.0)
-                      ],
-                    ),
-                  ),
-                );
-              },
-            )),
-        SizedBox(height: 24),
+        pVerticalSpace(height: 24.0),
+        GetBuilder<DashBoardController>(builder: (dashboardController) {
+          return Container(
+              child: dashboardController.loaderMap == false
+                  ? SpinKitRipple(
+                      color: pPrimaryColor,
+                      borderWidth: 7.0,
+                    )
+                  : Container(
+                      height: 136.0,
+                      child: new ListView.builder(
+                        padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: dashboardController.listCategories.length,
+                        itemBuilder: (i, con) {
+                          return Card(
+                            child: Column(
+                              children: [
+                                Container(
+                                    height: 95.0,
+                                    width: 110.0,
+                                    decoration: new BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(noImage),
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10.0),
+                                        topLeft: Radius.circular(10.0),
+                                      ),
+                                    )),
+                                pVerticalSpace(height: 8.0),
+                                Expanded(
+                                  child: TView(
+                                    title: dashboardController
+                                            .listCategories[con].category ??
+                                        "",
+                                    size: 14,
+                                    color: pTextColor,
+                                  ),
+                                ),
+                                pVerticalSpace(height: 4.0)
+                              ],
+                            ),
+                          );
+                        },
+                      )));
+        }),
+        SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
-              child: Text(
-                "Nearby",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16),
+              child: TView(
+                title: "Nearby",
+                weight: FontWeight.bold,
+                color: Colors.black,
+                size: 16,
+
+                // style: TextStyle(
+                //     color: Colors.black,
+                //     fontWeight: FontWeight.bold,
+                //     fontSize: 16),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
-              child: Text(
-                "View all",
-                style: TextStyle(color: pPrimaryColor, fontSize: 13),
+              child: TView(
+                title: "View all",
+                color: pProgress,
+                size: 13,
+                // style: TextStyle(color: pProgress, fontSize: 13),
               ),
             ),
           ],
@@ -381,13 +423,21 @@ class CustomInnerContent extends StatelessWidget {
                   Row(
                     children: [
                       SizedBox(
-                        width: 40,
-                        height: 40,
+                        width: 35,
+                        height: 35,
                         child: CircleAvatar(
                             backgroundColor: Colors.white,
                             radius: 20,
-                            backgroundImage: NetworkImage(
-                                'http://assets.stickpng.com/images/5842996fa6515b1e0ad75add.png')),
+                            backgroundImage: dashboardController
+                                        .listNearByBusiness[0]
+                                        .logoUrl!
+                                        .isEmpty ||
+                                    dashboardController
+                                            .listNearByBusiness[0].logoUrl ==
+                                        "string"
+                                ? NetworkImage(noImage)
+                                : NetworkImage(dashboardController
+                                    .listNearByBusiness[0].logoUrl!)),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -396,7 +446,14 @@ class CustomInnerContent extends StatelessWidget {
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: 8.0, bottom: 4.0),
-                            child: Text("Burger King"),
+                            child: TView(
+                              title: dashboardController
+                                      .listNearByBusiness[0].businessName ??
+                                  "",
+                              size: 14.5,
+                              color: Colors.grey.shade800,
+                              // style: TextStyle(fontSize: 14.5),
+                            ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -408,12 +465,21 @@ class CustomInnerContent extends StatelessWidget {
                                 child: Icon(
                                   Icons.restaurant,
                                   color: Colors.grey.shade600,
-                                  size: 13,
+                                  size: 11,
                                 ),
                               ),
-                              Text(
-                                "Fastfood",
-                                style: TextStyle(color: Colors.grey),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(maxWidth: 70),
+                                child: Text(
+                                  dashboardController
+                                          .listNearByBusiness[0].category ??
+                                      "",
+                                  style: TextStyle(
+                                      color: Colors.grey.shade500,
+                                      fontSize: 12.0),
+                                  maxLines: 1,
+                                  softWrap: true,
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
@@ -425,33 +491,28 @@ class CustomInnerContent extends StatelessWidget {
                                   size: 5,
                                 )),
                               ),
-                              Text(
-                                "3 Km",
-                                style: TextStyle(color: Colors.grey),
-                              ),
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 6.0, right: 6.0),
-                                child: Center(
-                                    child: Icon(
-                                  Icons.circle,
-                                  color: Colors.grey.shade600,
-                                  size: 5,
-                                )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8.0, right: 4.0),
+                                    left: 4.0, right: 4.0),
                                 child: Icon(
-                                  Icons.star,
+                                  Icons.location_on,
                                   color: Colors.grey.shade600,
-                                  size: 13,
+                                  size: 11,
                                 ),
                               ),
-                              Text(
-                                "4.5",
-                                style: TextStyle(color: Colors.grey),
-                              )
+                              TView(
+                                title: dashboardController
+                                        .listNearByBusiness[0].distance!
+                                        .toStringAsFixed(2) +
+                                    " Km",
+
+                                color: Colors.grey.shade500,
+                                size: 12.0,
+
+                                // style: TextStyle(
+                                //     color: Colors.grey.shade500,
+                                //     fontSize: 12.0),
+                              ),
                             ],
                           )
                         ],
@@ -466,21 +527,46 @@ class CustomInnerContent extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0, right: 4.0),
-                          child: Icon(
-                            Icons.flash_on,
-                            color: Colors.orange,
-                            size: 19,
+                          child: Image.asset(
+                            flash,
+                            height: 15,
+                            width: 15,
                           ),
                         ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("5% Extra Cashback",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16)),
-                            Text("No minimum purchase",
-                                style: TextStyle(fontSize: 14))
+                            // TView(
+                            //   title: cashback +
+                            //       " Extra Cashback",
+                            //   size: 14.0,
+                            //   color: pHomePageTextColor,
+                            // )
+
+                            TView(
+                              title: dashboardController.listNearByBusiness[0]
+                                      .discountPercenatage ??
+                                  "0" + "% Extra Cashback",
+                              // style: TextStyle(
+                              //     color: Colors.black,
+                              //     fontWeight: FontWeight.bold,
+                              //     fontSize: 16)
+
+                              color: Colors.black,
+                              size: 16.0,
+                              weight: FontWeight.bold,
+                            ),
+                            pVerticalSpace(height: 2.0),
+                            TView(
+                              title: "No minimum purchase",
+                              // style: TextStyle(
+                              //     color: Colors.black,
+                              //     fontWeight: FontWeight.bold,
+                              //     fontSize: 16)
+
+                              color: Colors.grey,
+                              size: 12.0,
+                            ),
                           ],
                         ),
                       ],
@@ -489,14 +575,16 @@ class CustomInnerContent extends StatelessWidget {
                 ],
               ),
               Container(
-                  height: 100.0,
-                  width: 100.0,
-                  decoration: new BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(burger_image),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ))
+                height: 90.0,
+                width: 110.0,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.network(
+                    noImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
             ],
           ),
         )
