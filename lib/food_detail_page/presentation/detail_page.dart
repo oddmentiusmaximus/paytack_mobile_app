@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/network/api_helper.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/food_detail_page/application/controllers/detail_page_controller.dart';
 import 'package:paytack/home/domain/near_by_model.dart';
@@ -43,10 +44,11 @@ class _DetailPageState extends State<DetailPage> {
       listOpeningHours = [];
     } else {
       var map = json.decode(listNearByBusiness.openingHours);
-      var maps = json.decode(map);
+      /*var maps = json.decode(map);
       print(map);
+*/
 
-      maps.forEach((key, value) {
+      map.forEach((key, value) {
         print(key);
         listOpeningHours.add(
             OpeningHours(day: key, start: value["start"], end: value["end"]));
@@ -57,8 +59,7 @@ class _DetailPageState extends State<DetailPage> {
       body: SafeArea(
         child: Stack(
           children: [
-            listNearByBusiness.logoUrl!.isEmpty ||
-                    listNearByBusiness.logoUrl == "string"
+            listNearByBusiness.businessCashbackConfig!.image.isEmpty
                 ? Image.network(
                     noImage,
                     fit: BoxFit.cover,
@@ -66,7 +67,7 @@ class _DetailPageState extends State<DetailPage> {
                     height: Get.height * 0.4,
                   )
                 : Image.network(
-                    listNearByBusiness.logoUrl.toString(),
+                    listNearByBusiness.businessCashbackConfig!.image,
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: Get.height * 0.4,
@@ -125,7 +126,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   height: Get.height * 0.4,
                                                 )
                                               : Image.network(
-                                                  listNearByBusiness.logoUrl)),
+                                                  ApiHelpers.baseUrl+listNearByBusiness.logoUrl)),
                                     ),
                                     Column(
                                       crossAxisAlignment:
@@ -223,7 +224,7 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      _makeLaunch('');
+                                     // _makeLaunch(listNearByBusiness);
                                     },
                                     child: Padding(
                                       padding:

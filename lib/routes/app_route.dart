@@ -16,12 +16,14 @@ abstract class AppRoute {
   static const discover_page = '/discover-screen';
   static const need_help = '/help-screen';
   static const refer_earn = '/refer-screen';
-  static const terms_condition = '/terms-screen';
+  static const terms_condition = '/terms-sc reen';
   static const cashoutPage = '/cashoutPage';
   static const bankDetailsPage = '/bankDetails';
   static const changePin = '/changePin';
   static const changePhoneNo = '/changePhoneNo';
   static const addTinkCard = '/addTink';
   static const setForgotPassword = '/forgot-pin';
+  static const nordiGen = '/bank-add';
+
 
 }

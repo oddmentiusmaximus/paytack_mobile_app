@@ -36,8 +36,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: commonAppBar("",
-                isTrue: true, size: 14, step: "1", color: Colors.transparent),
             resizeToAvoidBottomInset: false,
             body: Padding(
                 padding: EdgeInsets.symmetric(

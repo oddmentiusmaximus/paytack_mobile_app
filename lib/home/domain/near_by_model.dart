@@ -86,6 +86,7 @@ class BusinessCashbackConfig {
   String? extraCashbackEnd;
   String? payTackUserId;
   PayTackUser? payTackUser;
+  String image="";
 
   BusinessCashbackConfig(
       {this.id,
@@ -101,7 +102,8 @@ class BusinessCashbackConfig {
       this.extraCashbackStart,
       this.extraCashbackEnd,
       this.payTackUserId,
-      this.payTackUser});
+      this.payTackUser,
+      required this.image});
 
   BusinessCashbackConfig.fromJson(Map<String?, dynamic> json) {
     id = json['id'];
@@ -116,6 +118,7 @@ class BusinessCashbackConfig {
     extraCashbackValue = json['extraCashbackValue'];
     extraCashbackStart = json['extraCashbackStart'];
     extraCashbackEnd = json['extraCashbackEnd'];
+    image = json['image']??"";
     payTackUserId = json['payTackUserId'];
     payTackUser = json['payTackUser'] != null
         ? new PayTackUser.fromJson(json['payTackUser'])

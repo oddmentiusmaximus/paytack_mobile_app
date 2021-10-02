@@ -32,7 +32,6 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
     // TODO: implement initState
     super.initState();
 
-    Get.find<DashBoardController>();
   }
 
   @override
@@ -130,6 +129,23 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                                   },
                                 ),
                               ),
+                              pVerticalSpace(height: 16.0),
+                              Row(
+                                children: [
+                                  pHorizontalSpace(width: 15.0),
+                                  TView(
+                                    color: pPrimaryColor,
+                                    title: "Know more",
+                                    size: 14.0,
+                                    weight: FontWeight.bold,
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 15.0,
+                                    color: pPrimaryColor,
+                                  ),
+                                ],
+                              ),
                               /* Row(
                                 children: [
                                   TView(
@@ -224,7 +240,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               for (int i = 0; i < 2; i++)
-                                if (i == 0)
+                                if (i == val.pageNoSlider)
                                   SlideDots(true)
                                 else
                                   SlideDots(false)

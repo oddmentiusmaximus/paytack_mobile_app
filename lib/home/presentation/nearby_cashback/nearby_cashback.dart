@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/common_dialog.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/network/api_helper.dart';
 import 'package:paytack/common_function/utils/permission.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
@@ -152,9 +153,20 @@ class _NearByCashBackState extends State<NearByCashBack> {
                     physics: new NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
+
                       String cashback = dashboardController
-                          .listNearByBusiness[index].discountPercenatage
+                          .listNearByBusiness[index]
+                          .businessCashbackConfig!
+                          .firstCashbackValue
                           .toString();
+                      if (dashboardController.listNearByBusiness[index]
+                              .businessCashbackConfig!.cashbackType!
+                              .toLowerCase() ==
+                          "Percentage".toLowerCase()) {
+                        cashback = cashback + " %";
+                      } else {
+                        cashback = cashback + " kr";
+                      }
                       if (cashback == "null") {
                         cashback = "0";
                       }
@@ -198,7 +210,8 @@ class _NearByCashBackState extends State<NearByCashBack> {
                                                               .logoUrl ==
                                                           "string"
                                                   ? NetworkImage(noImage)
-                                                  : NetworkImage(
+                                                  : NetworkImage(ApiHelpers
+                                                          .baseUrl +
                                                       dashboardController
                                                           .listNearByBusiness[
                                                               index]
@@ -251,42 +264,57 @@ class _NearByCashBackState extends State<NearByCashBack> {
                                         ],
                                       ),
                                       pVerticalSpace(height: 12.0),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Image.asset(
-                                            flash,
-                                            height: 15,
-                                            width: 15,
-                                          ),
-                                          pHorizontalSpace(
-                                            width: 5.0,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              TView(
-                                                title: cashback +
-                                                    " Extra Cashback",
-                                                size: 14.0,
-                                                weight: FontWeight.bold,
-                                                color: Colors.black87,
-                                              ),
-                                              TView(
-                                                title: "No minimum purchase",
-                                                size: 14.0,
-                                                color: pHomePageTextColor,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                      cashback == "0"
+                                          ? Container()
+                                          : Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Image.asset(
+                                                  flash,
+                                                  height: 15,
+                                                  width: 15,
+                                                ),
+                                                pHorizontalSpace(
+                                                  width: 5.0,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    TView(
+                                                      title: cashback +
+                                                          " Extra Cashback",
+                                                      size: 14.0,
+                                                      weight: FontWeight.bold,
+                                                      color: Colors.black87,
+                                                    ),
+                                                    TView(
+                                                      title: dashboardController
+                                                                      .listNearByBusiness[
+                                                                          index]
+                                                                      .businessCashbackConfig!
+                                                                      .minimumQualifyingAmount ==
+                                                                  0 ||
+                                                              dashboardController
+                                                                      .listNearByBusiness[
+                                                                          index]
+                                                                      .businessCashbackConfig!
+                                                                      .minimumQualifyingAmount ==
+                                                                  null
+                                                          ? "No minimum purchase"
+                                                          : "On minimum Purchase",
+                                                      size: 14.0,
+                                                      color: pHomePageTextColor,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                       pVerticalSpace(height: 5.0),
                                     ],
                                   ),
@@ -304,9 +332,16 @@ class _NearByCashBackState extends State<NearByCashBack> {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(20.0),
-                                              child: Image.network(
-                                                noImage,
-                                                fit: BoxFit.cover,
+                                              child: dashboardController
+                                                  .listNearByBusiness[
+                                              index]
+                                                  .businessCashbackConfig!.image.isEmpty
+                                                  ? Image.network(noImage)
+                                                  : Image.network(ApiHelpers
+                                                  .baseUrl +
+                                                  dashboardController
+                                                      .listNearByBusiness[
+                                                  index].businessCashbackConfig!.image,
                                               ),
                                             ),
                                           ),

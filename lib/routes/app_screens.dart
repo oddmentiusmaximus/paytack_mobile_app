@@ -8,7 +8,9 @@ import 'package:paytack/discover/discover_page.dart';
 import 'package:paytack/food_detail_page/application/bindings/detail_page_binding.dart';
 import 'package:paytack/food_detail_page/presentation/detail_page.dart';
 import 'package:paytack/home/application/bindings/dashboard_binding.dart';
+import 'package:paytack/home/presentation/demo_bank.dart';
 import 'package:paytack/home/presentation/home_screen.dart';
+import 'package:paytack/home/presentation/web_view.dart';
 import 'package:paytack/intro_screen/presentation/getting_started_screen.dart';
 import 'package:paytack/login_screen/presentation/login_screen.dart';
 import 'package:paytack/login_screen/application/bindings/login_binding.dart';
@@ -80,6 +82,7 @@ class AppScreens {
     GetPage(name: AppRoute.bankDetailsPage, page: () => CashoutBankDetails()),
     GetPage(name: AppRoute.addTinkCard, page: () => AddTinkCard()),
     GetPage(name: AppRoute.setForgotPassword, page: () => SetForgotPinScreen()),
+    GetPage(name: AppRoute.nordiGen, page: () => BankAppExample()),
     GetPage(
         name: AppRoute.cashoutPage,
         page: () => CashoutScreenPage(),

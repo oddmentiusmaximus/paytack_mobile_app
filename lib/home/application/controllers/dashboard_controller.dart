@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -39,14 +40,41 @@ class DashBoardController extends GetxController {
   String? userEmail = '';
   List<NearByModel> listNearByBusiness = [];
   List<LatLng> latLong = [];
-
+int pageNoSlider=0;
   //
   Iterable markers = [];
   List<NearByModel> listDiscover = [];
 
   //
-
-  List<CategoriesModel> listCategories = [];
+void updateSlideDot(int index){
+  pageNoSlider=index;
+  update();
+}
+  List<CategoriesModel> listCategories = [
+    CategoriesModel(
+        businessName:
+            "https://thumbor.thedailymeal.com/O5BS3X-3J3JKcsTKYdYd996xqsI=/870x565/https://www.thedailymeal.com/sites/default/files/slideshows/1943277/2108053/0.jpg",
+        category: "Restaurant"),
+    CategoriesModel(
+        businessName:
+            "https://cdn.pixabay.com/photo/2015/10/12/14/54/coffee-983955__480.jpg",
+        category: "Coffee Shop"),
+    CategoriesModel(
+        businessName:
+            "https://i1.wp.com/cdn.whatsuplife.in/delhi/blog/2017/08/turquoise-colltage.png",
+        category: "Bar"),
+    CategoriesModel(
+        businessName:
+            "https://img.freepik.com/free-photo/hairdresser-does-hairstyle-her-client_1157-27203.jpg?size=626&ext=jpg",
+        category: "Hairdresser"),
+    CategoriesModel(businessName: noImage, category: "Grocery"),
+    CategoriesModel(businessName: noImage, category: "Florist"),
+    CategoriesModel(businessName: noImage, category: "Books,magazines etc"),
+    CategoriesModel(
+        businessName: noImage, category: "Bicycles and Electric Bike"),
+    CategoriesModel(businessName: noImage, category: "Betting And games"),
+    CategoriesModel(businessName: noImage, category: "Florist"),
+  ];
 
   TextEditingController? redeemController;
   bool loader = false;
@@ -274,11 +302,12 @@ class DashBoardController extends GetxController {
             listDiscover = list;
             BitmapDescriptor customIcons =
                 await BitmapDescriptor.fromAssetImage(
-                    ImageConfiguration(size: Size(48, 48)), green_dot);
+                    ImageConfiguration(size: Size(20.0, 20.0)), green_dot);
+            final Uint8List markerIcon = await getBytesFromAsset(green_dot, 60);
             markers = Iterable.generate(list.length, (index) {
               return Marker(
                   markerId: MarkerId(list[index].businessName ?? ''),
-                  icon: customIcons,
+                  icon: BitmapDescriptor.fromBytes(markerIcon),
                   position: LatLng(
                     double.tryParse(list[index].latitude ?? '0.0') ?? 0.0,
                     double.tryParse(list[index].longitude ?? '0.0') ?? 0.0,
@@ -294,7 +323,12 @@ class DashBoardController extends GetxController {
           print(error);
         });
   }
-
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+  }
   // /api/clients/categories
   void getCategories() {
     loaderMap = false;
@@ -314,5 +348,4 @@ class DashBoardController extends GetxController {
           print(error);
         });
   }
-
 }

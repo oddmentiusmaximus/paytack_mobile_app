@@ -44,8 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: commonAppBar("",
-              isTrue: true, size: 14, step: "1", color: Colors.transparent),
+
           resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: Column(
@@ -104,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }),
                       pVerticalSpace(height: 20.0),
                       TView(
-                        title: "Enter Pin",
+                        title: "Enter PIN",
                         size: 14.0,
                         weight: FontWeight.normal,
                         align: TextAlign.start,
@@ -132,6 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   obscureText: _loginController.isPin.value,
                                   obscuringCharacter: '*',
                                   blinkWhenObscuring: true,
+                                  showCursor: false,
                                   animationType: AnimationType.fade,
                                   pinTheme: PinTheme(
                                       shape: PinCodeFieldShape.box,
@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   //   print("Pressed");
                                   // },
                                   onChanged: (value) {
-                                    print(value);
+
                                   },
                                   beforeTextPaste: (text) {
                                     print("Allowing to paste $text");

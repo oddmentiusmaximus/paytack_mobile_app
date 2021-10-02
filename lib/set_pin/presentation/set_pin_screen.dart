@@ -106,6 +106,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                           errorAnimationController: errorController,
                           controller: _signupController.createPinController,
                           keyboardType: TextInputType.phone,
+                          showCursor: false,
                           onCompleted: (v) {
                             print("Completed");
                           },

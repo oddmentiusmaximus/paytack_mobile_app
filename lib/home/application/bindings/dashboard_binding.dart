@@ -11,7 +11,7 @@ class DashBoardBinding implements Bindings {
   void dependencies() {
     final apiBaseHelper = DioHelper();
     Get.lazyPut(() => NetworkProvider(apiBaseHelper));
-    Get.lazyPut<DashBoardController>(() => DashBoardController(Get.find()));
+    Get.put<DashBoardController>(DashBoardController(Get.find()));
     Get.put<ProfileController>(ProfileController(Get.find()));
 
   }

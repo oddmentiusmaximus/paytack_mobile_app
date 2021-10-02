@@ -18,12 +18,10 @@ class _AppConfigState extends State<AppConfig> {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return GetMaterialApp(
-      theme: PayTackTheme.lightPayTackTheme,
       debugShowCheckedModeBanner: false,
       getPages: AppScreens.all,
       initialRoute: AppRoute.splash,
       enableLog: true,
-
       navigatorKey: Get.key,
       locale: Locale('en', 'US'),
       fallbackLocale: TranslationService.fallbackLocale,

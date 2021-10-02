@@ -29,6 +29,7 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Need Apple Music when in use</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>

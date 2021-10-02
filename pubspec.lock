@@ -401,6 +401,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  nordigen_integration:
+    dependency: "direct main"
+    description:
+      name: nordigen_integration
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.3"
   path:
     dependency: "direct main"
     description:
@@ -595,6 +602,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  webview_flutter:
+    dependency: "direct main"
+    description:
+      name: webview_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.13"
   xml:
     dependency: transitive
     description:

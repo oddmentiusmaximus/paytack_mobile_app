@@ -19,7 +19,14 @@ import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/home/application/controllers/dashboard_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class GoogleMapsClonePage extends StatelessWidget {
+class GoogleMapsClonePage extends StatefulWidget {
+  @override
+  _GoogleMapsClonePageState createState() => _GoogleMapsClonePageState();
+}
+
+class _GoogleMapsClonePageState extends State<GoogleMapsClonePage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +102,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
           desiredAccuracy: LocationAccuracy.high);
       Get.find<DashBoardController>()
           .getDiscover(position.latitude, position.longitude);
-      Get.find<DashBoardController>().getCategories();
+      //  Get.find<DashBoardController>().getCategories();
     } else {
       Get.find<DashBoardController>().updateLoader(true);
       showCommonWithWidget(
@@ -177,10 +184,11 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
                   // ),
                 ),
                 DraggableScrollableSheet(
-                  initialChildSize: 0.29,
+                  initialChildSize: 0.60,
                   // minChildSize: .10,
-                  minChildSize: 0.10,
-                  maxChildSize: 0.48,
+                  minChildSize: 0.60,
+                  expand: true,
+                  maxChildSize: 0.60,
                   // initialChildSize: .30,
                   builder: (BuildContext context,
                       ScrollController scrollController) {
@@ -200,32 +208,8 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     );
   }
 
-  Future<Set<Marker>> generateMarkers(List<LatLng> positions) async {
-    List<Marker> markers = <Marker>[];
-    for (final location in positions) {
-      final icon = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(size: Size(24, 24)), green_dot);
 
-      final marker = Marker(
-        markerId: MarkerId(location.toString()),
-        position: LatLng(location.latitude, location.longitude),
-        icon: icon,
-      );
 
-      markers.add(marker);
-    }
-    return markers.toSet();
-  }
-
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
-  }
 }
 
 /// Search text field plus the horizontally scrolling categories below the text field
@@ -314,7 +298,9 @@ class CustomInnerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return
+
+      Column(
       children: <Widget>[
         pVerticalSpace(height: 8.0),
         Container(
@@ -344,45 +330,57 @@ class CustomInnerContent extends StatelessWidget {
                       color: pPrimaryColor,
                       borderWidth: 7.0,
                     )
-                  : Container(
-                      height: 136.0,
-                      child: new ListView.builder(
-                        padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: dashboardController.listCategories.length,
-                        itemBuilder: (i, con) {
-                          return Card(
-                            child: Column(
-                              children: [
-                                Container(
-                                    height: 95.0,
-                                    width: 110.0,
-                                    decoration: new BoxDecoration(
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(noImage),
+                  : dashboardController.listCategories.isEmpty
+                      ? Container(
+                          child: TView(
+                            title: "No data Found",
+                            color: pTextColor,
+                            size: 14.0,
+                          ),
+                        )
+                      : Container(
+                          height: 136.0,
+                          child: new ListView.builder(
+                            padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                            scrollDirection: Axis.horizontal,
+                            itemCount:
+                                dashboardController.listCategories.length,
+                            itemBuilder: (i, con) {
+                              return Card(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        height: 95.0,
+                                        width: 110.0,
+                                        decoration: new BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage(
+                                                dashboardController
+                                                    .listCategories[con]
+                                                    .businessName!),
+                                          ),
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(10.0),
+                                            topLeft: Radius.circular(10.0),
+                                          ),
+                                        )),
+                                    pVerticalSpace(height: 8.0),
+                                    Expanded(
+                                      child: TView(
+                                        title: dashboardController
+                                                .listCategories[con].category ??
+                                            "",
+                                        size: 14,
+                                        color: pTextColor,
                                       ),
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(10.0),
-                                        topLeft: Radius.circular(10.0),
-                                      ),
-                                    )),
-                                pVerticalSpace(height: 8.0),
-                                Expanded(
-                                  child: TView(
-                                    title: dashboardController
-                                            .listCategories[con].category ??
-                                        "",
-                                    size: 14,
-                                    color: pTextColor,
-                                  ),
+                                    ),
+                                    pVerticalSpace(height: 4.0)
+                                  ],
                                 ),
-                                pVerticalSpace(height: 4.0)
-                              ],
-                            ),
-                          );
-                        },
-                      )));
+                              );
+                            },
+                          )));
         }),
         SizedBox(height: 12),
         Row(
@@ -413,181 +411,204 @@ class CustomInnerContent extends StatelessWidget {
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 35,
-                        height: 35,
-                        child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 20,
-                            backgroundImage: dashboardController
-                                        .listNearByBusiness[0]
-                                        .logoUrl!
-                                        .isEmpty ||
-                                    dashboardController
-                                            .listNearByBusiness[0].logoUrl ==
-                                        "string"
-                                ? NetworkImage(noImage)
-                                : NetworkImage(dashboardController
-                                    .listNearByBusiness[0].logoUrl!)),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 8.0, bottom: 4.0),
-                            child: TView(
-                              title: dashboardController
-                                      .listNearByBusiness[0].businessName ??
-                                  "",
-                              size: 14.5,
-                              color: Colors.grey.shade800,
-                              // style: TextStyle(fontSize: 14.5),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8.0, right: 4.0),
-                                child: Icon(
-                                  Icons.restaurant,
-                                  color: Colors.grey.shade600,
-                                  size: 11,
-                                ),
-                              ),
-                              ConstrainedBox(
-                                constraints: BoxConstraints(maxWidth: 70),
-                                child: Text(
-                                  dashboardController
-                                          .listNearByBusiness[0].category ??
-                                      "",
-                                  style: TextStyle(
-                                      color: Colors.grey.shade500,
-                                      fontSize: 12.0),
-                                  maxLines: 1,
-                                  softWrap: true,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 6.0, right: 6.0),
-                                child: Center(
-                                    child: Icon(
-                                  Icons.circle,
-                                  color: Colors.grey.shade600,
-                                  size: 5,
-                                )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 4.0, right: 4.0),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Colors.grey.shade600,
-                                  size: 11,
-                                ),
-                              ),
-                              TView(
-                                title: dashboardController
-                                        .listNearByBusiness[0].distance!
-                                        .toStringAsFixed(2) +
-                                    " Km",
-
-                                color: Colors.grey.shade500,
-                                size: 12.0,
-
-                                // style: TextStyle(
-                                //     color: Colors.grey.shade500,
-                                //     fontSize: 12.0),
-                              ),
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+        dashboardController.loader == false
+            ? SpinKitRipple(
+                color: pPrimaryColor,
+                borderWidth: 7.0,
+              )
+            : dashboardController.listNearByBusiness.isEmpty
+                ? Container(
+                    child: TView(
+                      title: "No data",
+                      color: pTextColor,
+                      size: 14.0,
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(16.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4.0, right: 4.0),
-                          child: Image.asset(
-                            flash,
-                            height: 15,
-                            width: 15,
-                          ),
-                        ),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // TView(
-                            //   title: cashback +
-                            //       " Extra Cashback",
-                            //   size: 14.0,
-                            //   color: pHomePageTextColor,
-                            // )
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 35,
+                                  height: 35,
+                                  child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 20,
+                                      backgroundImage: dashboardController
+                                                  .listNearByBusiness[0]
+                                                  .logoUrl!
+                                                  .isEmpty ||
+                                              dashboardController
+                                                      .listNearByBusiness[0]
+                                                      .logoUrl ==
+                                                  "string"
+                                          ? NetworkImage(noImage)
+                                          : NetworkImage(dashboardController
+                                              .listNearByBusiness[0].logoUrl!)),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, bottom: 4.0),
+                                      child: TView(
+                                        title: dashboardController
+                                                .listNearByBusiness[0]
+                                                .businessName ??
+                                            "",
+                                        size: 14.5,
+                                        color: Colors.grey.shade800,
+                                        // style: TextStyle(fontSize: 14.5),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, right: 4.0),
+                                          child: Icon(
+                                            Icons.restaurant,
+                                            color: Colors.grey.shade600,
+                                            size: 11,
+                                          ),
+                                        ),
+                                        ConstrainedBox(
+                                          constraints:
+                                              BoxConstraints(maxWidth: 70),
+                                          child: Text(
+                                            dashboardController
+                                                    .listNearByBusiness[0]
+                                                    .category ??
+                                                "",
+                                            style: TextStyle(
+                                                color: Colors.grey.shade500,
+                                                fontSize: 12.0),
+                                            maxLines: 1,
+                                            softWrap: true,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 6.0, right: 6.0),
+                                          child: Center(
+                                              child: Icon(
+                                            Icons.circle,
+                                            color: Colors.grey.shade600,
+                                            size: 5,
+                                          )),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 4.0, right: 4.0),
+                                          child: Icon(
+                                            Icons.location_on,
+                                            color: Colors.grey.shade600,
+                                            size: 11,
+                                          ),
+                                        ),
+                                        TView(
+                                          title: dashboardController
+                                                  .listNearByBusiness[0]
+                                                  .distance!
+                                                  .toStringAsFixed(2) +
+                                              " Km",
 
-                            TView(
-                              title: dashboardController.listNearByBusiness[0]
-                                      .discountPercenatage ??
-                                  "0" + "% Extra Cashback",
-                              // style: TextStyle(
-                              //     color: Colors.black,
-                              //     fontWeight: FontWeight.bold,
-                              //     fontSize: 16)
+                                          color: Colors.grey.shade500,
+                                          size: 12.0,
 
-                              color: Colors.black,
-                              size: 16.0,
-                              weight: FontWeight.bold,
+                                          // style: TextStyle(
+                                          //     color: Colors.grey.shade500,
+                                          //     fontSize: 12.0),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                )
+                              ],
                             ),
-                            pVerticalSpace(height: 2.0),
-                            TView(
-                              title: "No minimum purchase",
-                              // style: TextStyle(
-                              //     color: Colors.black,
-                              //     fontWeight: FontWeight.bold,
-                              //     fontSize: 16)
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 4.0, right: 4.0),
+                                    child: Image.asset(
+                                      flash,
+                                      height: 15,
+                                      width: 15,
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // TView(
+                                      //   title: cashback +
+                                      //       " Extra Cashback",
+                                      //   size: 14.0,
+                                      //   color: pHomePageTextColor,
+                                      // )
 
-                              color: Colors.grey,
-                              size: 12.0,
-                            ),
+                                      TView(
+                                        title: dashboardController
+                                                .listNearByBusiness[0]
+                                                .discountPercenatage ??
+                                            "0" + "% Extra Cashback",
+                                        // style: TextStyle(
+                                        //     color: Colors.black,
+                                        //     fontWeight: FontWeight.bold,
+                                        //     fontSize: 16)
+
+                                        color: Colors.black,
+                                        size: 16.0,
+                                        weight: FontWeight.bold,
+                                      ),
+                                      pVerticalSpace(height: 2.0),
+                                      TView(
+                                        title: "No minimum purchase",
+                                        // style: TextStyle(
+                                        //     color: Colors.black,
+                                        //     fontWeight: FontWeight.bold,
+                                        //     fontSize: 16)
+
+                                        color: Colors.grey,
+                                        size: 12.0,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
+                        Container(
+                          height: 90.0,
+                          width: 110.0,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Image.network(
+                              noImage,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   )
-                ],
-              ),
-              Container(
-                height: 90.0,
-                width: 110.0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: Image.network(
-                    noImage,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              )
-            ],
-          ),
-        )
       ],
     );
 
