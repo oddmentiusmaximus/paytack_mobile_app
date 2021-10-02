@@ -37,6 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
+            appBar: commonAppBar('', color: Colors.transparent, isTrue: true),
             body: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 20.0,
@@ -280,6 +281,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                       ),
+                      SizedBox(height: 20,)
                     ]))),
       ],
     );

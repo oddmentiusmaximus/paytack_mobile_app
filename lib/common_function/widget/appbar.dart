@@ -23,6 +23,7 @@ AppBar commonAppBar(String appBarTitle,
               child: isTrue == true
                   ? Icon(
                       Icons.arrow_back_ios,
+                      color: Colors.black,
                       size: 22,
                     )
                   : Container(

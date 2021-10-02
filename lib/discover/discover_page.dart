@@ -157,29 +157,28 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
         builder: (dashboardController) {
           return Container(
             child: Stack(
-              children: <Widget>[
-                Center(
-                  child: dashboardController.loaderMap == false
-                      ? SpinKitRipple(
-                          color: pPrimaryColor,
-                          borderWidth: 7.0,
-                        )
-                      : GoogleMap(
-                          mapType: MapType.normal,
-                          initialCameraPosition: CameraPosition(
-                              target: LatLng(
-                                double.tryParse(dashboardController
-                                            .listDiscover[0].latitude ??
-                                        '0.0') ??
-                                    0.0,
-                                double.tryParse(dashboardController
-                                            .listDiscover[0].longitude ??
-                                        '0.0') ??
-                                    0.0,
-                              ),
-                              zoom: 13),
-                          markers: Set.from(dashboardController.markers),
-                        ),
+              children: <Widget>[Center(
+              child: dashboardController.loaderMap == false
+                  ? SpinKitRipple(
+                      color: pPrimaryColor,
+                      borderWidth: 7.0,)
+
+                  : GoogleMap(
+                      mapType: MapType.normal,
+                      initialCameraPosition: CameraPosition(
+                          target: LatLng(
+                            double.tryParse(dashboardController
+                                        .listDiscover[0].latitude ??
+                                    '0.0') ??
+                                0.0,
+                            double.tryParse(dashboardController
+                                        .listDiscover[0].longitude ??
+                                    '0.0') ??
+                                0.0,
+                          ),
+                          zoom: 13),
+                      markers: Set.from(dashboardController.markers),
+                    ),
 
                   // ),
                 ),

@@ -30,7 +30,8 @@ class SignupController extends GetxController {
 
   RxBool isNameError = false.obs;
   RxBool isEmailError = false.obs;
-
+  FocusNode firstPinCode = FocusNode();
+  FocusNode secondPinCode = FocusNode();
   @override
   void onInit() {
     super.onInit();
@@ -50,9 +51,9 @@ class SignupController extends GetxController {
       "password": createPinController!.text.trim(),
       "confirmPassword": confirmPinController!.text.trim(),
       "clientName": signUpName!.text.trim(),
-      "countryCode": countryCode.trim(),
+      "countryCode":optionalDetailsMobileNo!.text.isEmpty?' ': countryCode.trim(),
       "phoneNumber": optionalDetailsMobileNo!.text.isEmpty
-          ? ''
+          ? ' '
           : optionalDetailsMobileNo!.text.trim(),
       "gender": " ",
       "dateOfBirth":

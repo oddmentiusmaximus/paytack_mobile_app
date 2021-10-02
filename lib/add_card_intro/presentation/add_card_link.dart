@@ -35,12 +35,14 @@ class _AddCardIntroState extends State<AddCardIntro> {
             appBar: commonAppBar("",
                 isTrue: true, size: 14, step: "1", color: Colors.transparent),
             resizeToAvoidBottomInset: false,
-            body: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 2.0,
+            body: SafeArea(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20.0,
+                  vertical: 2.0,
+                ),
+                child: body,
               ),
-              child: body,
             )),
       ],
     );
@@ -64,15 +66,38 @@ Widget middleSection = new Expanded(
         ),
         pVerticalSpace(height: 15.0),
         Center(
-          child: TView(
-            title: "Your bank will never be charged. Ever.",
-            size: 14.0,
-            weight: FontWeight.normal,
-            align: TextAlign.start,
-            isMaxLines: false,
-            isOverflow: false,
-            color: pTextColor,
-          ),
+          child:
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: RichText(
+              text: new TextSpan(
+                // Note: Styles for TextSpans must be explicitly defined.
+                // Child text spans will inherit styles from parent
+                style: commonTextStyle(),
+                children: <TextSpan>[
+                  new TextSpan(
+                      text: 'Your bank will never be charged. ',
+                      style: commonTextStyle(
+                          color: pTextColor, type: 'B2')),
+                  TextSpan(
+                      text: 'Ever.',
+                      style: commonTextStyle(
+                          weight: FontWeight.bold,
+                          color: pTextColor,
+                          type: 'B2')),
+                ],
+              ),
+            ),
+          )
+          // TView(
+          //   title: "",
+          //   size: 14.0,
+          //   weight: FontWeight.normal,
+          //   align: TextAlign.start,
+          //   isMaxLines: false,
+          //   isOverflow: false,
+          //   color: pTextColor,
+          // ),
         ),
         pVerticalSpace(height: 15.0),
       ],
@@ -89,7 +114,7 @@ Widget bottomBanner = Column(
         height: 40.0,
         tvColor: Colors.white,
         radius: 12.0,
-        btnTitle: "Next",
+        btnTitle: "Link",
         onPress: () {
           //Get.toNamed(AppRoute.setPin);
           Get.put(PermissionsController()).isSignUp = true;
