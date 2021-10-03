@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/common_dialog.dart';
@@ -25,16 +26,19 @@ class GoogleMapsClonePage extends StatefulWidget {
 }
 
 class _GoogleMapsClonePageState extends State<GoogleMapsClonePage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          CustomGoogleMap(),
-          CustomHeader(),
-        ],
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            CustomGoogleMap(),
+            Padding(
+              padding: const EdgeInsets.only(top: 28.0),
+              child: CustomHeader(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -157,28 +161,29 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
         builder: (dashboardController) {
           return Container(
             child: Stack(
-              children: <Widget>[Center(
-              child: dashboardController.loaderMap == false
-                  ? SpinKitRipple(
-                      color: pPrimaryColor,
-                      borderWidth: 7.0,)
-
-                  : GoogleMap(
-                      mapType: MapType.normal,
-                      initialCameraPosition: CameraPosition(
-                          target: LatLng(
-                            double.tryParse(dashboardController
-                                        .listDiscover[0].latitude ??
-                                    '0.0') ??
-                                0.0,
-                            double.tryParse(dashboardController
-                                        .listDiscover[0].longitude ??
-                                    '0.0') ??
-                                0.0,
-                          ),
-                          zoom: 13),
-                      markers: Set.from(dashboardController.markers),
-                    ),
+              children: <Widget>[
+                Center(
+                  child: dashboardController.loaderMap == false
+                      ? SpinKitRipple(
+                          color: pPrimaryColor,
+                          borderWidth: 7.0,
+                        )
+                      : GoogleMap(
+                          mapType: MapType.normal,
+                          initialCameraPosition: CameraPosition(
+                              target: LatLng(
+                                double.tryParse(dashboardController
+                                            .listDiscover[0].latitude ??
+                                        '0.0') ??
+                                    0.0,
+                                double.tryParse(dashboardController
+                                            .listDiscover[0].longitude ??
+                                        '0.0') ??
+                                    0.0,
+                              ),
+                              zoom: 13),
+                          markers: Set.from(dashboardController.markers),
+                        ),
 
                   // ),
                 ),
@@ -206,9 +211,6 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
       ),
     );
   }
-
-
-
 }
 
 /// Search text field plus the horizontally scrolling categories below the text field
@@ -248,13 +250,14 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         maxLines: 1,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(15),
+          contentPadding:
+              const EdgeInsets.only(left: 5, right: 15, top: 15, bottom: 15),
           hintText: "Search venues..",
-          hintStyle: TextStyle(
-              color: Colors.grey.shade500,
-              fontSize: 14.0,
-              fontWeight: FontWeight.normal,
-              fontFamily: "Lato"),
+          hintStyle: GoogleFonts.lato(
+            color: pBottomNav,
+            fontSize: 14.0,
+            fontWeight: FontWeight.normal,
+          ),
           border: InputBorder.none,
         ),
       ),
@@ -297,9 +300,7 @@ class CustomInnerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-
-      Column(
+    return Column(
       children: <Widget>[
         pVerticalSpace(height: 8.0),
         Container(
@@ -382,33 +383,30 @@ class CustomInnerContent extends StatelessWidget {
                           )));
         }),
         SizedBox(height: 12),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: TView(
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TView(
                 title: "Nearby",
+                color: pTextColors,
+                size: 16.0,
                 weight: FontWeight.bold,
-                color: Colors.black,
-                size: 16,
-
-                // style: TextStyle(
-                //     color: Colors.black,
-                //     fontWeight: FontWeight.bold,
-                //     fontSize: 16),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: TView(
-                title: "View all",
-                color: pProgress,
-                size: 13,
-                // style: TextStyle(color: pProgress, fontSize: 13),
+              Spacer(),
+              InkWell(
+                onTap: () {},
+                child: TView(
+                  title: "VIEW ALL",
+                  color: pProgress,
+                  size: 13.0,
+                  weight: FontWeight.w800,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         dashboardController.loader == false
             ? SpinKitRipple(
@@ -417,10 +415,13 @@ class CustomInnerContent extends StatelessWidget {
               )
             : dashboardController.listNearByBusiness.isEmpty
                 ? Container(
-                    child: TView(
-                      title: "No data",
-                      color: pTextColor,
-                      size: 14.0,
+                    height: 200,
+                    child: Center(
+                      child: TView(
+                        title: "No data available",
+                        color: pTextColor,
+                        size: 14.0,
+                      ),
                     ),
                   )
                 : Padding(

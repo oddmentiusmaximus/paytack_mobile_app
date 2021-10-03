@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:paytack/common_function/constants.dart';
 
 class TView extends StatelessWidget {
   final String title;
   final double size;
+  final double? letterSpacing;
   final Color color;
   final TextAlign align;
   final FontWeight weight;
@@ -13,7 +15,7 @@ class TView extends StatelessWidget {
 
   TView({
     Key? key,
-    this.title="",
+    this.title = "",
     this.size = 12.0,
     this.isOverflow = false,
     this.color = pPrimaryColor,
@@ -21,6 +23,7 @@ class TView extends StatelessWidget {
     this.isMaxLines = false,
     this.textDecoration,
     this.align = TextAlign.center,
+    this.letterSpacing,
   }) : super(key: key);
 
   @override
@@ -31,9 +34,9 @@ class TView extends StatelessWidget {
       textScaleFactor: 1.0,
       textAlign: align,
       maxLines: isMaxLines ? null : 3,
-      style: TextStyle(
+      style: GoogleFonts.lato(
+        letterSpacing: letterSpacing,
         color: color,
-        fontFamily: latoFontRegular,
         fontSize: size,
         fontWeight: weight,
         decoration: textDecoration ?? TextDecoration.none,

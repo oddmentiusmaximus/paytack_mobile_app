@@ -117,31 +117,40 @@ class _NearByCashBackState extends State<NearByCashBack> {
                     )),
               )
             : dashboardController.listNearByBusiness.isEmpty
-                ? Container(
-                    height: Get.height,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Image.asset(
-                            not_found,
-                            fit: BoxFit.fitHeight,
+                ? Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Container(
+
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 200,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Image.asset(
+                                  not_found,
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        pVerticalSpace(height: 10.0),
-                        TView(
-                            title: "Hard time finding your destination",
-                            color: Colors.black,
-                            weight: FontWeight.bold,
-                            size: 20.0),
-                        pVerticalSpace(height: 10.0),
-                        TView(
-                            title: "We are not yet operational near you.",
-                            color: pTextColor,
-                            size: 14.0),
-                        pVerticalSpace(height: 10.0),
-                      ],
+                          pVerticalSpace(height: 10.0),
+                          TView(
+                              title: "Hard time finding your destination",
+                              color: Colors.black,
+                              weight: FontWeight.bold,
+                              size: 20.0),
+                          pVerticalSpace(height: 10.0),
+                          TView(
+                              title: "We are not yet operational near you..",
+                              color: pTextColor,
+                              letterSpacing: 1.2,
+                              size: 14.0),
+                          pVerticalSpace(height: 10.0),
+                        ],
+                      ),
                     ),
                   )
                 : ListView.separated(
@@ -153,7 +162,6 @@ class _NearByCashBackState extends State<NearByCashBack> {
                     physics: new NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-
                       String cashback = dashboardController
                           .listNearByBusiness[index]
                           .businessCashbackConfig!
@@ -333,16 +341,19 @@ class _NearByCashBackState extends State<NearByCashBack> {
                                               borderRadius:
                                                   BorderRadius.circular(20.0),
                                               child: dashboardController
-                                                  .listNearByBusiness[
-                                              index]
-                                                  .businessCashbackConfig!.image.isEmpty
+                                                      .listNearByBusiness[index]
+                                                      .businessCashbackConfig!
+                                                      .image
+                                                      .isEmpty
                                                   ? Image.network(noImage)
-                                                  : Image.network(ApiHelpers
-                                                  .baseUrl +
-                                                  dashboardController
-                                                      .listNearByBusiness[
-                                                  index].businessCashbackConfig!.image,
-                                              ),
+                                                  : Image.network(
+                                                      ApiHelpers.baseUrl +
+                                                          dashboardController
+                                                              .listNearByBusiness[
+                                                                  index]
+                                                              .businessCashbackConfig!
+                                                              .image,
+                                                    ),
                                             ),
                                           ),
                                         ],

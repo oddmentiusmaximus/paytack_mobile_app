@@ -64,7 +64,9 @@ class OutlineButtonCommon extends StatelessWidget {
   final GestureTapCallback? onPressed;
   final String? btnTitle;
   final double? tvSize;
+  final double? iconSize;
   final Color? textColor;
+  final Color? iconColor;
   final bool? isEnabled;
   final FontWeight? fontWeight;
   final Color? color;
@@ -89,7 +91,9 @@ class OutlineButtonCommon extends StatelessWidget {
       this.textColor,
       this.icon,
       this.horizontalPadding = 0.0,
-      this.verticalPadding = 0.0})
+      this.verticalPadding = 0.0,
+
+      this.iconColor = pTextColors, this.iconSize = 14.0})
       : super(key: key);
 
   @override
@@ -107,11 +111,13 @@ class OutlineButtonCommon extends StatelessWidget {
           size: tvSize!,
           color: textColor!,
         ),
-        icon: icon==null?Container():ImageIcon(
-          AssetImage(icon!),
-          size: 14.0,
-          color: pTextColors,
-        ),
+        icon: icon == null
+            ? Container()
+            : ImageIcon(
+                AssetImage(icon!),
+                size: iconSize,
+                color: iconColor,
+              ),
       ),
     );
   }

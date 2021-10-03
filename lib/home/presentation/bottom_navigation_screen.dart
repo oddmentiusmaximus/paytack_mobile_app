@@ -41,7 +41,6 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: _pages[_selectedTabIndex],
       bottomNavigationBar: bottomNavigationBar,
     );
@@ -63,57 +62,48 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage(rewards),
-                size: 15,
+                size: 18,
                 color: _selectedTabIndex == 0 ? pPrimaryColor : pBorderGrey,
               ),
-              title: Text('Rewards',
-                  style: TextStyle(
-                      fontSize: 10.0,
-                      fontFamily: latoFont,
-                      color: _selectedTabIndex == 0
-                          ? pTextColor
-                          : pBottomNav)),
+              title: TView(
+                title: 'Rewards',
+                size: 11,
+                color: _selectedTabIndex == 0 ? pTextColor : pBottomNav,
+              ),
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage(discover),
-                size: 15,
+                size: 18,
                 color: _selectedTabIndex == 1 ? pPrimaryColor : pBorderGrey,
               ),
-              title: Text('Discover',
-                  style: TextStyle(
-                      fontSize: 10.0,
-                      fontFamily: latoFont,
-                      color: _selectedTabIndex == 1
-                          ? pTextColor
-                          : pBottomNav)),
+              title: TView(
+                title: 'Discover',
+                size: 11,
+                color: _selectedTabIndex == 1 ? pTextColor : pBottomNav,
+              ),
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(AssetImage(history),
-                  size: 15,
-                  color:
-                      _selectedTabIndex == 2 ? pPrimaryColor : pBorderGrey),
-              title: Text('History',
-                  style: TextStyle(
-                      fontSize: 10.0,
-                      fontFamily: latoFont,
-                      color: _selectedTabIndex == 2
-                          ? pTextColor
-                          : pBottomNav)),
+                  size: 18,
+                  color: _selectedTabIndex == 2 ? pPrimaryColor : pBorderGrey),
+              title: TView(
+                title: 'History',
+                size: 11,
+                color: _selectedTabIndex == 2 ? pTextColor : pBottomNav,
+              ),
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage(meTab),
-                size: 15,
+                size: 18,
                 color: _selectedTabIndex == 3 ? pPrimaryColor : pBorderGrey,
               ),
-              title: Text('Me',
-                  style: TextStyle(
-                      fontSize: 10.0,
-                      fontFamily: latoFont,
-                      color: _selectedTabIndex == 3
-                          ? pTextColor
-                          : pBottomNav)),
+              title: TView(
+                title: 'Me',
+                size: 11,
+                color: _selectedTabIndex == 3 ? pTextColor : pBottomNav,
+              ),
             ),
           ],
         ));
