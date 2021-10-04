@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:paytack/add_card_intro/presentation/add_card_link.dart';
 import 'package:paytack/add_card_intro/presentation/add_card_tink.dart';
+import 'package:paytack/add_card_intro/presentation/web_view.dart';
 import 'package:paytack/cashout_screens/application/binding.dart';
 import 'package:paytack/cashout_screens/presentation/bank_details_cashout.dart';
 import 'package:paytack/cashout_screens/presentation/view.dart';
@@ -53,6 +54,10 @@ class AppScreens {
     GetPage(
       name: AppRoute.setPin,
       page: () => SetPinScreen(),
+    ),
+    GetPage(
+      name: AppRoute.webview,
+      page: () => TinkIntegration(),
     ),
     GetPage(
         name: AppRoute.homeLanding,

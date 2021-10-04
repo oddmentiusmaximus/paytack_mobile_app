@@ -208,57 +208,60 @@ class DashBoardController extends GetxController {
     if (permission == true) {
       try {
         var result = await BarcodeScanner.scan();
-        /*if (result.rawContent.isNotEmpty) {*/
-        showCommonWithWidget(
-          barrierDismissible: false,
-          context: context,
-          title: "Enter amount to redeem",
-          //  image: success_tick,
-          message: '',
-          imageTrue: false,
-          widget: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                TInput(
-                    controller: redeemController,
-                    hintText: "0 kr.",
-                    maxLines: 1,
-                    type: 'B1',
-                    isEdit: false,
-                    isError: false,
-                    isInput: true,
-                    keyboardType: TextInputType.number,
-                    onChange: (val) {
-                      if (val.toString() == 'null' || val.isEmpty) {}
-                    }),
-                pVerticalSpace(height: 15.0),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: TView(
-                    title: "Available balance $availableCashback" + " Kr.",
-                    size: 14.0,
-                    color: pTextColor,
+        print(result.rawContent);
+        String? token =
+            await CommonStorage.readSecureStorageData("access_token");
+        if (result.rawContent.isNotEmpty && token!.isNotEmpty) {
+          showCommonWithWidget(
+            barrierDismissible: false,
+            context: context,
+            title: "Enter amount to redeem",
+            //  image: success_tick,
+            message: '',
+            imageTrue: false,
+            widget: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  TInput(
+                      controller: redeemController,
+                      hintText: "0 kr.",
+                      maxLines: 1,
+                      type: 'B1',
+                      isEdit: false,
+                      isError: false,
+                      isInput: true,
+                      keyboardType: TextInputType.number,
+                      onChange: (val) {
+                        if (val.toString() == 'null' || val.isEmpty) {}
+                      }),
+                  pVerticalSpace(height: 15.0),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TView(
+                      title: "Available balance $availableCashback" + " Kr.",
+                      size: 14.0,
+                      color: pTextColor,
+                    ),
                   ),
-                ),
-                pVerticalSpace(height: 15.0),
-                CustomButton(
-                    color: pPrimaryColor,
-                    isEnabled: true,
-                    tvSize: 16.0,
-                    width: 100,
-                    tvColor: Colors.white,
-                    height: 45.0,
-                    radius: 12.0,
-                    btnTitle: "Confirm",
-                    onPress: () {
-                      Get.back();
-                    }),
-              ],
+                  pVerticalSpace(height: 15.0),
+                  CustomButton(
+                      color: pPrimaryColor,
+                      isEnabled: true,
+                      tvSize: 16.0,
+                      width: 100,
+                      tvColor: Colors.white,
+                      height: 45.0,
+                      radius: 12.0,
+                      btnTitle: "Confirm",
+                      onPress: () {
+                        Get.back();
+                      }),
+                ],
+              ),
             ),
-          ),
-        );
-        /*}*/
+          );
+        }
       } on PlatformException catch (e) {
         if (e.code == BarcodeScanner.cameraAccessDenied) {
         } else {}

@@ -25,7 +25,6 @@ class _SetPinScreenState extends State<SetPinScreen> {
   String currentText = "";
   final SignupController _signupController = Get.find();
 
-
   @override
   void initState() {
     // TODO: implement initState

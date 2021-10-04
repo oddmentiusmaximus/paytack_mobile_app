@@ -24,6 +24,7 @@ abstract class AppRoute {
   static const addTinkCard = '/addTink';
   static const setForgotPassword = '/forgot-pin';
   static const nordiGen = '/bank-add';
+  static const webview = '/app_web';
 
 
 }

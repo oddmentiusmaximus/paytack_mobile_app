@@ -153,25 +153,22 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                                 size: 13.0,
                               ),
                               Spacer(),
-                              Padding(
-                                padding: EdgeInsets.only(left: 80),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    TView(
-                                      color: pPrimaryColor,
-                                      title: "Know more",
-                                      size: 13.0,
-                                      weight: FontWeight.w600,
-                                    ),
-                                    pHorizontalSpace(width: 2.0),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 15.0,
-                                      color: pPrimaryColor,
-                                    )
-                                  ],
-                                ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  TView(
+                                    color: pPrimaryColor,
+                                    title: "Know more",
+                                    size: 13.0,
+                                    weight: FontWeight.w600,
+                                  ),
+                                  pHorizontalSpace(width: 2.0),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 15.0,
+                                    color: pPrimaryColor,
+                                  )
+                                ],
                               )
                             ],
                           ),

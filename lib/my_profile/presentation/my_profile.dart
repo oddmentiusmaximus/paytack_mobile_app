@@ -114,8 +114,8 @@ class MyProfileTab extends StatelessWidget {
                                     pHorizontalSpace(width: 12.0),
                                     ImageIcon(
                                       AssetImage(edit),
-                                      size: 15,
-                                      color: pBottomNav,
+                                      size: 14,
+                                      color: Colors.black,
                                     ),
                                   ]),
                                 )
@@ -190,6 +190,7 @@ class MyProfileTab extends StatelessWidget {
             Divider(
               height: 10,
               thickness: 10,
+              color: dividerColor,
             ),
 
             // pVerticalSpace(height: 10.0),
