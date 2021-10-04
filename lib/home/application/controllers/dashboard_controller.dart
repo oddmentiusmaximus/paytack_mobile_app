@@ -40,16 +40,18 @@ class DashBoardController extends GetxController {
   String? userEmail = '';
   List<NearByModel> listNearByBusiness = [];
   List<LatLng> latLong = [];
-int pageNoSlider=0;
+  int pageNoSlider = 0;
+
   //
   Iterable markers = [];
   List<NearByModel> listDiscover = [];
 
   //
-void updateSlideDot(int index){
-  pageNoSlider=index;
-  update();
-}
+  void updateSlideDot(int index) {
+    pageNoSlider = index;
+    update();
+  }
+
   List<CategoriesModel> listCategories = [
     CategoriesModel(
         businessName:
@@ -323,12 +325,17 @@ void updateSlideDot(int index){
           print(error);
         });
   }
+
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
     ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
+
   // /api/clients/categories
   void getCategories() {
     loaderMap = false;

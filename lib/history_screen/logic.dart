@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 
 class HistoryScreenLogic extends GetxController {
   // final state = HistoryScreenState();
-  RxBool isCheckIn = true.obs;
-  RxBool isBankTransferIn = false.obs;
-  RxBool isRedeem = false.obs;
+  bool isCheckIn = true;
+  bool isBankTransferIn = false;
+  bool isRedeem = false;
 
   @override
   void onInit() {
@@ -15,20 +15,21 @@ class HistoryScreenLogic extends GetxController {
 
   changePage(bool isCheck, bool isBankTransfer, bool isRedeemPage) {
     if (isCheck) {
-      isCheckIn.value = isCheck;
-      isBankTransferIn.value = isBankTransfer;
-      isRedeem.value = isRedeemPage;
+      isCheckIn = isCheck;
+      isBankTransferIn = isBankTransfer;
+      isRedeem = isRedeemPage;
     }
     if (isBankTransfer) {
-      isCheckIn.value = isCheck;
-      isBankTransferIn.value = isBankTransfer;
-      isRedeem.value = isRedeemPage;
+      isCheckIn = isCheck;
+      isBankTransferIn = isBankTransfer;
+      isRedeem = isRedeemPage;
     }
     if (isRedeemPage) {
-      isCheckIn.value = isCheck;
-      isBankTransferIn.value = isBankTransfer;
-      isRedeem.value = isRedeemPage;
+      isCheckIn = isCheck;
+      isBankTransferIn = isBankTransfer;
+      isRedeem = isRedeemPage;
     }
+    update();
   }
 
   @override

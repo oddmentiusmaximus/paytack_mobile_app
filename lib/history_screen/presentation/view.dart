@@ -20,75 +20,71 @@ class HistoryScreenPage extends StatelessWidget {
         elevation: 0,
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 2.0,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TView(
-                    title: "Activities",
-                    size: 24.0,
-                    weight: FontWeight.bold,
-                    align: TextAlign.start,
-                    isMaxLines: false,
-                    isOverflow: false,
-                    color: pTextColor,
+        child: GetBuilder<HistoryScreenLogic>(builder: (logic) {
+          return Column(
+            children: [
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 2.0,
                   ),
-                  Obx(() {
-                    return Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: GestureDetector(
-                            onTap: () => logic.changePage(true, false, false),
-                            child: Visibility(
-                              visible: logic.isCheckIn.isTrue,
-                              replacement: ListTile(
-                                subtitle: Divider(
-                                  thickness: 5,
-                                  color: Colors.transparent,
-                                  endIndent: 90,
-                                  height: 0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TView(
+                        title: "Activities",
+                        size: 24.0,
+                        weight: FontWeight.bold,
+                        align: TextAlign.start,
+                        isMaxLines: false,
+                        isOverflow: false,
+                        color: pTextColor,
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            child: GestureDetector(
+                              onTap: () => logic.changePage(true, false, false),
+                              child: Visibility(
+                                visible: logic.isCheckIn == true,
+                                replacement: ListTile(
+
+                                  contentPadding: EdgeInsets.zero,
+                                  title: TView(
+                                    title: "Check-ins",
+                                    size: 14.0,
+                                    align: TextAlign.start,
+                                    isMaxLines: false,
+                                    isOverflow: false,
+                                    color: pDisableColor,
+                                  ),
                                 ),
-                                contentPadding: EdgeInsets.zero,
-                                title: TView(
-                                  title: "Check-ins",
-                                  size: 14.0,
-                                  align: TextAlign.start,
-                                  isMaxLines: false,
-                                  isOverflow: false,
-                                  color: pDisableColor,
-                                ),
-                              ),
-                              child: ListTile(
-                                subtitle: Divider(
-                                  thickness: 5,
-                                  color: pPrimaryColor,
-                                  endIndent: 90,
-                                  height: 0,
-                                ),
-                                contentPadding: EdgeInsets.zero,
-                                title: TView(
-                                  title: "Check-ins",
-                                  size: 16.0,
-                                  weight: FontWeight.bold,
-                                  align: TextAlign.start,
-                                  isMaxLines: false,
-                                  isOverflow: false,
-                                  color: pTextColor,
+                                child: ListTile(
+                                  subtitle: Divider(
+                                    thickness: 5,
+                                    color: pProgress,
+                                    endIndent: 70,
+                                    height: 0,
+                                  ),
+                                  contentPadding: EdgeInsets.zero,
+                                  title: TView(
+                                    title: "Check-ins",
+                                    size: 16.0,
+                                    weight: FontWeight.bold,
+                                    align: TextAlign.start,
+                                    isMaxLines: false,
+                                    isOverflow: false,
+                                    color: pTextColor,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        /*Flexible(
+                          /*Flexible(
                           child: GestureDetector(
                             onTap: () => logic.changePage(false, true, false),
                             child: Visibility(
@@ -131,91 +127,83 @@ class HistoryScreenPage extends StatelessWidget {
                             ),
                           ),
                         ),*/
-                        Flexible(
-                          child: GestureDetector(
-                            onTap: () => logic.changePage(false, false, true),
-                            child: Visibility(
-                              visible: logic.isRedeem.isTrue,
-                              replacement: ListTile(
-                                subtitle: Divider(
-                                  thickness: 5,
-                                  color: Colors.transparent,
-                                  endIndent: 90,
-                                  height: 0,
+                          Flexible(
+                            child: GestureDetector(
+                              onTap: () => logic.changePage(false, false, true),
+                              child: Visibility(
+                                visible: logic.isRedeem == true,
+                                replacement: ListTile(
+
+                                  contentPadding: EdgeInsets.zero,
+                                  title: TView(
+                                    title: "Redeem",
+                                    size: 14.0,
+                                    weight: FontWeight.normal,
+                                    align: TextAlign.start,
+                                    isMaxLines: false,
+                                    isOverflow: false,
+                                    color: pDisableColor,
+                                  ),
                                 ),
-                                contentPadding: EdgeInsets.zero,
-                                title: TView(
-                                  title: "Redeem",
-                                  size: 14.0,
-                                  weight: FontWeight.normal,
-                                  align: TextAlign.start,
-                                  isMaxLines: false,
-                                  isOverflow: false,
-                                  color: pDisableColor,
-                                ),
-                              ),
-                              child: ListTile(
-                                subtitle: Divider(
-                                  thickness: 5,
-                                  color: pPrimaryColor,
-                                  endIndent: 90,
-                                  height: 0,
-                                ),
-                                contentPadding: EdgeInsets.zero,
-                                title: TView(
-                                  title: "Redeem",
-                                  size: 16.0,
-                                  weight: FontWeight.bold,
-                                  align: TextAlign.start,
-                                  isMaxLines: false,
-                                  isOverflow: false,
-                                  color: pTextColor,
+                                child: ListTile(
+                                  subtitle: Divider(
+                                    thickness: 5,
+                                    color: pProgress,
+                                    endIndent: 220,
+                                    height: 0,
+                                  ),
+                                  contentPadding: EdgeInsets.zero,
+                                  title: TView(
+                                    title: "Redeem",
+                                    size: 16.0,
+                                    weight: FontWeight.bold,
+                                    align: TextAlign.start,
+                                    isMaxLines: false,
+                                    isOverflow: false,
+                                    color: pTextColor,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    );
-                  })
-                ],
+                        ],
+                      )
+                    ],
+                  )
               ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                  width: 60,
-                  padding: EdgeInsets.all(8),
-                  alignment: Alignment.centerLeft,
-                  child: TView(
-                    title: 'TODAY',
-                    color: pPhoneText,
-                    size: 11,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10)), // radius of 10
-                      color: Colors.grey // green as background color
-                      )),
-            ),
-            pVerticalSpace(height: 25.0),
-            Expanded(
-              child: Obx(() {
-                return ListView.builder(
-                  itemCount: logic.isBankTransferIn.isTrue
-                      ? 3
-                      : logic.isRedeem.isTrue
-                          ? 5
-                          : 15,
-                  itemBuilder: (BuildContext context, int index) {
-                    return listTileActivities();
-                  },
-                );
-              }),
-            )
-          ],
-        ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                    width: 60,
+                    padding: EdgeInsets.all(8),
+                    alignment: Alignment.centerLeft,
+                    child: TView(
+                      title: 'TODAY',
+                      color: pPhoneText,
+                      size: 11,
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10)), // radius of 10
+                        color: Colors.grey // green as background color
+                    )),
+              ),
+              pVerticalSpace(height: 25.0),
+              Expanded(
+                  child: ListView.builder(
+                    itemCount: logic.isBankTransferIn == true
+                        ? 3
+                        : logic.isRedeem == true
+                        ? 5
+                        : 15,
+                    itemBuilder: (BuildContext context, int index) {
+                      return listTileActivities();
+                    },
+                  ))
+            ],
+          );
+        }),
       ),
     );
   }

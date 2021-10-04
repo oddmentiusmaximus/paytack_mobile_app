@@ -31,7 +31,6 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
@@ -53,140 +52,134 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10.0, vertical: 10.0),
                       child: Container(
-                          color: Colors.white,
-                          margin: MediaQuery.of(context).padding,
-                          child: Row(
-                            children: [
-                              ImageIcon(
-                                AssetImage(logo_mark),
-                                color: pPrimaryColor,
-                              ),
-                              pHorizontalSpace(width: 10.0),
-                              TView(
-                                title: "Welcome," + " " + "${val.userName}",
-                                color: pTextColors,
-                                size: 18,
-                                weight: FontWeight.bold,
-                              ),
-                            ],
-                          )),
+                        color: Colors.white,
+                        margin: MediaQuery.of(context).padding,
+                        child: Row(
+                          children: [
+                            ImageIcon(
+                              AssetImage(logo_mark),
+                              size: 24,
+                              color: pPrimaryColor,
+                            ),
+                            pHorizontalSpace(width: 10.0),
+                            TView(
+                              title: "Welcome, " +
+                                  "${val.userName!.isNotEmpty ? val.userName!.replaceFirst(val.userName![0], val.userName![0].toUpperCase()) : '...'}",
+                              color: pTextColors,
+                              size: 17,
+                              weight: FontWeight.bold,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 45.0, vertical: 5.0),
-                      child: Row(
+                    ListTile(
+                      title: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TView(
-                                color: pHomePageTextColor,
-                                title: "CASHBACK BALANCE",
-                              ),
-                              pVerticalSpace(height: 10.0),
-                              TView(
-                                size: 23.0,
-                                color: pTextColors,
-                                title: val.availableCashback.toString() + " kr",
-                                weight: FontWeight.bold,
-                              ),
-                              pVerticalSpace(height: 15.0),
-                              Row(
-                                children: [
-                                  TView(
-                                    color: Colors.grey,
-                                    title:
-                                        val.pendingCashback.toString() + " kr.",
-                                    size: 14.0,
-                                    weight: FontWeight.bold,
-                                  ),
-                                  pHorizontalSpace(width: 2.0),
-                                  TView(
-                                    title: "Cashback Pending",
-                                    color: pHomePageTextColor,
-                                  ),
-                                ],
-                              ),
-                            ],
+                          pVerticalSpace(height: 15.0),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30.0, vertical: 0.0),
+                            child: TView(
+                              color: pHomePageTextColor,
+                              title: "CASHBACK BALANCE",
+                              size: 10,
+                              letterSpacing: 1.5,
+                              weight: FontWeight.w600,
+                            ),
                           ),
-                          Spacer(),
-                          Column(
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 30.0, right: 10.0, top: 0.0),
+                            child: Row(
+                              children: [
+                                TView(
+                                  size: 28.0,
+                                  color: pTextColors,
+                                  title: val.availableCashback.toString(),
+                                  weight: FontWeight.bold,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 5),
+                                  child: TView(
+                                    size: 20.0,
+                                    color: pTextColors,
+                                    title: " Kr.",
+                                    weight: FontWeight.normal,
+                                  ),
+                                ),
+                                Spacer(),
+                                Container(
+                                  height: 40,
+                                  width: 117,
+                                  child: OutlineButtonCommon(
+                                    btnTitle: "Redeem",
+                                    tvSize: 13.0,
+                                    height: 50.0,
+                                    horizontalPadding: 5.0,
+                                    verticalPadding: 15.0,
+                                    btnColor: pPrimaryColor,
+                                    icon: qr,
+                                    color: pPrimaryColor,
+                                    textColor: Colors.black,
+                                    onPressed: () {
+                                      val.scan(context);
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          pVerticalSpace(height: 25.0),
+                          Row(
                             children: [
-                              Container(
-                                child: OutlineButtonCommon(
-                                  btnTitle: "Redeem",
-                                  tvSize: 14.0,
-                                  height: 15.0,
-                                  horizontalPadding: 1.0,
-                                  verticalPadding: 1.0,
-                                  btnColor: pPrimaryColor,
-                                  icon: qr,
-                                  color: pPrimaryColor,
-                                  textColor: Colors.black,
-                                  onPressed: () {
-                                    val.scan(context);
-                                  },
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 30.0, right: 0.0, top: 0.0),
+                                child: TView(
+                                  color: Colors.grey,
+                                  title:
+                                      val.pendingCashback.toString() + " Kr.",
+                                  size: 13.0,
+                                  weight: FontWeight.bold,
                                 ),
                               ),
-                              pVerticalSpace(height: 16.0),
-                              Row(
-                                children: [
-                                  pHorizontalSpace(width: 15.0),
-                                  TView(
-                                    color: pPrimaryColor,
-                                    title: "Know more",
-                                    size: 14.0,
-                                    weight: FontWeight.bold,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 15.0,
-                                    color: pPrimaryColor,
-                                  ),
-                                ],
-                              ),
-                              /* Row(
-                                children: [
-                                  TView(
-                                    color: Colors.grey,
-                                    title:
-                                        val.pendingCashback.toString() + " kr",
-                                    size: 14.0,
-                                    weight: FontWeight.bold,
-                                  ),
-                                  pHorizontalSpace(width: 10.0),
-                                  Tooltip(
-                                    key: key,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                    ),
-                                    textStyle:
-                                        commonTextStyle(color: Colors.black),
-                                    message:
-                                        'Minimum 100kr cashback can be \ntransfer back into your bank account',
-                                    child: GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () => _onTap(key),
-                                      child: Image.asset(
-                                        help,
-                                        height: 30.0,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              pVerticalSpace(height: 10.0),
+                              pHorizontalSpace(width: 2.0),
                               TView(
-                                title: "Pending Cashback",
+                                title: "Cashback Pending",
                                 color: pHomePageTextColor,
-                              ),*/
+                                size: 13.0,
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: EdgeInsets.only(left: 80),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    TView(
+                                      color: pPrimaryColor,
+                                      title: "Know more",
+                                      size: 13.0,
+                                      weight: FontWeight.w600,
+                                    ),
+                                    pHorizontalSpace(width: 2.0),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 15.0,
+                                      color: pPrimaryColor,
+                                    )
+                                  ],
+                                ),
+                              )
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
-                    pVerticalSpace(height: 10.0),
+
+                    pVerticalSpace(height: 20.0),
                     // Padding(
                     //   padding: const EdgeInsets.symmetric(
                     //       horizontal: 20.0, vertical: 5.0),
@@ -269,9 +262,9 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                             },
                             child: TView(
                               title: "VIEW ALL",
-                              color: pPrimaryColor,
-                              size: 16.0,
-                              weight: FontWeight.normal,
+                              color: pProgress,
+                              size: 13.0,
+                              weight: FontWeight.w800,
                             ),
                           ),
                         ],
