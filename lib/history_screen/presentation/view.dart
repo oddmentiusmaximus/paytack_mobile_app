@@ -52,11 +52,14 @@ class HistoryScreenPage extends StatelessWidget {
                               child: Visibility(
                                 visible: logic.isCheckIn == true,
                                 replacement: ListTile(
-
+                                  subtitle: TView(
+                                    title: ' ',
+                                    color: Colors.transparent,
+                                  ),
                                   contentPadding: EdgeInsets.zero,
                                   title: TView(
                                     title: "Check-ins",
-                                    size: 14.0,
+                                    size: 16.0,
                                     align: TextAlign.start,
                                     isMaxLines: false,
                                     isOverflow: false,
@@ -133,11 +136,14 @@ class HistoryScreenPage extends StatelessWidget {
                               child: Visibility(
                                 visible: logic.isRedeem == true,
                                 replacement: ListTile(
-
+                                 subtitle: TView(
+                                    title: ' ',
+                                    color: Colors.transparent,
+                                  ),
                                   contentPadding: EdgeInsets.zero,
                                   title: TView(
                                     title: "Redeem",
-                                    size: 14.0,
+                                    size: 16.0,
                                     weight: FontWeight.normal,
                                     align: TextAlign.start,
                                     isMaxLines: false,
@@ -169,8 +175,7 @@ class HistoryScreenPage extends StatelessWidget {
                         ],
                       )
                     ],
-                  )
-              ),
+                  )),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
@@ -186,21 +191,21 @@ class HistoryScreenPage extends StatelessWidget {
                         borderRadius: BorderRadius.only(
                             topRight: Radius.circular(10),
                             bottomRight: Radius.circular(10)), // radius of 10
-                        color: Colors.grey // green as background color
-                    )),
+                        color: pBorderGrey// green as background color
+                        )),
               ),
               pVerticalSpace(height: 25.0),
               Expanded(
                   child: ListView.builder(
-                    itemCount: logic.isBankTransferIn == true
-                        ? 3
-                        : logic.isRedeem == true
+                itemCount: logic.isBankTransferIn == true
+                    ? 3
+                    : logic.isRedeem == true
                         ? 5
                         : 15,
-                    itemBuilder: (BuildContext context, int index) {
-                      return listTileActivities();
-                    },
-                  ))
+                itemBuilder: (BuildContext context, int index) {
+                  return listTileActivities();
+                },
+              ))
             ],
           );
         }),

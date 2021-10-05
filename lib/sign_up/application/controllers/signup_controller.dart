@@ -57,9 +57,9 @@ class SignupController extends GetxController {
           : optionalDetailsMobileNo!.text.trim(),
       "gender": " ",
       "dateOfBirth":
-          birthdayDate.trim() == 'Birthday' ? ' ' : birthdayDate.trim(),
+          birthdayDate.trim() == 'Birthday' ? '0001-01-01T00:00:00' : birthdayDate.trim(),
       "anniversaryDate": anniversaryDate.trim() == 'Anniversary'
-          ? ' '
+          ? '0001-01-01T00:00:00'
           : anniversaryDate.trim(),
       "referralCode": signUpReferralCode!.text.isEmpty
           ? ' '

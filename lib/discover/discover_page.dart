@@ -188,15 +188,23 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
                   // ),
                 ),
                 DraggableScrollableSheet(
-                  initialChildSize: 0.60,
+                  initialChildSize:
+                      dashboardController.listNearByBusiness.isNotEmpty
+                          ? 0.60
+                          : 0.30,
                   // minChildSize: .10,
-                  minChildSize: 0.60,
+                  minChildSize:
+                      dashboardController.listNearByBusiness.isNotEmpty
+                          ? 0.60
+                          : 0.30,
                   expand: true,
                   maxChildSize: 0.60,
+
                   // initialChildSize: .30,
                   builder: (BuildContext context,
                       ScrollController scrollController) {
                     return SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: scrollController,
                       child: CustomScrollViewContent(
                         dashboardController: dashboardController,
@@ -331,13 +339,7 @@ class CustomInnerContent extends StatelessWidget {
                       borderWidth: 7.0,
                     )
                   : dashboardController.listCategories.isEmpty
-                      ? Container(
-                          child: TView(
-                            title: "No data Found",
-                            color: pTextColor,
-                            size: 14.0,
-                          ),
-                        )
+                      ? Opacity(opacity: 0.0)
                       : Container(
                           height: 136.0,
                           child: new ListView.builder(
@@ -414,16 +416,7 @@ class CustomInnerContent extends StatelessWidget {
                 borderWidth: 7.0,
               )
             : dashboardController.listNearByBusiness.isEmpty
-                ? Container(
-                    height: 200,
-                    child: Center(
-                      child: TView(
-                        title: "No data available",
-                        color: pTextColor,
-                        size: 14.0,
-                      ),
-                    ),
-                  )
+                ? Opacity(opacity: 0.0)
                 : Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
@@ -440,6 +433,10 @@ class CustomInnerContent extends StatelessWidget {
                                       backgroundColor: Colors.white,
                                       radius: 20,
                                       backgroundImage: dashboardController
+                                                      .listNearByBusiness[0]
+                                                      .logoUrl ==
+                                                  null ||
+                                              dashboardController
                                                   .listNearByBusiness[0]
                                                   .logoUrl!
                                                   .isEmpty ||

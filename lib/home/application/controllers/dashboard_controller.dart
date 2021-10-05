@@ -41,6 +41,7 @@ class DashBoardController extends GetxController {
   List<NearByModel> listNearByBusiness = [];
   List<LatLng> latLong = [];
   int pageNoSlider = 0;
+  int sortIndexPos = 1;
 
   //
   Iterable markers = [];
@@ -282,6 +283,7 @@ class DashBoardController extends GetxController {
             List<NearByModel> list = List<NearByModel>.from(
                 success.map((i) => NearByModel.fromJson(i)));
             listNearByBusiness = list;
+            // listNearByBusiness.add(NearByModel());
             updateLoader(true);
           }
           update();
