@@ -9,6 +9,7 @@ import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/network/api_helper.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/food_detail_page/application/controllers/detail_page_controller.dart';
+import 'package:paytack/home/application/controllers/dashboard_controller.dart';
 import 'package:paytack/home/domain/near_by_model.dart';
 import 'package:paytack/home/domain/opening_hours_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,6 +23,7 @@ class _DetailPageState extends State<DetailPage> {
   double i = 0;
   List<OpeningHours> listOpeningHours = [];
   DetailPageController _detailPageController = Get.find();
+  DashBoardController dashboardController = Get.find();
 
   @override
   void initState() {
@@ -39,6 +41,26 @@ class _DetailPageState extends State<DetailPage> {
     // String jsonsDataString = response.body.toString(); // toString of Response's body is assigned to jsonDataString
     // String withoutEquals = listNearByBusiness.openingHours.replaceAll(RegExp("\ "), '');
     listOpeningHours.clear();
+
+    String cashback = listNearByBusiness
+        .businessCashbackConfig!.firstCashbackValue
+        .toString();
+    String extraCashback = listNearByBusiness
+        .businessCashbackConfig!.extraCashbackValue
+        .toString();
+
+    if (listNearByBusiness.businessCashbackConfig!.cashbackType!
+            .toLowerCase() ==
+        "Percentage".toLowerCase()) {
+      cashback = cashback + " %";
+      extraCashback = extraCashback + " %";
+    } else {
+      cashback = cashback + " kr";
+      extraCashback = extraCashback + " kr";
+    }
+    if (cashback == "null") {
+      cashback = "0";
+    }
     if (listNearByBusiness.openingHours == "string" ||
         listNearByBusiness.openingHours.isEmpty) {
       listOpeningHours = [];
@@ -125,8 +147,9 @@ class _DetailPageState extends State<DetailPage> {
                                                   width: double.infinity,
                                                   height: Get.height * 0.4,
                                                 )
-                                              : Image.network(
-                                                  ApiHelpers.baseUrl+listNearByBusiness.logoUrl)),
+                                              : Image.network(ApiHelpers
+                                                      .baseUrl +
+                                                  listNearByBusiness.logoUrl)),
                                     ),
                                     Column(
                                       crossAxisAlignment:
@@ -224,7 +247,7 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                     // _makeLaunch(listNearByBusiness);
+                                      // _makeLaunch(listNearByBusiness);
                                     },
                                     child: Padding(
                                       padding:
@@ -277,65 +300,11 @@ class _DetailPageState extends State<DetailPage> {
                             ],
                           ),
                         ),
-                        GetBuilder<DetailPageController>(builder: (logic) {
-                          return logic.loyaltyStatus == true
-                              ? Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 16.0,
-                                      right: 16.0,
-                                      top: 26.0,
-                                      bottom: 20.0),
-                                  child: MaterialButton(
-                                    height: 55,
-                                    minWidth: double.infinity,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(12)),
-                                    onPressed: () {
-                                      logic.joinLoyaltyProgram(
-                                          listNearByBusiness
-                                              .businessCashbackConfig
-                                              .payTackUserId,
-                                          false,
-                                          context);
-                                    },
-                                    child: TView(
-                                      title: "Leave Cashback Program",
-                                      size: 19.0,
-                                      color: Colors.white,
-                                    ),
-                                    color: pButtonColor,
-                                  ),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 16.0,
-                                      right: 16.0,
-                                      top: 26.0,
-                                      bottom: 20.0),
-                                  child: MaterialButton(
-                                    height: 55,
-                                    minWidth: double.infinity,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(12)),
-                                    onPressed: () {
-                                      logic.joinLoyaltyProgram(
-                                          listNearByBusiness
-                                              .businessCashbackConfig
-                                              .payTackUserId,
-                                          true,
-                                          context);
-                                    },
-                                    child: TView(
-                                      title: "Join Loyalty Program",
-                                      size: 19.0,
-                                      color: Colors.white,
-                                    ),
-                                    color: pPrimaryColor,
-                                  ),
-                                );
-                        }),
+                        Padding(
+                          padding:
+                          const EdgeInsets.only(top: 16.0, bottom: 8.0),
+                          child: Divider(color: Colors.grey),
+                        ),
                         InkWell(
                           onTap: () {
                             String googleUrl =
@@ -366,19 +335,84 @@ class _DetailPageState extends State<DetailPage> {
                               const EdgeInsets.only(top: 16.0, bottom: 8.0),
                           child: Divider(color: Colors.grey),
                         ),
-                        TView(
-                            title:
-                                "Upto ${listNearByBusiness.discountPercenatage.toString()} % Cashback",
-                            size: 20.0,
-                            color: pTextColor,
-                            weight: FontWeight.bold),
-                        Padding(
-                            padding: EdgeInsets.only(top: 2.0),
-                            child: TView(
-                              title: "No minimum purchase",
-                              size: 12.0,
-                              color: pTextColor,
-                            )),
+                        listNearByBusiness
+                                    .businessCashbackConfig!.extraCashbackValue
+                                    .toString()
+                                    .isEmpty ||
+                                listNearByBusiness.businessCashbackConfig!
+                                        .extraCashbackValue
+                                        .toString() ==
+                                    '0'
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TView(
+                                    title: "Upto $cashback Cashback",
+                                    size: 14.0,
+                                    weight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
+                                  TView(
+                                    title: listNearByBusiness
+                                                    .businessCashbackConfig!
+                                                    .minimumQualifyingAmount ==
+                                                0 ||
+                                            listNearByBusiness
+                                                    .businessCashbackConfig!
+                                                    .minimumQualifyingAmount ==
+                                                null
+                                        ? "No minimum purchase"
+                                        : "On minimum ${listNearByBusiness.businessCashbackConfig!.minimumQualifyingAmount} Purchase",
+                                    size: 14.0,
+                                    color: pHomePageTextColor,
+                                  ),
+                                ],
+                              )
+                            : Container(),
+                        listNearByBusiness
+                                    .businessCashbackConfig!.extraCashbackValue
+                                    .toString()
+                                    .isEmpty ||
+                                listNearByBusiness.businessCashbackConfig!
+                                        .extraCashbackValue
+                                        .toString() ==
+                                    '0'
+                            ? Container()
+                            : Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    flash,
+                                    height: 15,
+                                    width: 15,
+                                  ),
+                                  pHorizontalSpace(
+                                    width: 5.0,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      TView(
+                                        title:
+                                            extraCashback + " Extra Cashback",
+                                        size: 14.0,
+                                        weight: FontWeight.bold,
+                                        color: Colors.black87,
+                                      ),
+                                      TView(
+                                        title: "No minimum purchase",
+                                        size: 14.0,
+                                        color: pHomePageTextColor,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+
                         Padding(
                           padding:
                               const EdgeInsets.only(top: 8.0, bottom: 16.0),

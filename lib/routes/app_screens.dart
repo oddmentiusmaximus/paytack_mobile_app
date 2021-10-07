@@ -11,7 +11,7 @@ import 'package:paytack/food_detail_page/presentation/detail_page.dart';
 import 'package:paytack/home/application/bindings/dashboard_binding.dart';
 import 'package:paytack/home/presentation/demo_bank.dart';
 import 'package:paytack/home/presentation/home_screen.dart';
-import 'package:paytack/home/presentation/web_view.dart';
+
 import 'package:paytack/intro_screen/presentation/getting_started_screen.dart';
 import 'package:paytack/login_screen/presentation/login_screen.dart';
 import 'package:paytack/login_screen/application/bindings/login_binding.dart';

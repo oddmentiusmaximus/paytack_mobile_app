@@ -39,70 +39,14 @@ class _NearByCashBackState extends State<NearByCashBack> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCurrentLocation();
-  }
-
-  Future<void> getCurrentLocation() async {
-    bool permission = await PermissionHandle().checkPermissionStorage(
-        context: context, permissionGroup: Permission.location);
-    print("here");
-    print(permission);
-    if (permission == true) {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      Get.find<DashBoardController>()
-          .getNearBy(position.latitude, position.longitude);
-    } else {
-      Get.find<DashBoardController>().updateLoader(true);
-      showCommonWithWidget(
-          locationPopup: true,
-          barrierDismissible: false,
-          imageTrue: false,
-          context: context,
-          title: "Location disabled",
-          message:
-              'Please enable location services to find \nbest offers nearest to you',
-          widget: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                CustomButton(
-                    color: pPrimaryColor,
-                    isEnabled: true,
-                    tvSize: 16.0,
-                    width: 150,
-                    tvColor: Colors.white,
-                    height: 45.0,
-                    radius: 12.0,
-                    btnTitle: "Enable location",
-                    onPress: () async {
-                      await openAppSettings();
-                      //PermissionHandle().permission();
-                    }),
-                pVerticalSpace(height: 15.0),
-                InkWell(
-                  onTap: () {
-                    Get.find<DashBoardController>().updateLoader(true);
-                    Get.back();
-                  },
-                  child: TView(
-                    title: "Not now",
-                    color: pPrimaryColor,
-                    size: 14.0,
-                  ),
-                )
-              ],
-            ),
-          ));
-      print(e.toString());
-    }
+    //  getCurrentLocation();
   }
 
   @override
   Widget build(BuildContext context) {
     var random = new Random();
     return RefreshIndicator(
-      onRefresh: getCurrentLocation,
+      onRefresh: Get.find<DashBoardController>().getCurrentLocation,
       child: SingleChildScrollView(
           //physics: const AlwaysScrollableScrollPhysics(), // new
           child:
@@ -120,7 +64,6 @@ class _NearByCashBackState extends State<NearByCashBack> {
                 ? Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: Container(
-
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -167,13 +110,21 @@ class _NearByCashBackState extends State<NearByCashBack> {
                           .businessCashbackConfig!
                           .firstCashbackValue
                           .toString();
+                      String extraCashback = dashboardController
+                          .listNearByBusiness[index]
+                          .businessCashbackConfig!
+                          .extraCashbackValue
+                          .toString();
+
                       if (dashboardController.listNearByBusiness[index]
                               .businessCashbackConfig!.cashbackType!
                               .toLowerCase() ==
                           "Percentage".toLowerCase()) {
                         cashback = cashback + " %";
+                        extraCashback = extraCashback + " %";
                       } else {
                         cashback = cashback + " kr";
+                        extraCashback = extraCashback + " kr";
                       }
                       if (cashback == "null") {
                         cashback = "0";
@@ -272,7 +223,64 @@ class _NearByCashBackState extends State<NearByCashBack> {
                                         ],
                                       ),
                                       pVerticalSpace(height: 12.0),
-                                      cashback == "0"
+                                      dashboardController
+                                                  .listNearByBusiness[index]
+                                                  .businessCashbackConfig!
+                                                  .extraCashbackValue
+                                                  .toString()
+                                                  .isEmpty ||
+                                              dashboardController
+                                                      .listNearByBusiness[index]
+                                                      .businessCashbackConfig!
+                                                      .extraCashbackValue
+                                                      .toString() ==
+                                                  '0'
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                TView(
+                                                  title:
+                                                      "Upto $cashback Cashback",
+                                                  size: 14.0,
+                                                  weight: FontWeight.bold,
+                                                  color: Colors.black87,
+                                                ),
+                                                TView(
+                                                  title: dashboardController
+                                                                  .listNearByBusiness[
+                                                                      index]
+                                                                  .businessCashbackConfig!
+                                                                  .minimumQualifyingAmount ==
+                                                              0 ||
+                                                          dashboardController
+                                                                  .listNearByBusiness[
+                                                                      index]
+                                                                  .businessCashbackConfig!
+                                                                  .minimumQualifyingAmount ==
+                                                              null
+                                                      ? "No minimum purchase"
+                                                      : "On minimum ${dashboardController.listNearByBusiness[index].businessCashbackConfig!.minimumQualifyingAmount} Purchase",
+                                                  size: 14.0,
+                                                  color: pHomePageTextColor,
+                                                ),
+                                              ],
+                                            )
+                                          : Container(),
+                                      dashboardController
+                                                  .listNearByBusiness[index]
+                                                  .businessCashbackConfig!
+                                                  .extraCashbackValue
+                                                  .toString()
+                                                  .isEmpty ||
+                                              dashboardController
+                                                      .listNearByBusiness[index]
+                                                      .businessCashbackConfig!
+                                                      .extraCashbackValue
+                                                      .toString() ==
+                                                  '0'
                                           ? Container()
                                           : Row(
                                               crossAxisAlignment:
@@ -295,27 +303,15 @@ class _NearByCashBackState extends State<NearByCashBack> {
                                                       MainAxisAlignment.start,
                                                   children: [
                                                     TView(
-                                                      title: cashback +
+                                                      title: extraCashback +
                                                           " Extra Cashback",
                                                       size: 14.0,
                                                       weight: FontWeight.bold,
                                                       color: Colors.black87,
                                                     ),
                                                     TView(
-                                                      title: dashboardController
-                                                                      .listNearByBusiness[
-                                                                          index]
-                                                                      .businessCashbackConfig!
-                                                                      .minimumQualifyingAmount ==
-                                                                  0 ||
-                                                              dashboardController
-                                                                      .listNearByBusiness[
-                                                                          index]
-                                                                      .businessCashbackConfig!
-                                                                      .minimumQualifyingAmount ==
-                                                                  null
-                                                          ? "No minimum purchase"
-                                                          : "On minimum Purchase",
+                                                      title:
+                                                          "No minimum purchase",
                                                       size: 14.0,
                                                       color: pHomePageTextColor,
                                                     ),

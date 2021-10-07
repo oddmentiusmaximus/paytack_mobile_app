@@ -8,7 +8,6 @@ import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/discover/discover_page.dart';
 import 'package:paytack/history_screen/presentation/view.dart';
 import 'package:paytack/home/presentation/home_dashboard.dart';
-import 'package:paytack/home/presentation/web_view.dart';
 import 'package:paytack/my_profile/presentation/my_profile.dart';
 
 class BottomNavigationScreen extends StatefulWidget {

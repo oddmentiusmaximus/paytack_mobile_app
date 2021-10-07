@@ -218,25 +218,74 @@ class MyProfileTab extends StatelessWidget {
                   return ListTile(
                     onTap: () {
                       if (moreMenuList[index] == "Sign out") {
-                        actionPopup(
+                        showDialog(
+                            barrierColor: Colors.black26,
                             context: context,
-                            icon: ImageIcon(
-                              AssetImage(signOut),
-                              color: Colors.red,
-                              size: 70.0,
-                            ),
-                            message: "Are you sure you want to sign out?",
-                            rightButtonText: "Yes",
-                            leftButtonText: "No",
-                            rightBtnCallBack: () async {
-                              //Get.back(canPop: true, closeOverlays: true);
-                              await CommonStorage.delete();
-                              Navigator.of(context, rootNavigator: true).pop();
-                              Get.offAllNamed(AppRoute.login);
-                            },
-                            leftBtnCallBack: () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                              //Get.back(result: "hi");
+                            builder: (context) {
+                              return Dialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(15.0)),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          pHorizontalSpace(width: 25.0),
+                                          Expanded(
+                                            child: TView(
+                                              title: "Sign Out",
+                                              size: 18.0,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: (){
+                                              Navigator.of(context,
+                                                  rootNavigator: true)
+                                                  .pop();
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Icon(Icons.close),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      pVerticalSpace(height: 15.0),
+                                      TView(
+                                        title:
+                                            "You'll be signed out from your \naccount on this device",
+                                        size: 15.0,
+                                        color: Colors.black,
+                                      ),
+                                      pVerticalSpace(height: 30.0),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context,
+                                              rootNavigator: true)
+                                              .pop();
+                                          Get.offAllNamed(AppRoute.login);
+
+                                        },
+                                        child: TView(
+                                          title: "Log me out",
+                                          color: Colors.white,
+                                          size: 15.0,
+                                        ),
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(Colors
+                                                  .red), // <-- Button col,
+                                        ),
+                                      ),
+                                      pVerticalSpace(height: 15.0),
+                                    ],
+                                  ));
                             });
                       } else {
                         Get.toNamed(navigation[index]['route']);

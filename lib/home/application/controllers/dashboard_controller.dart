@@ -8,6 +8,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:paytack/common_function/utils/permission.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
@@ -30,6 +31,7 @@ import 'package:paytack/common_function/secure_storage.dart';
 import 'package:paytack/common_function/utils/camera_utils.dart';
 import 'package:paytack/common_function/utils/loading_class.dart';
 import 'package:paytack/common_function/widget/button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashBoardController extends GetxController {
   String? errorMsg;
@@ -51,6 +53,15 @@ class DashBoardController extends GetxController {
   void updateSlideDot(int index) {
     pageNoSlider = index;
     update();
+  }
+
+  void _launchMapsUrl(double lat, double lon) async {
+    final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lon';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   List<CategoriesModel> listCategories = [
@@ -91,9 +102,71 @@ class DashBoardController extends GetxController {
 
   @override
   void onInit() {
+    getData();
+    super.onInit();
+  }
+
+  getData() async {
+    await getCurrentLocation();
     getCashBackData();
     getUserData();
-    super.onInit();
+  }
+
+  Future<void> getCurrentLocation() async {
+    bool permission = await PermissionHandle().checkPermissionStorage(
+        context: Get.context, permissionGroup: Permission.location);
+    print("here");
+    print(permission);
+    if (permission == true) {
+      var position = await GeolocatorPlatform.instance
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+      Get.find<DashBoardController>()
+          .getNearBy(position.latitude, position.longitude);
+      //  Get.find<DashBoardController>().getCategories();
+    } else {
+      Get.find<DashBoardController>().updateLoader(true);
+      showCommonWithWidget(
+          locationPopup: true,
+          barrierDismissible: false,
+          imageTrue: false,
+          context: Get.context,
+          title: "Location disabled",
+          message:
+              'Please enable location services to find \nbest offers nearest to you',
+          widget: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                CustomButton(
+                    color: pPrimaryColor,
+                    isEnabled: true,
+                    tvSize: 16.0,
+                    width: 150,
+                    tvColor: Colors.white,
+                    height: 45.0,
+                    radius: 12.0,
+                    btnTitle: "Enable location",
+                    onPress: () async {
+                      await openAppSettings();
+                      //PermissionHandle().permission();
+                    }),
+                pVerticalSpace(height: 15.0),
+                InkWell(
+                  onTap: () {
+                    Get.find<DashBoardController>().updateLoader(true);
+                    Get.back();
+                  },
+                  child: TView(
+                    title: "Not now",
+                    color: pPrimaryColor,
+                    size: 14.0,
+                  ),
+                )
+              ],
+            ),
+          ));
+    }
   }
 
   updateLoader(bool val) {
@@ -296,7 +369,7 @@ class DashBoardController extends GetxController {
         });
   }
 
-  void getDiscover(double lat, double long) {
+  void getDiscover(double lat, double long, BuildContext context) {
     loaderMap = false;
     _networkRepository.getMethod(
         baseUrl: ApiHelpers.baseUrl +
@@ -313,13 +386,82 @@ class DashBoardController extends GetxController {
             final Uint8List markerIcon = await getBytesFromAsset(green_dot, 60);
             markers = Iterable.generate(list.length, (index) {
               return Marker(
+                  onTap: () {
+                    showDialog(
+                      barrierColor: Colors.black26,
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          elevation: 0,
+                          backgroundColor: Color(0xffffffff),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: InkWell(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(Icons.close),
+                                    )),
+                              ),
+                              SizedBox(height: 6),
+                              Text(
+                                list[index].businessName!,
+                                style: commonTextStyle(
+                                    weight: FontWeight.bold,
+                                    type: 'h4',
+                                    color: Colors.black),
+                              ),
+                              SizedBox(height: 10),
+                              Divider(
+                                height: 1,
+                              ),
+                              SizedBox(height: 10),
+                              InkWell(
+                                highlightColor: Colors.grey[200],
+                                onTap: () {
+                                  _launchMapsUrl(
+                                      double.parse(list[index].latitude!),
+                                      double.parse(list[index].longitude!));
+                                },
+                                child: Center(
+                                  child: OutlineButtonCommon(
+                                    btnTitle: "Get Direction",
+                                    tvSize: 13.0,
+                                    height: 50.0,
+                                    horizontalPadding: 5.0,
+                                    verticalPadding: 15.0,
+                                    btnColor: pPrimaryColor,
+                                    color: pPrimaryColor,
+                                    textColor: Colors.black,
+                                    onPressed: () {
+                                      _launchMapsUrl(
+                                          double.parse(list[index].latitude!),
+                                          double.parse(list[index].longitude!));
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
                   markerId: MarkerId(list[index].businessName ?? ''),
                   icon: BitmapDescriptor.fromBytes(markerIcon),
                   position: LatLng(
                     double.tryParse(list[index].latitude ?? '0.0') ?? 0.0,
                     double.tryParse(list[index].longitude ?? '0.0') ?? 0.0,
-                  ),
-                  infoWindow: InfoWindow(title: list[index].businessName));
+                  ));
             });
             updateNearBy(true);
           }

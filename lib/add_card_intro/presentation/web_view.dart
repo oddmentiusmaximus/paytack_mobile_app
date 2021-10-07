@@ -41,7 +41,7 @@ class _TinkIntegrationState extends State<TinkIntegration> {
         body: SafeArea(
           child: WebView(
             initialUrl:
-                'https://link.tink.com/1.0/account-check?client_id=d19e4b22e7074164826c4074b2d6cffb&redirect_uri=http://localhost:3000/callback&market=SE',
+                'https://link.tink.com/1.0/account-check/?client_id=d19e4b22e7074164826c4074b2d6cffb&redirect_uri=https%3A%2F%2Fconsole.tink.com%2Fcallback&market=SE&locale=en_US&test=true',
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (WebViewController webViewController) {
               _controller.complete(webViewController);

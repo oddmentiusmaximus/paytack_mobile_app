@@ -105,7 +105,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
       Get.find<DashBoardController>()
-          .getDiscover(position.latitude, position.longitude);
+          .getDiscover(position.latitude, position.longitude, context);
       //  Get.find<DashBoardController>().getCategories();
     } else {
       Get.find<DashBoardController>().updateLoader(true);
