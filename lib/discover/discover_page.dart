@@ -18,6 +18,7 @@ import 'package:paytack/common_function/utils/permission.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/home/application/controllers/dashboard_controller.dart';
+import 'package:paytack/routes/app_screens.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class GoogleMapsClonePage extends StatefulWidget {
@@ -188,14 +189,19 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
                   // ),
                 ),
                 DraggableScrollableSheet(
-                  initialChildSize: 0.35,
+                  initialChildSize:
+                      dashboardController.listNearByBusiness.isEmpty
+                          ? 0.1
+                          : 0.35,
                   minChildSize: 0.1,
                   maxChildSize: 0.4,
+                  expand: true,
                   // initialChildSize: .30,
                   builder: (BuildContext context,
                       ScrollController scrollController) {
                     return SingleChildScrollView(
                       controller: scrollController,
+                      physics: ClampingScrollPhysics(),
                       child: CustomScrollViewContent(
                         dashboardController: dashboardController,
                       ),
@@ -245,18 +251,24 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: TextFormField(
-        maxLines: 1,
-        decoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.only(left: 5, right: 15, top: 15, bottom: 15),
-          hintText: "Search venues..",
-          hintStyle: GoogleFonts.lato(
-            color: pBottomNav,
-            fontSize: 14.0,
-            fontWeight: FontWeight.normal,
+      child: GestureDetector(
+        onTap: () {
+          Get.toNamed(AppRoute.search_page);
+        },
+        child: TextFormField(
+          enabled: false,
+          maxLines: 1,
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.only(left: 5, right: 15, top: 15, bottom: 15),
+            hintText: "Search venues..",
+            hintStyle: GoogleFonts.lato(
+              color: pBottomNav,
+              fontSize: 14.0,
+              fontWeight: FontWeight.normal,
+            ),
+            border: InputBorder.none,
           ),
-          border: InputBorder.none,
         ),
       ),
     );

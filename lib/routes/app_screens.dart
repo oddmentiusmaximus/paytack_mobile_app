@@ -6,6 +6,7 @@ import 'package:paytack/cashout_screens/application/binding.dart';
 import 'package:paytack/cashout_screens/presentation/bank_details_cashout.dart';
 import 'package:paytack/cashout_screens/presentation/view.dart';
 import 'package:paytack/discover/discover_page.dart';
+import 'package:paytack/discover/search_page.dart';
 import 'package:paytack/food_detail_page/application/bindings/detail_page_binding.dart';
 import 'package:paytack/food_detail_page/presentation/detail_page.dart';
 import 'package:paytack/home/application/bindings/dashboard_binding.dart';
@@ -15,7 +16,6 @@ import 'package:paytack/home/presentation/home_screen.dart';
 import 'package:paytack/intro_screen/presentation/getting_started_screen.dart';
 import 'package:paytack/login_screen/presentation/login_screen.dart';
 import 'package:paytack/login_screen/application/bindings/login_binding.dart';
-import 'package:paytack/login_screen/presentation/login_screen.dart';
 import 'package:paytack/login_screen/presentation/set_forgot_screen.dart';
 import 'package:paytack/my_profile/presentation/change_phone_no/change_phone_no.dart';
 import 'package:paytack/my_profile/presentation/change_pin/change_pin.dart';
@@ -31,7 +31,6 @@ import 'package:paytack/set_pin/presentation/set_pin_screen.dart';
 import 'package:paytack/sign_up/application/bindings/signin_binding.dart';
 import 'package:paytack/sign_up/presentation/sign_up.dart';
 import 'package:paytack/splash_screen/splash_screen.dart';
-import 'package:paytack/verify_phone/presentation/verify_otp.dart';
 
 part 'app_route.dart';
 
@@ -58,6 +57,10 @@ class AppScreens {
     GetPage(
       name: AppRoute.webview,
       page: () => TinkIntegration(),
+    ),
+    GetPage(
+      name: AppRoute.search_page,
+      page: () => SearchPage(),
     ),
     GetPage(
         name: AppRoute.homeLanding,

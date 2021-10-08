@@ -25,6 +25,7 @@ abstract class AppRoute {
   static const setForgotPassword = '/forgot-pin';
   static const nordiGen = '/bank-add';
   static const webview = '/app_web';
+  static const search_page = '/search_page';
 
 
 }
