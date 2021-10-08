@@ -26,6 +26,7 @@ abstract class AppRoute {
   static const nordiGen = '/bank-add';
   static const webview = '/app_web';
   static const search_page = '/search_page';
+  static const changeEmail = '/change_email';
 
 
 }

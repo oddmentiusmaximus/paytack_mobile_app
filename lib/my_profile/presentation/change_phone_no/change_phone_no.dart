@@ -17,7 +17,6 @@ class ChangePhoneNoPage extends StatefulWidget {
 
 class _ChangePhoneNoPageState extends State<ChangePhoneNoPage> {
   final profileController = Get.find<ProfileController>();
-  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -108,29 +107,18 @@ class _ChangePhoneNoPageState extends State<ChangePhoneNoPage> {
               ],
             ),
             Spacer(),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                isLoading
-                    ? CircularProgressIndicator(
-                        color: pPrimaryColor,
-                      )
-                    : CustomButton(
-                        color: pPrimaryColor,
-                        isEnabled: true,
-                        tvSize: 16.0,
-                        height: 50.0,
-                        radius: 12.0,
-                        tvColor: Colors.white,
-                        btnTitle: "Update",
-                        onPress: () {
-                          Get.find<ProfileController>().updatePhone(context);
-                          setState(() {
-                            isLoading = true;
-                          });
-                        })
-              ],
-            ),
+            CustomButton(
+                color: pPrimaryColor,
+                isEnabled: true,
+                tvSize: 16.0,
+                height: 50.0,
+                radius: 12.0,
+                tvColor: Colors.white,
+                btnTitle: "Update",
+                onPress: () {
+                  Get.find<ProfileController>().updatePhone(context);
+
+                }),
             pVerticalSpace(height: 25.0),
           ],
         ),

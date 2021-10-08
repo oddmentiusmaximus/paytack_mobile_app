@@ -15,6 +15,7 @@ class ApiHelpers {
   static String getCategories = "api/clients/categories";
 
   static String updatePhone = "api/client/account/update-phone";
+  static String updateEmail = "/api/client/account/update-email";
 
   static String loyaltyProgramJoined = "api/clients/already-joined";
   static String manageLoyaltyProgram = "api/clients/manage-loyalti-program";

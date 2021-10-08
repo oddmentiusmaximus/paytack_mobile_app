@@ -17,32 +17,41 @@ class NeedHelp extends StatefulWidget {
 }
 
 class _NeedHelpState extends State<NeedHelp> {
-  TextEditingController _textEditingController=new TextEditingController();
+  TextEditingController _textEditingController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: commonAppBar("Help",  isTrue: true,
+      appBar: commonAppBar("Help",
+          isTrue: true,
           size: 18,
           step: "1",
           color: Colors.transparent,
           textColor: pTextColor),
       body: SafeArea(
           child: SingleChildScrollView(
-            child: Container(
-              height: Get.height,
-        padding: EdgeInsets.symmetric(
-            horizontal: 10.0,
-            vertical: 2.0,
+        physics: const ScrollPhysics(),
+        child: IntrinsicHeight(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 2.0,
+                  ),
+                  child: body(),
+                ),
+              ),
+            ],
+          ),
         ),
-        child: body(),
-      ),
-          )),
+      )),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(8.0),
-        child:
-        Padding(
+        child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: CustomButton(
               color: pPrimaryColor,
@@ -53,7 +62,8 @@ class _NeedHelpState extends State<NeedHelp> {
               radius: 12.0,
               btnTitle: "Send",
               onPress: () {
-                Get.find<ProfileController>().submitFeedback(_textEditingController.text, context);
+                Get.find<ProfileController>()
+                    .submitFeedback(_textEditingController.text, context);
               }),
         ),
       ),
@@ -101,8 +111,6 @@ class _NeedHelpState extends State<NeedHelp> {
       ],
     );
   }
-
-
 
   Widget middleSection() {
     return Expanded(

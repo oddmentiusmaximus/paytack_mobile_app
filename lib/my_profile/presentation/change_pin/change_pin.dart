@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:paytack/common_function/constants.dart';
+import 'package:paytack/common_function/utils/camera_utils.dart';
 import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
@@ -12,8 +13,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ChangePinPage extends StatelessWidget {
   StreamController<ErrorAnimationType>? errorController;
-  bool hasError = false;
-  String currentText = "";
   final profileController = Get.find<ProfileController>();
 
   @override
@@ -79,7 +78,7 @@ class ChangePinPage extends StatelessWidget {
                           animationDuration: Duration(milliseconds: 300),
                           enableActiveFill: true,
                           errorAnimationController: errorController,
-                          controller: TextEditingController(),
+                          controller: profileController.newPinController,
                           keyboardType: TextInputType.phone,
                           onCompleted: (v) {
                             print("Completed");
@@ -170,7 +169,7 @@ class ChangePinPage extends StatelessWidget {
                             animationDuration: Duration(milliseconds: 300),
                             enableActiveFill: true,
                             errorAnimationController: errorController,
-                            controller: TextEditingController(),
+                            controller: profileController.confirmPinController,
                             keyboardType: TextInputType.phone,
 
                             onCompleted: (v) {
@@ -222,7 +221,15 @@ class ChangePinPage extends StatelessWidget {
                     height: 50.0,
                     radius: 12.0,
                     btnTitle: "Update",
-                    onPress: () {}),
+                    onPress: () {
+                      if (profileController.newPinController!.text ==
+                          profileController.confirmPinController!.text) {
+                        profileController.setNewPin(context);
+                      } else {
+                        showToast(
+                            msg: 'New Pin doesn\'t match the confirm Pin');
+                      }
+                    }),
               ],
             ),
           ),

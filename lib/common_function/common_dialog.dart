@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/home/application/controllers/dashboard_controller.dart';
-import 'package:paytack/routes/app_screens.dart';
 
 void actionPopup({
   BuildContext? context,
@@ -97,6 +95,7 @@ Future<void> showCommonWithWidget({
           borderRadius: BorderRadius.circular(8),
         ),
         elevation: 5,
+
         insetPadding:
             const EdgeInsets.only(left: 20.0, right: 20, top: 20, bottom: 20),
         child: SingleChildScrollView(

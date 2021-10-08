@@ -106,16 +106,22 @@ class MyProfileTab extends StatelessWidget {
                                       horizontal: 8.0),
                                   child: Row(children: [
                                     TView(
-                                      title: profile.userEmail.toString(),
+                                      title: profile.userEmail != null
+                                          ? profile.userEmail.toString()
+                                          : '...',
                                       color: pBottomNav,
                                       size: 12,
                                       weight: FontWeight.normal,
                                     ),
                                     pHorizontalSpace(width: 12.0),
-                                    ImageIcon(
-                                      AssetImage(edit),
-                                      size: 14,
-                                      color: Colors.black,
+                                    GestureDetector(
+                                      onTap: () => verifyPinPopUp(context,
+                                          route: AppRoute.changeEmail),
+                                      child: ImageIcon(
+                                        AssetImage(edit),
+                                        size: 14,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                   ]),
                                 )
@@ -239,19 +245,24 @@ class MyProfileTab extends StatelessWidget {
                                           Expanded(
                                             child: TView(
                                               title: "Sign Out",
-                                              size: 18.0,
+                                              size: 20.0,
+                                              weight: FontWeight.bold,
                                               color: Colors.black,
                                             ),
                                           ),
                                           InkWell(
-                                            onTap: (){
+                                            onTap: () {
                                               Navigator.of(context,
-                                                  rootNavigator: true)
+                                                      rootNavigator: true)
                                                   .pop();
                                             },
                                             child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Icon(Icons.close),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Icon(
+                                                Icons.close,
+                                                color: pBottomNav,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -260,28 +271,29 @@ class MyProfileTab extends StatelessWidget {
                                       TView(
                                         title:
                                             "You'll be signed out from your \naccount on this device",
-                                        size: 15.0,
-                                        color: Colors.black,
+                                        size: 14.0,
+                                        color: pTextColor3,
                                       ),
                                       pVerticalSpace(height: 30.0),
                                       ElevatedButton(
                                         onPressed: () {
                                           Navigator.of(context,
-                                              rootNavigator: true)
+                                                  rootNavigator: true)
                                               .pop();
                                           Get.offAllNamed(AppRoute.login);
-
                                         },
                                         child: TView(
                                           title: "Log me out",
                                           color: Colors.white,
-                                          size: 15.0,
+                                          size: 16.0,
                                         ),
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(Colors
-                                                  .red), // <-- Button col,
-                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(11.0),
+                                            ),
+                                            primary:
+                                                Colors.red), // <-- Button col,
                                       ),
                                       pVerticalSpace(height: 15.0),
                                     ],
@@ -335,7 +347,7 @@ class MyProfileTab extends StatelessWidget {
                 children: <Widget>[
                   //Expanded(child: Container(padding: EdgeInsets.all(16),color: Colors.red,child: Text("text 1"))),
                   Expanded(
-                    child: PinCodeTextField(
+                    child: new PinCodeTextField(
                       appContext: context,
                       pastedTextStyle: TextStyle(
                         color: Colors.green.shade600,
@@ -361,13 +373,14 @@ class MyProfileTab extends StatelessWidget {
                           inactiveFillColor: Colors.white,
                           activeFillColor: Colors.white,
                           selectedFillColor: Colors.white,
-                          selectedColor: pPrimaryColor,
-                          activeColor: pPrimaryColor),
+                          selectedColor: pBottomNav,
+                          activeColor: pBottomNav),
                       autoDisposeControllers: false,
                       cursorColor: Colors.black,
                       animationDuration: Duration(milliseconds: 300),
                       enableActiveFill: true,
                       errorAnimationController: errorController,
+
                       controller: profileController.popUpPinController,
                       keyboardType: TextInputType.phone,
                       onCompleted: (v) {

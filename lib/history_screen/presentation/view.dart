@@ -70,7 +70,7 @@ class HistoryScreenPage extends StatelessWidget {
                                   subtitle: Divider(
                                     thickness: 5,
                                     color: pProgress,
-                                    endIndent: 70,
+                                    endIndent: Get.size.width * 0.19,
                                     height: 0,
                                   ),
                                   contentPadding: EdgeInsets.zero,
@@ -136,7 +136,7 @@ class HistoryScreenPage extends StatelessWidget {
                               child: Visibility(
                                 visible: logic.isRedeem == true,
                                 replacement: ListTile(
-                                 subtitle: TView(
+                                  subtitle: TView(
                                     title: ' ',
                                     color: Colors.transparent,
                                   ),
@@ -155,7 +155,7 @@ class HistoryScreenPage extends StatelessWidget {
                                   subtitle: Divider(
                                     thickness: 5,
                                     color: pProgress,
-                                    endIndent: 220,
+                                    endIndent: Get.size.width * 0.55,
                                     height: 0,
                                   ),
                                   contentPadding: EdgeInsets.zero,
@@ -191,7 +191,7 @@ class HistoryScreenPage extends StatelessWidget {
                         borderRadius: BorderRadius.only(
                             topRight: Radius.circular(10),
                             bottomRight: Radius.circular(10)), // radius of 10
-                        color: pBorderGrey// green as background color
+                        color: pBorderGrey // green as background color
                         )),
               ),
               pVerticalSpace(height: 25.0),

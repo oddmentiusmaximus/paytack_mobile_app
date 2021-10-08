@@ -17,6 +17,7 @@ import 'package:paytack/intro_screen/presentation/getting_started_screen.dart';
 import 'package:paytack/login_screen/presentation/login_screen.dart';
 import 'package:paytack/login_screen/application/bindings/login_binding.dart';
 import 'package:paytack/login_screen/presentation/set_forgot_screen.dart';
+import 'package:paytack/my_profile/presentation/change_email/change_email.dart';
 import 'package:paytack/my_profile/presentation/change_phone_no/change_phone_no.dart';
 import 'package:paytack/my_profile/presentation/change_pin/change_pin.dart';
 import 'package:paytack/my_profile/presentation/need_help/need_help.dart';
@@ -70,6 +71,7 @@ class AppScreens {
     // GetPage(name: AppRoute.verifyOtp, page: () => VerifyOtpScreen()),
     GetPage(name: AppRoute.login, page: () => LoginScreen()),
     GetPage(name: AppRoute.nearByAll, page: () => NearByAll()),
+    GetPage(name: AppRoute.changeEmail, page: () => ChangeEmailID()),
     GetPage(
         name: AppRoute.detailPage,
         page: () => DetailPage(),
