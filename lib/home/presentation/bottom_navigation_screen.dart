@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:get/get.dart';
 import 'package:paytack/common_function/assets_file.dart';
 import 'package:paytack/common_function/constants.dart';
@@ -9,6 +10,7 @@ import 'package:paytack/discover/discover_page.dart';
 import 'package:paytack/history_screen/presentation/view.dart';
 import 'package:paytack/home/presentation/home_dashboard.dart';
 import 'package:paytack/my_profile/presentation/my_profile.dart';
+import 'package:paytack/routes/app_screens.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
   @override
@@ -39,9 +41,78 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_selectedTabIndex],
-      bottomNavigationBar: bottomNavigationBar,
+    return OfflineBuilder(
+      connectivityBuilder: (
+        BuildContext context,
+        ConnectivityResult connectivity,
+        Widget child,
+      ) {
+        final bool connected = connectivity != ConnectivityResult.none;
+        if (connected) {
+          /// Backpress
+          return Scaffold(
+            body: _pages[_selectedTabIndex],
+            bottomNavigationBar: bottomNavigationBar,
+          );
+        }
+
+        /// No internet connection design
+        else {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+                child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Transform(
+                      transform: Matrix4.translationValues(0.0, 0.0, 0.0),
+                      child: Image(
+                        image: AssetImage('assets/images/no_internet.gif'),
+                      )),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  TView(
+                    title: "No Internet Connection",
+                    size: 14.0,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  TView(
+                    title:
+                        "Make sure Wi-Fi or cellular data is \n turned on and then try again",
+                    size: 14.0,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    height: 40.0,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.offAllNamed(AppRoute.splash);
+                    },
+                    child: TView(
+                      title: "Retry Again",
+                      color: Colors.white,
+                      size: 15.0,
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          pPrimaryColor), // <-- Button col,
+                    ),
+                  ),
+                ],
+              ),
+            )),
+            bottomNavigationBar: bottomNavigationBar,
+          );
+        }
+      },
+      child: Text('You are offline'),
     );
   }
 

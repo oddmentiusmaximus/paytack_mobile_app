@@ -188,23 +188,13 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
                   // ),
                 ),
                 DraggableScrollableSheet(
-                  initialChildSize:
-                      dashboardController.listNearByBusiness.isNotEmpty
-                          ? 0.60
-                          : 0.30,
-                  // minChildSize: .10,
-                  minChildSize:
-                      dashboardController.listNearByBusiness.isNotEmpty
-                          ? 0.60
-                          : 0.30,
-                  expand: true,
-                  maxChildSize: 0.60,
-
+                  initialChildSize: 0.35,
+                  minChildSize: 0.1,
+                  maxChildSize: 0.4,
                   // initialChildSize: .30,
                   builder: (BuildContext context,
                       ScrollController scrollController) {
                     return SingleChildScrollView(
-                      physics: const NeverScrollableScrollPhysics(),
                       controller: scrollController,
                       child: CustomScrollViewContent(
                         dashboardController: dashboardController,

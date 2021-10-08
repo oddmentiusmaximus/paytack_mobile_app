@@ -43,6 +43,7 @@ dependencies:
   nordigen_integration: ^1.5.3
   webview_flutter: ^2.0.12
   google_fonts: ^2.1.0
+  flutter_offline: ^2.0.0
 
 
 
