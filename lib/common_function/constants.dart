@@ -20,10 +20,11 @@ const pSlider1 = Color(0xFFF6D9CB);
 const pError = Color(0xFFF32D2D);
 const pIconColor = Color(0xFFE3E4F7);
 const pBubbleColor = Color(0xFF939329);
+const pDivideColor = Color(0xFFE6E6E6);
 /*Fonts*/
 const latoFont = 'assets/fonts/Lato-Black.ttf';
 const latoFontRegular = 'assets/fonts/Lato-Regular.ttf';
-const noImage = 'https://freepikpsd.com/media/2019/10/no-image-available-icon-png-8-Transparent-Images.png';
+const noImage = 'https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg';
 
 /*Widget*/
 Widget pVerticalSpace({height: 10.0}) => SizedBox(height: height);

@@ -49,6 +49,15 @@ class _DetailPageState extends State<DetailPage> {
         .businessCashbackConfig!.extraCashbackValue
         .toString();
 
+    bool vatExcluded = listNearByBusiness.businessCashbackConfig!.vatExcluded;
+    String redeemCondition =
+        listNearByBusiness.businessCashbackConfig!.redeemCondition;
+    String vat = '';
+    if (vatExcluded) {
+      vat = "Vat Included";
+    } else {
+      vat = "Vat Excluded";
+    }
     if (listNearByBusiness.businessCashbackConfig!.cashbackType!
             .toLowerCase() ==
         "Percentage".toLowerCase()) {
@@ -302,9 +311,35 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                         Padding(
                           padding:
-                          const EdgeInsets.only(top: 16.0, bottom: 8.0),
-                          child: Divider(color: Colors.grey),
+                              const EdgeInsets.only(left: 35.0, right: 16.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: TView(
+                              title: vat,
+                              size: 12.0,
+                              color: Colors.black54,
+                            ),
+                          ),
                         ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 35.0, right: 16.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: TView(
+                              title: "Redeem" + " " + redeemCondition,
+                              size: 12.0,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                            padding:
+                                const EdgeInsets.only(top: 16.0, bottom: 8.0),
+                            child: Divider(
+                              color: pDivideColor,
+                              thickness: 0.5,
+                            )),
                         InkWell(
                           onTap: () {
                             String googleUrl =
@@ -333,7 +368,7 @@ class _DetailPageState extends State<DetailPage> {
                         Padding(
                           padding:
                               const EdgeInsets.only(top: 16.0, bottom: 8.0),
-                          child: Divider(color: Colors.grey),
+                          child: Divider(color: pDivideColor, thickness: 0.5),
                         ),
                         listNearByBusiness
                                     .businessCashbackConfig!.extraCashbackValue
@@ -412,11 +447,13 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                 ],
                               ),
-
                         Padding(
                           padding:
                               const EdgeInsets.only(top: 8.0, bottom: 16.0),
-                          child: Divider(color: Colors.grey),
+                          child: Divider(
+                            color: pDivideColor,
+                            thickness: 0.5,
+                          ),
                         ),
                         Padding(
                           padding:

@@ -7,6 +7,7 @@ import 'package:paytack/common_function/widget/appbar.dart';
 import 'package:paytack/common_function/widget/button.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:paytack/common_function/widget/textinput.dart';
+import 'package:paytack/my_profile/application/profile_controller.dart';
 
 class NeedHelp extends StatefulWidget {
   const NeedHelp({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class NeedHelp extends StatefulWidget {
 }
 
 class _NeedHelpState extends State<NeedHelp> {
+  TextEditingController _textEditingController=new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +52,9 @@ class _NeedHelpState extends State<NeedHelp> {
               tvColor: Colors.white,
               radius: 12.0,
               btnTitle: "Send",
-              onPress: () {}),
+              onPress: () {
+                Get.find<ProfileController>().submitFeedback(_textEditingController.text, context);
+              }),
         ),
       ),
     );
@@ -93,7 +98,6 @@ class _NeedHelpState extends State<NeedHelp> {
           ),
         ),
         middleSection(),
-        
       ],
     );
   }
@@ -119,7 +123,7 @@ class _NeedHelpState extends State<NeedHelp> {
             hintText: "Tell us more. How can we help you?",
             type: 'B1',
             maxLines: 1,
-            controller: TextEditingController(),
+            controller: _textEditingController,
             isEdit: false,
             isError: false,
             isInput: true,

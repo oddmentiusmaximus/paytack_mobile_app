@@ -18,6 +18,7 @@ class ApiHelpers {
 
   static String loyaltyProgramJoined = "api/clients/already-joined";
   static String manageLoyaltyProgram = "api/clients/manage-loyalti-program";
+  static String help = "/api/clients/help";
 //static String resetPassword = "api/Clients/getnearestbussinessdetails";
 
 }

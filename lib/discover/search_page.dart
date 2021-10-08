@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:paytack/common_function/constants.dart';
 import 'package:paytack/common_function/widget/mytext.dart';
 import 'package:get/get.dart';
+import 'package:paytack/routes/app_screens.dart';
 
 import 'application/search_controller.dart';
 
@@ -124,6 +125,10 @@ class SearchPage extends StatelessWidget {
     return Column(
       children: [
         ListTile(
+          onTap: (){
+            Get.toNamed(AppRoute.detailPage,
+                arguments:  controller.searchResultList[index]);
+            },
           contentPadding: EdgeInsets.all(12.0),
           leading: CircleAvatar(
             radius: 25.0,
